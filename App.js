@@ -1,23 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Font } from "expo";
+import { Text } from "react-native";
+import { Root } from "./app/router";
 
 export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
+  state = {
+    fontLoaded: false
+  };
+  async componentDidMount() {
+    await Font.loadAsync({
+      Arial: require("./app/resources/Arial.ttf")
+    });
+    this.setState({ fontLoaded: true });
   }
+  render() {
+    if (!this.state.fontLoaded) return <Text> Error loading font </Text>;
+    return <Root />;
+  }
+  // ...
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
