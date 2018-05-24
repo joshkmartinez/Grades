@@ -1,14 +1,15 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from "react";
+import { View, Text } from "react-native";
 
 export default class Grades extends React.Component {
-  render () {
+  static navigationOptions = {
+    title: "Grades"
+  };
+  render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>
-          Home Screen
-        </Text>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text>Home Screen</Text>
       </View>
-    )
+    );
   }
 }
