@@ -1,7 +1,6 @@
 import React from "react";
 import {
   View,
-  Image,
   TextInput,
   StyleSheet,
   Alert,
@@ -9,6 +8,7 @@ import {
   Dimensions
 } from "react-native";
 import { Button, Text } from "native-base";
+
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -20,43 +20,42 @@ export default class Login extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { isAuthed: false };
-    this.state = { username: "" };
-    this.state = { authError: false };
-    this.state = { password: "" };
-
-    auth = () => {
-
-      //do auth process
-      this.setState({ authError: false });
-      this.setState({ isAuthed: true });
-      if (isAuthed === false) { // auth error
-        this.setState({ authError: true });
-        this.showAlert();
-      }
-      if (isAuthed === true) { // nav to grades screen is authentication is successful
-        // save auth credentials
-        this.props.navigation.navigate("Grades")
-      }
-
-
-    }
-
-    const showAlert = () => {
-      Alert.alert(
-         'There was an error loging in. Please check your username and password and try again.'
-      )
-   }
+    this.state = { isAuthed: false, username: "", authError: false, password: "" };
+    this.auth = this.auth.bind(this);
+    this.showAlert = this.showAlert.bind(this);
 
   }
+
+  showAlert(){
+    Alert.alert(
+      'There was an error loging in. Please check your username and password and try again.'
+    )
+  }
+
+  auth(){
+
+    //do auth 
+    this.setState({ authError: false,isAuthed: false });
+
+    if (this.state.isAuthed === false && this.state.isAuthed === false && this.state.username == "admin" && this.state.password == "admin") { // authentication is successful
+      this.setState({ isAuthed: true });
+      this.props.navigation.navigate("Grades")
+    } else { // auth error
+      this.setState({ authError: true,isAuthed: false });
+      this.showAlert
+    }
+
+  };
   render() {
-    const {showAlert} = this.state
+    const { showAlert } = this.state
     return (
       <View style={styles.wrapper}>
         <KeyboardAvoidingView behavior="padding" style={styles.loginContainer}>
           <TextInput
             placeholder="school email"
             keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
             placeholderTextColor="white"
             style={styles.input}
             value={this.state.username}
@@ -65,23 +64,32 @@ export default class Login extends React.Component {
           <TextInput
             placeholder="password"
             secureTextEntry
+            autoCorrect={false}
+            autoCapitalize="none"
             placeholderTextColor="white"
             style={styles.input}
             value={this.state.password}
           />
 
-          <View style={{ alignItems: "center" }}>
+          <View style={{
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: 12
+          }}>
+
             <Button
               primary
-              onPress={showAlert}
-              style={styles.loginButton}
+              onPress={this.auth}
             >
-              <Text> Login </Text>
-            </Button>
 
+              <Text> Login </Text>
+
+            </Button>
           </View>
+
         </KeyboardAvoidingView>
-       
+        
       </View>
     );
   }
@@ -89,8 +97,9 @@ export default class Login extends React.Component {
 
 const styles = {
   loginContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: width - 42,
     backgroundColor: "#bdc3c7",
     borderRadius: 9,
@@ -100,11 +109,9 @@ const styles = {
 
   input: {
     paddingHorizontal: 10,
-    marginTop: 9,
-    marginBottom: 9,
     color: "#2c3e50",
     backgroundColor: "#95a5a6",
-    margin: 3,
+    margin: 12,
     height: 42,
     width: width - 69,
     borderRadius: 3
