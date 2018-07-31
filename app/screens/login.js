@@ -88,7 +88,7 @@ export default class Login extends React.Component {
               margin: 12
             }}
           >
-            <Button primary onPress={() => this.auth}>
+            <Button primary onPress={() => this.props.navigation.navigate("Grades");}>
               <Text> Login </Text>
             </Button>
           </View>
