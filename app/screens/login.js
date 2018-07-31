@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { Button, Text } from "native-base";
 
-
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
@@ -20,37 +19,47 @@ export default class Login extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { isAuthed: false, username: "", authError: false, password: "" };
+    this.state = {
+      isAuthed: false,
+      username: "",
+      authError: false,
+      password: "",
+    };
     this.auth = this.auth.bind(this);
     this.showAlert = this.showAlert.bind(this);
-
   }
-
-  showAlert(){
+  showAlert() {
     Alert.alert(
-      'There was an error loging in. Please check your username and password and try again.'
-    )
+      "There was an error loging in. Please check your username and password and try again."
+    );
   }
+  auth() {
+    //do auth
+    this.setState({ authError: false, isAuthed: false });
 
-  auth(){
-
-    //do auth 
-    this.setState({ authError: false,isAuthed: false });
-
-    if (this.state.isAuthed === false && this.state.isAuthed === false && this.state.username == "admin" && this.state.password == "admin") { // authentication is successful
+    if (
+      this.state.isAuthed === false &&
+      this.state.authError === false &&
+      this.state.username == "admin" &&
+      this.state.password == "admin"
+    ) {
+      // authentication is successful
       this.setState({ isAuthed: true });
-      this.props.navigation.navigate("Grades")
-    } else { // auth error
-      this.setState({ authError: true,isAuthed: false });
-      this.showAlert
+      this.props.navigation.navigate("Grades");
+    } else {
+      // auth error
+      this.setState({ authError: true, isAuthed: false });
+      this.showAlert;
     }
-
-  };
+  }
+  
   render() {
-    const { showAlert } = this.state
+    const { showAlert } = this.state;
+    
     return (
       <View style={styles.wrapper}>
         <KeyboardAvoidingView behavior="padding" style={styles.loginContainer}>
+        
           <TextInput
             placeholder="school email"
             keyboardType="email-address"
@@ -71,25 +80,19 @@ export default class Login extends React.Component {
             value={this.state.password}
           />
 
-          <View style={{
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: 12
-          }}>
-
-            <Button
-              primary
-              onPress={this.auth}
-            >
-
+          <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: 12
+            }}
+          >
+            <Button primary onPress={() => this.auth}>
               <Text> Login </Text>
-
             </Button>
           </View>
-
         </KeyboardAvoidingView>
-        
       </View>
     );
   }
@@ -97,14 +100,13 @@ export default class Login extends React.Component {
 
 const styles = {
   loginContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     width: width - 42,
     backgroundColor: "#bdc3c7",
     borderRadius: 9,
-    marginTop: 21,
-    marginBottom: 21
+    top: -9
   },
 
   input: {
@@ -135,7 +137,7 @@ const styles = {
     marginBottom: 21
   },
   error: {
-    color: 'red',
-    textAlign: 'center',
+    color: "red",
+    textAlign: "center"
   }
 };
