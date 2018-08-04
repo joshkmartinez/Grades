@@ -23,7 +23,7 @@ export default class Login extends React.Component {
       isAuthed: false,
       username: "",
       authError: false,
-      password: "",
+      password: ""
     };
     this.auth = this.auth.bind(this);
     this.showAlert = this.showAlert.bind(this);
@@ -52,14 +52,13 @@ export default class Login extends React.Component {
       this.showAlert;
     }
   }
-  
+
   render() {
     const { showAlert } = this.state;
-    
+
     return (
       <View style={styles.wrapper}>
         <KeyboardAvoidingView behavior="padding" style={styles.loginContainer}>
-        
           <TextInput
             placeholder="school email"
             keyboardType="email-address"
@@ -88,13 +87,16 @@ export default class Login extends React.Component {
               margin: 12
             }}
           >
-            <Button primary onPress={() => this.props.navigation.navigate("Grades");}>
+            <Button
+              primary
+              onPress={() => this.props.navigation.navigate("Grades")}
+            >
               <Text> Login </Text>
             </Button>
           </View>
         </KeyboardAvoidingView>
       </View>
-    );
+    )
   }
 }
 

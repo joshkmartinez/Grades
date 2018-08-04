@@ -27,7 +27,7 @@ export default {
 
     login() {
         //send username and password to athuenticate
-        //maybe send to server also
+        //send to server also
     }
 
 };
