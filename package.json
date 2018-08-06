@@ -24,7 +24,10 @@
     "native-base": "^2.7.2",
     "react": "16.3.1",
     "react-native": "^0.55.0",
+    "react-native-axios": "^0.17.1",
+    "react-native-search-list": "^0.1.0",
     "react-native-snackbar-dialog": "^1.4.1",
-    "react-navigation": "^2.0.1"
+    "react-navigation": "^2.0.1",
+    "searchable-flatlist": "0.0.4"
   }
 }

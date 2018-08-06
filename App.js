@@ -9,8 +9,11 @@ export default class App extends React.Component {
   };
   async componentDidMount() {
     await Font.loadAsync({
-      Arial: require("./app/resources/Arial.ttf")
+      Arial: require("./app/resources/Arial.ttf"),
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
+
     this.setState({ fontLoaded: true });
   }
   render() {

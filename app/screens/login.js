@@ -23,7 +23,8 @@ export default class Login extends React.Component {
       isAuthed: false,
       username: "",
       authError: false,
-      password: ""
+      password: "",
+      districtText: ""
     };
     this.auth = this.auth.bind(this);
     this.showAlert = this.showAlert.bind(this);
@@ -58,7 +59,31 @@ export default class Login extends React.Component {
 
     return (
       <View style={styles.wrapper}>
-        <KeyboardAvoidingView behavior="padding" style={styles.loginContainer}>
+        <KeyboardAvoidingView
+          behavior="padding"
+          keyboardVerticalOffset={64}
+          style={styles.loginContainer}
+        >
+          <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: 12
+            }}
+          >
+            <Button
+              block
+              info
+              style={{ width: width - 73 }}
+              onPress={() => this.props.navigation.navigate("Grades")}
+            >
+              <Text> Choose School / District </Text>
+            </Button>
+
+            <Text style={styles.districtText}> {this.state.districtText} </Text>
+          </View>
+
           <TextInput
             placeholder="school email"
             keyboardType="email-address"
@@ -96,7 +121,7 @@ export default class Login extends React.Component {
           </View>
         </KeyboardAvoidingView>
       </View>
-    )
+    );
   }
 }
 
@@ -109,6 +134,10 @@ const styles = {
     backgroundColor: "#bdc3c7",
     borderRadius: 9,
     top: -9
+  },
+
+  districtText: {
+    fontWeight: "bold"
   },
 
   input: {
