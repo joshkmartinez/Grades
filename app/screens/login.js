@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   TextInput,
-  StyleSheet,
   Alert,
   KeyboardAvoidingView,
   Dimensions
@@ -76,7 +75,7 @@ export default class Login extends React.Component {
               block
               info
               style={{ width: width - 73 }}
-              onPress={() => this.props.navigation.navigate("Grades")}
+              onPress={() => this.props.navigation.navigate("chooseDistrict")}
             >
               <Text> Choose School / District </Text>
             </Button>

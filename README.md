@@ -1,3 +1,4 @@
-# Grades App
+# Grades for students and parents
+### Note: expo doesn't suport rn 56
 
-### Use npm instead of yarn for simplicities sake
+* dont use yarn *
