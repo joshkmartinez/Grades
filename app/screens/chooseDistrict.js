@@ -1,8 +1,14 @@
 import React from "react";
-import { View, FlatList, ActivityIndicator, Dimensions} from "react-native";
-import { List, ListItem, SearchBar } from "react-native-elements";
-import { getSchools } from "../api/index";
-import { H1, H2, Text} from 'native-base';
+import {
+  View,
+  FlatList,
+  ActivityIndicator,
+  Dimensions,
+  SafeAreaView,
+  AsyncStorage
+} from "react-native";
+import { List, SearchBar } from "react-native-elements";
+import { Text } from "native-base";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -13,105 +19,68 @@ export default class chooseDistrict extends React.Component {
   };
   constructor(props) {
     super(props);
-
+    this.makeRemoteRequest = this.makeRemoteRequest.bind(this);
     this.state = {
       loading: false,
-      data: [
-        {
-          CDS: "30736353030244",
-          SchoolName: "Laguna Hills High",
-          DistrictName: "Saddleback Valley Unified",
-          Status: "active",
-          County: "Orange",
-          StreetAddress: "25401 Paseo de Valencia",
-          City: "Laguna Hills",
-          State: "CA",
-          ZipCode: "92653",
-          MailingAddress: "25401 Paseo de Valencia",
-          MailingCity: "Laguna Hills",
-          MailingState: "CA",
-          MailingZipCode: "92653",
-          AeriesAppParentURL: "https://familyportal.svusd.org/ParentPortal",
-          AeriesAppStaffURL: "https://EM2.svusd.org/EM2",
-          AeriesAppTeacherURL: "",
-          AeriesAppParent: true,
-          AeriesAppStaff: true,
-          AeriesAppTeacher: false,
-          RecordsTransferURL: "",
-          RecordsTransfer: false,
-          Fax: null,
-          PublicPhone: "(949) 770-5447",
-          PublicWebsite: "",
-          OpenDate: "1980-07-01T00:00:00",
-          CloseDate: "1900-01-01T00:00:00",
-          isCharter: false,
-          Latitude: "33.594318",
-          Longitude: "-117.70108",
-          PublicAdminFirstName: "Bill",
-          PublicAdminLastName: "Hinds",
-          PublicAdminEmail: "bill.hinds@svusd.org",
-          HighGrade: 0,
-          LowGrade: 0
-        },
-        {
-          CDS: "49706074930327",
-          SchoolName: "Laguna High",
-          DistrictName: "West Sonoma County Union High",
-          Status: "active",
-          County: "Sonoma",
-          StreetAddress: "445 Taft St.",
-          City: "Sebastopol",
-          State: "CA",
-          ZipCode: "95472",
-          MailingAddress: "445 Taft St.",
-          MailingCity: "Sebastopol",
-          MailingState: "CA",
-          MailingZipCode: "95472",
-          AeriesAppParentURL: "https://portal.wscuhsd.k12.ca.us/parentportal",
-          AeriesAppStaffURL: "",
-          AeriesAppTeacherURL: "",
-          AeriesAppParent: true,
-          AeriesAppStaff: false,
-          AeriesAppTeacher: false,
-          RecordsTransferURL: "",
-          RecordsTransfer: false,
-          Fax: null,
-          PublicPhone: "(707) 824-6484",
-          PublicWebsite: "",
-          OpenDate: "1980-07-01T00:00:00",
-          CloseDate: "1900-01-01T00:00:00",
-          isCharter: false,
-          Latitude: "38.406153",
-          Longitude: "-122.82398",
-          PublicAdminFirstName: "Kent",
-          PublicAdminLastName: "Cromwell",
-          PublicAdminEmail: "kcromwell.lhs@wscuhsd.k12.ca.us",
-          HighGrade: 0,
-          LowGrade: 0
-        }
-      ],
-      error: null,
-      query: ""
+      data: [],
+      error: false,
+      query: "",
+      link: "",
+      parsedQuery: "",
+      hasChosenAlready: false
     };
+    this.makeRemoteRequest = this.makeRemoteRequest.bind(this);
+    this.parseQuery = this.parseQuery.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
+
   componentDidMount() {
-    this.makeRemoteRequest();
+    //this.makeRemoteRequest();
   }
 
   makeRemoteRequest = () => {
     this.setState({ loading: true });
-
-    getSchools()
-      .then(users => {
-        this.setState({
-          loading: false,
-          data: schools
-        });
+    console.log(this.state.query);
+    let theQuery = this.state.query;
+    let parsed = this.parseQuery(theQuery);
+    console.log("Parsed query: " + parsed);
+    this.setState({ parsedQuery: parsed });
+    fetch(
+      `https://ping.aeries.com/api/v1/schoolsearch/ca/AeriesAppParent/${parsed}`
+    )
+      .then(response => response.json())
+      .then(responseJson => {
+          console.log("Response: " + responseJson)
+        this.setState(
+          {
+            isLoading: false,
+            data: responseJson
+          },
+          function() {
+            this.setState({ loading: false });
+            //console.log("Current State: " + this.state.data);
+          }
+        );
       })
       .catch(error => {
-        this.setState({ error, loading: false });
+        console.error(error);
+        this.setState({ loading: false });
+        this.setState({ error: true });
       });
   };
+
+  schoolSelected = link => {
+    let schoolLink = this.state.link;
+    _storeData = async () => {
+      try {
+        await AsyncStorage.setItem("Link", schoolLink);
+        console.log("Data Saved!");
+      } catch (error) {
+        console.log("Error saving data");
+      }
+    };
+  };
+
   handleSearch = text => {
     this.setState({ query: text });
   };
@@ -121,18 +90,31 @@ export default class chooseDistrict extends React.Component {
       <View
         style={{
           height: 2,
-          backgroundColor: "whitesmoke",
+          left: "9%",
+          backgroundColor: "whitesmoke"
         }}
       />
     );
   };
+  parseQuery(searchParam) {
+    searchParam = searchParam.split(" ").join("%20"); //STRINGS ARE IMMUTABLE
+    console.log("Function output" + searchParam);
+    return searchParam;
+    //have to replace spaces with %20 for the link
+  }
 
   renderHeader = () => {
-    return <SearchBar
-    lightTheme
-    placeholder="Search for your school / district" 
-    style={{width: width, backgroundColor: "white"}}
-    />
+    return (
+      <SearchBar
+        lightTheme
+        multiline={false}
+        placeholder="Search for your school"
+        onChangeText={query => this.setState({ query })}
+        value={this.state.query}
+        onSubmitEditing={this.makeRemoteRequest}
+        style={{ width: width, backgroundColor: "white" }}
+      />
+    );
   };
 
   renderFooter = () => {
@@ -152,18 +134,30 @@ export default class chooseDistrict extends React.Component {
   };
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center", width: width }}>
+      <SafeAreaView
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      >
         <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
           <FlatList
+            style={{ width: width }}
             data={this.state.data}
             renderItem={({ item }) => (
-              <View>
-              <H1>
-                {item.SchoolName}
-              </H1>
-              <Text>
-              {item.DistrictName}
-              </Text>
+              <View style={{ left: "9%", padding: 6 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    
+                  }}
+                >
+                  {item.SchoolName}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                  }}
+                >
+                  {item.DistrictName} {item.DistrictName}
+                </Text>
               </View>
             )}
             keyExtractor={item => item.SchoolName}
@@ -172,7 +166,7 @@ export default class chooseDistrict extends React.Component {
             ListFooterComponent={this.renderFooter}
           />
         </List>
-      </View>
+      </SafeAreaView>
     );
   }
 }
