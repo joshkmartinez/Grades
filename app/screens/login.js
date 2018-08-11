@@ -4,7 +4,8 @@ import {
   TextInput,
   Alert,
   KeyboardAvoidingView,
-  Dimensions
+  Dimensions,
+  AsyncStorage
 } from "react-native";
 import { Button, Text } from "native-base";
 
@@ -23,10 +24,28 @@ export default class Login extends React.Component {
       username: "",
       authError: false,
       password: "",
-      districtText: ""
+      districtText: "",
+      schoolLink: ""
     };
     this.auth = this.auth.bind(this);
     this.showAlert = this.showAlert.bind(this);
+  }
+  componentDidMount() {
+    // make sure user has internet
+  }
+  async checkIfLinkExists() {
+    if ((await AsyncStorage.getItem("link")) !== null) {
+      console.log("LOGIN FILE: async LINK data exists");
+    } else {
+      console.log("LOGIN FILE: no async LINK data exists");
+    }
+  }
+  async checkIfSchoolNameExists() {
+    if ((await AsyncStorage.getItem("name")) !== null) {
+      console.log("LOGIN FILE: async NAME data exists");
+    } else {
+      console.log("LOGIN FILE: no async NAME data exists");
+    }
   }
   showAlert() {
     Alert.alert(

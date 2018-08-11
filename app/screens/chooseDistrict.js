@@ -5,10 +5,12 @@ import {
   ActivityIndicator,
   Dimensions,
   SafeAreaView,
-  AsyncStorage
+  AsyncStorage,
+  TouchableOpacity
 } from "react-native";
 import { List, SearchBar } from "react-native-elements";
 import { Text } from "native-base";
+import { _ } from "lodash";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -35,51 +37,69 @@ export default class chooseDistrict extends React.Component {
   }
 
   componentDidMount() {
-    //this.makeRemoteRequest();
+    // make sure user has internet
   }
 
-  makeRemoteRequest = () => {
-    this.setState({ loading: true });
-    console.log(this.state.query);
-    let theQuery = this.state.query;
-    let parsed = this.parseQuery(theQuery);
-    console.log("Parsed query: " + parsed);
-    this.setState({ parsedQuery: parsed });
-    fetch(
-      `https://ping.aeries.com/api/v1/schoolsearch/ca/AeriesAppParent/${parsed}`
-    )
-      .then(response => response.json())
-      .then(responseJson => {
-          console.log("Response: " + responseJson)
-        this.setState(
-          {
-            isLoading: false,
-            data: responseJson
-          },
-          function() {
-            this.setState({ loading: false });
-            //console.log("Current State: " + this.state.data);
-          }
-        );
-      })
-      .catch(error => {
-        console.error(error);
-        this.setState({ loading: false });
-        this.setState({ error: true });
-      });
-  };
+  makeRemoteRequest = _.debounce(
+    () => {
+      this.setState({ loading: true });
+      console.log(this.state.query);
+      let theQuery = this.state.query;
+      let parsed = this.parseQuery(theQuery);
+      console.log("Parsed query: " + parsed);
+      this.setState({ parsedQuery: parsed });
+      fetch(
+        `https://ping.aeries.com/api/v1/schoolsearch/ca/AeriesAppParent/${parsed}`
+      )
+        .then(response => response.json())
+        .then(responseJson => {
+          console.log("Response: " + responseJson);
+          this.setState(
+            {
+              isLoading: false,
+              data: responseJson
+            },
+            function() {
+              this.setState({ loading: false });
+              //console.log("Current State: " + this.state.data);
+            }
+          );
+        })
+        .catch(error => {
+          console.error(error);
+          this.setState({ loading: false });
+          this.setState({ error: true });
+        });
+    },
+    //this debounce function from lodash wont call the function until no editing has been made for 250 miliseconds (reduces api strain)
+    250
+  );
 
-  schoolSelected = link => {
-    let schoolLink = this.state.link;
-    _storeData = async () => {
-      try {
-        await AsyncStorage.setItem("Link", schoolLink);
-        console.log("Data Saved!");
-      } catch (error) {
-        console.log("Error saving data");
-      }
-    };
-  };
+  async storeData(link) {
+    await AsyncStorage.setItem("link", link).catch(console.log);
+    console.log("DATA SAVED: " + link);
+
+    if ((await AsyncStorage.getItem("link")) !== null) {
+      console.log("async link data exists");
+    } else {
+      console.log("no async link data exists");
+    }
+  }
+  async storeSchoolName(name) {
+    await AsyncStorage.setItem("name", name).catch(console.log);
+    console.log("DATA SAVED: " + name);
+
+    if ((await AsyncStorage.getItem("name")) !== null) {
+      console.log("async name data exists");
+    } else {
+      console.log("no async name data exists");
+    }
+  }
+
+  schoolSelected(link, name) {
+    this.storeData(link);
+    this.storeSchoolName(name);
+  }
 
   handleSearch = text => {
     this.setState({ query: text });
@@ -98,7 +118,7 @@ export default class chooseDistrict extends React.Component {
   };
   parseQuery(searchParam) {
     searchParam = searchParam.split(" ").join("%20"); //STRINGS ARE IMMUTABLE
-    console.log("Function output" + searchParam);
+    //console.log("Function output:  " + searchParam);
     return searchParam;
     //have to replace spaces with %20 for the link
   }
@@ -111,7 +131,7 @@ export default class chooseDistrict extends React.Component {
         placeholder="Search for your school"
         onChangeText={query => this.setState({ query })}
         value={this.state.query}
-        onSubmitEditing={this.makeRemoteRequest}
+        onEndEditing={this.makeRemoteRequest}
         style={{ width: width, backgroundColor: "white" }}
       />
     );
@@ -143,24 +163,32 @@ export default class chooseDistrict extends React.Component {
             data={this.state.data}
             renderItem={({ item }) => (
               <View style={{ left: "9%", padding: 6 }}>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    
-                  }}
+                <TouchableOpacity
+                  onPress={() =>
+                    this.schoolSelected(
+                      item.AeriesAppParentURL,
+                      item.SchoolName
+                    )
+                  }
                 >
-                  {item.SchoolName}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 12,
-                  }}
-                >
-                  {item.DistrictName} {item.DistrictName}
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 16
+                    }}
+                  >
+                    {item.SchoolName}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 12
+                    }}
+                  >
+                    {item.DistrictName}
+                  </Text>
+                </TouchableOpacity>
               </View>
             )}
-            keyExtractor={item => item.SchoolName}
+            //keyExtractor={item => item.AeriesAppParentURL}
             ItemSeparatorComponent={this.renderSeparator}
             ListHeaderComponent={this.renderHeader}
             ListFooterComponent={this.renderFooter}
