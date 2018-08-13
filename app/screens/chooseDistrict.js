@@ -99,6 +99,7 @@ export default class chooseDistrict extends React.Component {
   schoolSelected(link, name) {
     this.storeData(link);
     this.storeSchoolName(name);
+    this.props.navigation.navigate("Login");
   }
 
   handleSearch = text => {
@@ -117,7 +118,7 @@ export default class chooseDistrict extends React.Component {
     );
   };
   parseQuery(searchParam) {
-    searchParam = searchParam.replace(/\s*$/,""); //remove the whitespace after the string using regex
+    searchParam = searchParam.replace(/\s*$/, ""); //remove the whitespace after the string using regex
     searchParam = searchParam.split(" ").join("%20"); //STRINGS ARE IMMUTABLE
     //console.log("Function output:  " + searchParam);
     return searchParam;

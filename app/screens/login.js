@@ -8,6 +8,7 @@ import {
   AsyncStorage
 } from "react-native";
 import { Button, Text } from "native-base";
+import { _ } from "lodash";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -32,21 +33,42 @@ export default class Login extends React.Component {
   }
   componentDidMount() {
     // make sure user has internet
+    this.refreshSchoolandName();
   }
   async checkIfLinkExists() {
     if ((await AsyncStorage.getItem("link")) !== null) {
-      console.log("LOGIN FILE: async LINK data exists");
+      //console.log("LOGIN FILE: async LINK data exists");
+      const link = JSON.stringify(await AsyncStorage.getItem("link"));
+      //console.log(link)
+
+      this.setState({ schoolLink: link });
+      //console.log("UPDATED LINK STATE: " + this.state.schoolLink)
     } else {
       console.log("LOGIN FILE: no async LINK data exists");
     }
   }
   async checkIfSchoolNameExists() {
     if ((await AsyncStorage.getItem("name")) !== null) {
-      console.log("LOGIN FILE: async NAME data exists");
+      //console.log("LOGIN FILE: async NAME data exists");
+      const name = JSON.stringify(await AsyncStorage.getItem("name"));
+      //console.log(name)
+      this.setState({ districtText: name });
+      //console.log("UPDATED school name STATE: " + this.state.schoolLink)
     } else {
       console.log("LOGIN FILE: no async NAME data exists");
+      this.setState({ districtText: "Select a school before proceeding" });
     }
   }
+
+  refreshSchoolandName = _.debounce(
+    () => {
+      this.checkIfLinkExists();
+      this.checkIfSchoolNameExists();
+    },
+    666
+    //this debounce function from lodash wont call the function until no editing has been made for 666 miliseconds (reduces api strain)
+  );
+
   showAlert() {
     Alert.alert(
       "There was an error loging in. Please check your username and password and try again."
@@ -74,7 +96,7 @@ export default class Login extends React.Component {
 
   render() {
     const { showAlert } = this.state;
-
+    this.refreshSchoolandName();
     return (
       <View style={styles.wrapper}>
         <KeyboardAvoidingView
@@ -87,9 +109,14 @@ export default class Login extends React.Component {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              margin: 12
+              margin: 3
             }}
           >
+          <View
+              style={{
+                height: 6
+              }}
+            /> //spacer
             <Button
               block
               info
@@ -98,8 +125,19 @@ export default class Login extends React.Component {
             >
               <Text> Choose School / District </Text>
             </Button>
-
-            <Text style={styles.districtText}> {this.state.districtText} </Text>
+            <View
+              style={{
+                height: 3
+              }}
+            /> //spacer
+            <Text
+              adjustsFontSizeToFit
+              numberOfLines={1}
+              style={styles.districtText}
+            >
+              {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}{" "}
+            </Text>{" "}
+            //removed the quotes from the string
           </View>
 
           <TextInput
@@ -154,9 +192,7 @@ const styles = {
     top: -9
   },
 
-  districtText: {
-    fontWeight: "bold"
-  },
+  districtText: {},
 
   input: {
     paddingHorizontal: 10,
