@@ -26,7 +26,8 @@ export default class Login extends React.Component {
       authError: false,
       password: "",
       districtText: "",
-      schoolLink: ""
+      schoolLink: "",
+      needToSelect: true
     };
     this.auth = this.auth.bind(this);
     this.showAlert = this.showAlert.bind(this);
@@ -42,13 +43,16 @@ export default class Login extends React.Component {
       //console.log(link)
 
       this.setState({ schoolLink: link });
+      this.setState({ needtoSelect: false });
       //console.log("UPDATED LINK STATE: " + this.state.schoolLink)
     } else {
+      this.setState({ needtoSelect: false });
       console.log("LOGIN FILE: no async LINK data exists");
+      this.setState({ districtText: "Select a school before proceeding" });
     }
   }
   async checkIfSchoolNameExists() {
-    if ((await AsyncStorage.getItem("name")) !== null) {
+    if ((await AsyncStorage.getItem("name")) !== null && this.state.needToSelect=== false) {
       //console.log("LOGIN FILE: async NAME data exists");
       const name = JSON.stringify(await AsyncStorage.getItem("name"));
       //console.log(name)
@@ -56,7 +60,7 @@ export default class Login extends React.Component {
       //console.log("UPDATED school name STATE: " + this.state.schoolLink)
     } else {
       console.log("LOGIN FILE: no async NAME data exists");
-      this.setState({ districtText: "Select a school before proceeding" });
+      
     }
   }
 
@@ -165,7 +169,7 @@ export default class Login extends React.Component {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              margin: 12
+              margin: 9
             }}
           >
             <Button
