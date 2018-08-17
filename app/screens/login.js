@@ -5,7 +5,8 @@ import {
   Alert,
   KeyboardAvoidingView,
   Dimensions,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator
 } from "react-native";
 import { Button, Text } from "native-base";
 import { _ } from "lodash";
@@ -26,8 +27,7 @@ export default class Login extends React.Component {
       authError: false,
       password: "",
       districtText: "",
-      schoolLink: "",
-      needToSelect: true
+      schoolLink: ""
     };
     this.auth = this.auth.bind(this);
     this.showAlert = this.showAlert.bind(this);
@@ -43,24 +43,22 @@ export default class Login extends React.Component {
       //console.log(link)
 
       this.setState({ schoolLink: link });
-      this.setState({ needtoSelect: false });
+
       //console.log("UPDATED LINK STATE: " + this.state.schoolLink)
     } else {
-      this.setState({ needtoSelect: false });
       console.log("LOGIN FILE: no async LINK data exists");
       this.setState({ districtText: "Select a school before proceeding" });
     }
   }
   async checkIfSchoolNameExists() {
-    if ((await AsyncStorage.getItem("name")) !== null && this.state.needToSelect=== false) {
+    if ((await AsyncStorage.getItem("name")) !== null) {
       //console.log("LOGIN FILE: async NAME data exists");
       const name = JSON.stringify(await AsyncStorage.getItem("name"));
       //console.log(name)
       this.setState({ districtText: name });
       //console.log("UPDATED school name STATE: " + this.state.schoolLink)
     } else {
-      console.log("LOGIN FILE: no async NAME data exists");
-      
+      console.log("LOGIN FILE Check: no async NAME data exists");
     }
   }
 
@@ -116,11 +114,12 @@ export default class Login extends React.Component {
               margin: 3
             }}
           >
-          <View
+            <View
               style={{
                 height: 6
               }}
-            /> //spacer
+            />{" "}
+            //spacer
             <Button
               block
               info
@@ -133,15 +132,15 @@ export default class Login extends React.Component {
               style={{
                 height: 3
               }}
-            /> //spacer
+            />{" "}
+            //spacer
             <Text
               adjustsFontSizeToFit
               numberOfLines={1}
               style={styles.districtText}
             >
               {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}{" "}
-            </Text>{" "}
-            //removed the quotes from the string
+            </Text>//removes quotes from string
           </View>
 
           <TextInput
