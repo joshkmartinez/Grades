@@ -23,11 +23,12 @@ export default class Login extends React.Component {
     super(props);
     this.state = {
       isAuthed: false,
-      username: "",
+      username: null,
       authError: false,
-      password: "",
+      password: null,
       districtText: "",
-      schoolLink: ""
+      schoolLink: "",
+      loading: false
     };
     this.auth = this.auth.bind(this);
     this.showAlert = this.showAlert.bind(this);
@@ -67,8 +68,8 @@ export default class Login extends React.Component {
       this.checkIfLinkExists();
       this.checkIfSchoolNameExists();
     },
-    666
-    //this debounce function from lodash wont call the function until no editing has been made for 666 miliseconds (reduces api strain)
+    420
+    //this debounce function from lodash wont call the function until no editing has been made for 420 miliseconds (reduces api strain)
   );
 
   showAlert() {
@@ -77,14 +78,14 @@ export default class Login extends React.Component {
     );
   }
   auth() {
-    //do auth
-    this.setState({ authError: false, isAuthed: false });
+    console.log;
+    this.setState({ authError: false, isAuthed: false, loading: true });
 
     if (
       this.state.isAuthed === false &&
       this.state.authError === false &&
-      this.state.username == "admin" &&
-      this.state.password == "admin"
+      this.state.username !== null &&
+      this.state.password !== null
     ) {
       // authentication is successful
       this.setState({ isAuthed: true });
@@ -140,7 +141,8 @@ export default class Login extends React.Component {
               style={styles.districtText}
             >
               {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}{" "}
-            </Text>//removes quotes from string
+            </Text>
+            //removes quotes from string
           </View>
 
           <TextInput
@@ -168,15 +170,21 @@ export default class Login extends React.Component {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              margin: 9
+              margin: 6
             }}
-          >
-            <Button
-              primary
-              onPress={() => this.props.navigation.navigate("Grades")}
-            >
-              <Text> Login </Text>
-            </Button>
+          >//spacer
+
+            //the below Component shows ActivityIndicator if this.state.loading: true; else will show login button
+            {this.state.loading ? (
+              <ActivityIndicator animating size="large" />
+            ) : (
+              <Button
+                primary
+                onPress={() => this.props.navigation.navigate("Grades")}
+              >
+                <Text> Login </Text>
+              </Button>
+            )}
           </View>
         </KeyboardAvoidingView>
       </View>
@@ -195,7 +203,7 @@ const styles = {
     top: -9
   },
 
-  districtText: {},
+  districtText: { top: 1 },
 
   input: {
     paddingHorizontal: 10,
