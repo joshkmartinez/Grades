@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   TextInput,
-  Alert,
   KeyboardAvoidingView,
   Dimensions,
   AsyncStorage,
@@ -31,7 +30,6 @@ export default class Login extends React.Component {
       loading: false
     };
     this.auth = this.auth.bind(this);
-    this.showAlert = this.showAlert.bind(this);
   }
   componentDidMount() {
     // make sure user has internet
@@ -82,23 +80,15 @@ export default class Login extends React.Component {
     //this debounce function from lodash wont call the function until no editing has been made for 420 miliseconds (reduces api strain)
   );
 
-  showAlert() {
-    Alert.alert(
-      "There was an error loging in. Please check your username and password and try again."
-    );
-  }
   auth() {
     console.log("auth function called");
     this.setState({ authError: false, isAuthed: false, loading: true });
 
-    if (
-      this.state.isAuthed === false &&
-      this.state.authError === false
-    ) {
+    if (this.state.isAuthed === false && this.state.authError === false) {
       //try to auth
       //catch error code, check for internet fail code, check for invald auth code
       // authentication is successful
-      console.log("in if state")
+      console.log("in if state");
       this.setState({ isAuthed: true, loading: false });
       this.props.navigation.navigate("Grades");
     } else {
@@ -115,7 +105,6 @@ export default class Login extends React.Component {
   }
 
   render() {
-    const { showAlert } = this.state;
     this.refreshSchoolandName();
     return (
       <Root>
@@ -130,6 +119,7 @@ export default class Login extends React.Component {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
+
                 margin: 3
               }}
             >
@@ -139,17 +129,27 @@ export default class Login extends React.Component {
                 }}
               />{" "}
               //spacer
-              <Button
-                block
-                primary
-                style={{ width: width - 69 }}
-                onPress={() => this.props.navigation.navigate("chooseDistrict")}
-              >
-                <Text> Choose School / District </Text>
-              </Button>
               <View
                 style={{
-                  height: 3
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <Button
+                  block
+                  primary
+                  style={{ width: width - 69 }}
+                  onPress={() =>
+                    this.props.navigation.navigate("chooseDistrict")
+                  }
+                >
+                  <Text> Choose School / District </Text>
+                </Button>
+              </View>
+              <View
+                style={{
+                  height: 6
                 }}
               />{" "}
               //spacer
@@ -196,10 +196,7 @@ export default class Login extends React.Component {
               {this.state.loading ? (
                 <ActivityIndicator animating size="large" />
               ) : (
-                <Button
-                  primary
-                  onPress={() => this.auth()}
-                >
+                <Button primary onPress={() => this.auth()}>
                   <Text> Login </Text>
                 </Button>
               )}
