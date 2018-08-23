@@ -88,22 +88,29 @@ export default class Login extends React.Component {
     );
   }
   auth() {
-    console.log;
+    console.log("auth function called");
     this.setState({ authError: false, isAuthed: false, loading: true });
 
     if (
       this.state.isAuthed === false &&
-      this.state.authError === false &&
-      this.state.username !== null &&
-      this.state.password !== null
+      this.state.authError === false
     ) {
+      //try to auth
+      //catch error code, check for internet fail code, check for invald auth code
       // authentication is successful
-      this.setState({ isAuthed: true });
+      console.log("in if state")
+      this.setState({ isAuthed: true, loading: false });
       this.props.navigation.navigate("Grades");
     } else {
       // auth error
-      this.setState({ authError: true, isAuthed: false });
-      this.showAlert;
+      this.setState({ isAuthed: false, loading: false });
+      Toast.show({
+        text: "Error...",
+        buttonText: "Ok",
+        duration: 3420, //in miliseconds
+        position: "top",
+        type: "danger"
+      });
     }
   }
 
@@ -135,7 +142,7 @@ export default class Login extends React.Component {
               <Button
                 block
                 primary
-                style={{ width: width - 73 }}
+                style={{ width: width - 69 }}
                 onPress={() => this.props.navigation.navigate("chooseDistrict")}
               >
                 <Text> Choose School / District </Text>
@@ -191,7 +198,7 @@ export default class Login extends React.Component {
               ) : (
                 <Button
                   primary
-                  onPress={() => this.props.navigation.navigate("Grades")}
+                  onPress={() => this.auth()}
                 >
                   <Text> Login </Text>
                 </Button>

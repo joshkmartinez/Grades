@@ -1,5 +1,18 @@
 import React from "react";
-import { View, Text } from "react-native";
+import {
+  View,
+  TextInput,
+  Alert,
+  KeyboardAvoidingView,
+  Dimensions,
+  AsyncStorage,
+  ActivityIndicator
+} from "react-native";
+import { Button, Text, Toast, Root } from "native-base";
+import { _ } from "lodash";
+
+let width = Dimensions.get("window").width;
+let height = Dimensions.get("window").height;
 
 export default class Grades extends React.Component {
   static navigationOptions = {
