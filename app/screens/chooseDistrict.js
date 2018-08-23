@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { List, SearchBar } from "react-native-elements";
-import { Text } from "native-base";
+import { Text, Toast } from "native-base";
 import { _ } from "lodash";
 
 let width = Dimensions.get("window").width;
@@ -100,6 +100,7 @@ export default class chooseDistrict extends React.Component {
     this.storeData(link);
     this.storeSchoolName(name);
     this.props.navigation.navigate("Login");
+    
   }
 
   handleSearch = text => {

@@ -8,7 +8,7 @@ import {
   AsyncStorage,
   ActivityIndicator
 } from "react-native";
-import { Button, Text } from "native-base";
+import { Button, Text, Toast, Root } from "native-base";
 import { _ } from "lodash";
 
 let width = Dimensions.get("window").width;
@@ -37,6 +37,7 @@ export default class Login extends React.Component {
     // make sure user has internet
     this.refreshSchoolandName();
   }
+
   async checkIfLinkExists() {
     if ((await AsyncStorage.getItem("link")) !== null) {
       //console.log("LOGIN FILE: async LINK data exists");
@@ -56,6 +57,15 @@ export default class Login extends React.Component {
       //console.log("LOGIN FILE: async NAME data exists");
       const name = JSON.stringify(await AsyncStorage.getItem("name"));
       //console.log(name)
+      if (name !== this.state.districtText) {
+        Toast.show({
+          text: "School Chosen",
+          buttonText: "Ok",
+          duration: 3420, //in miliseconds
+          position: "top",
+          type: "success"
+        });
+      }
       this.setState({ districtText: name });
       //console.log("UPDATED school name STATE: " + this.state.schoolLink)
     } else {
@@ -101,93 +111,95 @@ export default class Login extends React.Component {
     const { showAlert } = this.state;
     this.refreshSchoolandName();
     return (
-      <View style={styles.wrapper}>
-        <KeyboardAvoidingView
-          behavior="padding"
-          keyboardVerticalOffset={64}
-          style={styles.loginContainer}
-        >
-          <View
-            style={{
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              margin: 3
-            }}
+      <Root>
+        <View style={styles.wrapper}>
+          <KeyboardAvoidingView
+            behavior="padding"
+            keyboardVerticalOffset={64}
+            style={styles.loginContainer}
           >
             <View
               style={{
-                height: 6
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: 3
               }}
-            />{" "}
-            //spacer
-            <Button
-              block
-              info
-              style={{ width: width - 73 }}
-              onPress={() => this.props.navigation.navigate("chooseDistrict")}
             >
-              <Text> Choose School / District </Text>
-            </Button>
+              <View
+                style={{
+                  height: 6
+                }}
+              />{" "}
+              //spacer
+              <Button
+                block
+                primary
+                style={{ width: width - 73 }}
+                onPress={() => this.props.navigation.navigate("chooseDistrict")}
+              >
+                <Text> Choose School / District </Text>
+              </Button>
+              <View
+                style={{
+                  height: 3
+                }}
+              />{" "}
+              //spacer
+              <Text
+                adjustsFontSizeToFit
+                numberOfLines={1}
+                style={styles.districtText}
+              >
+                {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}{" "}
+              </Text>
+              //removes quotes from string
+            </View>
+
+            <TextInput
+              placeholder="school email"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholderTextColor="white"
+              style={styles.input}
+              value={this.state.username}
+            />
+
+            <TextInput
+              placeholder="password"
+              secureTextEntry
+              autoCorrect={false}
+              autoCapitalize="none"
+              placeholderTextColor="white"
+              style={styles.input}
+              value={this.state.password}
+            />
+
             <View
               style={{
-                height: 3
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                margin: 6
               }}
-            />{" "}
-            //spacer
-            <Text
-              adjustsFontSizeToFit
-              numberOfLines={1}
-              style={styles.districtText}
             >
-              {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}{" "}
-            </Text>
-            //removes quotes from string
-          </View>
-
-          <TextInput
-            placeholder="school email"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholderTextColor="white"
-            style={styles.input}
-            value={this.state.username}
-          />
-
-          <TextInput
-            placeholder="password"
-            secureTextEntry
-            autoCorrect={false}
-            autoCapitalize="none"
-            placeholderTextColor="white"
-            style={styles.input}
-            value={this.state.password}
-          />
-
-          <View
-            style={{
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              margin: 6
-            }}
-          >//spacer
-
-            //the below Component shows ActivityIndicator if this.state.loading: true; else will show login button
-            {this.state.loading ? (
-              <ActivityIndicator animating size="large" />
-            ) : (
-              <Button
-                primary
-                onPress={() => this.props.navigation.navigate("Grades")}
-              >
-                <Text> Login </Text>
-              </Button>
-            )}
-          </View>
-        </KeyboardAvoidingView>
-      </View>
+              //spacer //the below Component shows ActivityIndicator if
+              this.state.loading: true; else will show login button
+              {this.state.loading ? (
+                <ActivityIndicator animating size="large" />
+              ) : (
+                <Button
+                  primary
+                  onPress={() => this.props.navigation.navigate("Grades")}
+                >
+                  <Text> Login </Text>
+                </Button>
+              )}
+            </View>
+          </KeyboardAvoidingView>
+        </View>
+      </Root>
     );
   }
 }
