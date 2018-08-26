@@ -79,6 +79,9 @@ export default class Login extends React.Component {
     420
     //this debounce function from lodash wont call the function until no editing has been made for 420 miliseconds (reduces api strain)
   );
+  spacer(space) {
+    return <View styles={{ height: space }} />;
+  }
 
   auth() {
     console.log("auth function called");
@@ -151,7 +154,7 @@ export default class Login extends React.Component {
                 style={{
                   height: 6
                 }}
-              />{" "}
+              />
               //spacer
               <Text
                 adjustsFontSizeToFit
