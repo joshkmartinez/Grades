@@ -23,7 +23,7 @@ export default class App extends React.Component {
       return (
         <View
           style={{
-            top: 21,
+            top: "42%",
             borderColor: "whitesmoke",
             alignItems: "center",
             justifyContent: "center"
