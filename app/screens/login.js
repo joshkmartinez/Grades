@@ -1,13 +1,12 @@
 import React from "react";
 import {
-  View,
-  TextInput,
-  KeyboardAvoidingView,
+  //View,
+  //KeyboardAvoidingView,
   Dimensions,
-  AsyncStorage,
-  ActivityIndicator
+  //AsyncStorage,
+  //ActivityIndicator
 } from "react-native";
-import { Button, Text, Toast, Root, Container } from "native-base";
+//import { Button, Text, Toast, Root, Container } from "native-base";
 import { _ } from "lodash";
 import { default as Student } from "../components/studentLoginForm";
 import { default as Parent } from "../components/parentLoginForm";
@@ -15,8 +14,8 @@ import ScrollableTabView, {
   DefaultTabBar
 } from "react-native-scrollable-tab-view";
 
-let width = Dimensions.get("window").width;
-let height = Dimensions.get("window").height;
+let width = Dimensions.get("window").width
+let height = Dimensions.get("window").height
 
 export default class Login extends React.Component {
   static navigationOptions = {
@@ -37,7 +36,9 @@ export default class Login extends React.Component {
     };
   }
   componentDidMount() {
-    {/*make sure user has internet*/}
+    {
+      /*make sure user has internet*/
+    }
   }
 
   render() {

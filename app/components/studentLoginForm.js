@@ -9,14 +9,13 @@ import {
 } from "react-native";
 import { Button, Text, Toast, Root } from "native-base";
 import { _ } from "lodash";
-import { withNavigation } from "react-navigation";
-
+import { withNavigation, Header } from "react-navigation";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { ScrollView } from "react-native-gesture-handler";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
 class StudentLoginForm extends React.Component {
-  
-
   constructor(props) {
     super(props);
     this.state = {
@@ -114,8 +113,9 @@ class StudentLoginForm extends React.Component {
         <View style={styles.wrapper}>
           <KeyboardAvoidingView
             behavior="padding"
-            keyboardVerticalOffset={64}
+            //keyboardVerticalOffset={0}
             style={styles.loginContainer}
+            keyboardVerticalOffset = {Header.HEIGHT + 20}
           >
             <View
               style={{
@@ -124,12 +124,7 @@ class StudentLoginForm extends React.Component {
                 alignItems: "center"
               }}
             >
-              <View
-                style={{
-                  height: 6
-                }}
-              />{" "}
-              //spacer
+              
               <View
                 style={{
                   flexDirection: "column",
@@ -153,15 +148,14 @@ class StudentLoginForm extends React.Component {
                   height: 6
                 }}
               />
-              //spacer
               <Text
                 adjustsFontSizeToFit
                 numberOfLines={1}
                 style={styles.districtText}
               >
-                {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}{" "}
+                {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}
+                {/*This is some regex that removes quotes from the string*/}
               </Text>
-              //removes quotes from string
             </View>
 
             <TextInput
@@ -188,12 +182,11 @@ class StudentLoginForm extends React.Component {
               style={{
                 flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "center",
-                margin: 6
+                alignItems: "center"
               }}
             >
-              //spacer //the below Component shows ActivityIndicator if
-              this.state.loading: true; else will show login button
+              {/*the component below shows ActivityIndicator if this.state.loading: true; else will show 
+              login button*/}
               {this.state.loading ? (
                 <ActivityIndicator animating size="large" />
               ) : (
@@ -202,7 +195,7 @@ class StudentLoginForm extends React.Component {
                 </Button>
               )}
             </View>
-          </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
         </View>
       </Root>
     );
@@ -217,7 +210,7 @@ const styles = {
     width: width - 42,
     backgroundColor: "#bdc3c7",
     borderRadius: 9,
-    top: "12%"
+    top: "9%"
   },
 
   districtText: { top: 1 },
@@ -233,10 +226,8 @@ const styles = {
   },
 
   wrapper: {
-    //flex: ,
     alignItems: "center",
     justifyContent: "center"
-    //marginTop: -21
   },
 
   loginButton: {

@@ -77,28 +77,28 @@ export default class chooseDistrict extends React.Component {
 
   async storeData(link) {
     await AsyncStorage.setItem("link", link).catch(console.log);
-    console.log("DATA SAVED: " + link);
+    console.log("DATA SAVED: " + link)
 
     if ((await AsyncStorage.getItem("link")) !== null) {
-      console.log("async link data exists");
+      console.log("async link data exists")
     } else {
-      console.log("no async link data exists");
+      console.log("no async link data exists")
     }
   }
   async storeSchoolName(name) {
     await AsyncStorage.setItem("name", name).catch(console.log);
-    console.log("DATA SAVED: " + name);
+    console.log("DATA SAVED: " + name)
 
     if ((await AsyncStorage.getItem("name")) !== null) {
-      console.log("async name data exists");
+      console.log("async name data exists")
     } else {
       console.log("no async name data exists");
     }
   }
 
   schoolSelected(link, name) {
-    this.storeData(link);
-    this.storeSchoolName(name);
+    this.storeData(link)
+    this.storeSchoolName(name)
     this.props.navigation.navigate("Login");
     
   }
