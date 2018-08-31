@@ -43,7 +43,7 @@ export default class Login extends React.Component {
 
   render() {
     return (
-      <ScrollableTabView style={{ marginTop: 16 }} initialPage={0}>
+      <ScrollableTabView initialPage={0}>
         <Student tabLabel="Student Login" />
         <Parent tabLabel="Parent Login" />
       </ScrollableTabView>

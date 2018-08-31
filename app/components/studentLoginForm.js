@@ -115,7 +115,7 @@ class StudentLoginForm extends React.Component {
             behavior="padding"
             //keyboardVerticalOffset={0}
             style={styles.loginContainer}
-            keyboardVerticalOffset = {Header.HEIGHT + 20}
+            
           >
             <View
               style={{

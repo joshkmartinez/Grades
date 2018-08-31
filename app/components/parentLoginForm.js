@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import { Button, Text, Toast, Root } from "native-base";
 import { _ } from "lodash";
-import { withNavigation, Header } from "react-navigation";
-import { ScrollView } from "react-native-gesture-handler";
+import { withNavigation } from "react-navigation";
+
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -113,7 +113,7 @@ class ParentLoginForm extends React.Component {
         <View style={styles.wrapper}>
           <KeyboardAvoidingView
             behavior="padding"
-            keyboardVerticalOffset = {Header.HEIGHT + 20}
+            
             style={styles.loginContainer}
           >
             <View
