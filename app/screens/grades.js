@@ -41,15 +41,15 @@ export default class Grades extends React.Component {
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
-          <Text>Home Screen</Text>
-          {this.state.page === "Home" && <Text>Home</Text>}
-        {this.state.page === "Profile" && <Text>Profile</Text>}
-        {this.state.page === "Settings" && <Text>Settings</Text>}
+          <Text>Logged in:</Text>
+          {this.state.page === "Home" && <Text>show grades Component</Text>}
+        {this.state.page === "Profile" && <Text>Profile Component</Text>}
+        {this.state.page === "Settings" && <Text>Settings Component</Text>}
         
         
         </View>
       </PTRView>
-      <Tabbar
+      <Tabbar type="ripple" rippleColor="#007aff" tabbarBgColor="#78909c"
           stateFunc={(tab) => {
             this.setState({page: tab.page})
             //this.props.navigation.setParams({tabTitle: tab.title})
@@ -58,8 +58,9 @@ export default class Grades extends React.Component {
           tabs={[
             {
               page: "Home",
+              //title: "HomeScreen", need to get this title to work
               icon: "home",
-              badgeNumber: 11, //add new assignment notification num
+              badgeNumber: 1, //add new assignment notification number
             },
             
             {
