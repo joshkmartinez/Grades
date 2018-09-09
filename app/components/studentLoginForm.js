@@ -7,10 +7,10 @@ import {
   AsyncStorage,
   ActivityIndicator
 } from "react-native";
-import { Button, Text, Toast, Root } from "native-base";
+import { Button, Text, Toast, Root, Spinner } from "native-base";
 import { _ } from "lodash";
 import { withNavigation, Header } from "react-navigation";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ScrollView } from "react-native-gesture-handler";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -74,13 +74,23 @@ class StudentLoginForm extends React.Component {
       this.checkIfLinkExists();
       this.checkIfSchoolNameExists();
     },
-    420
+    333
     //this debounce function from lodash wont call the function until no editing has been made for 420 miliseconds (reduces api strain)
   );
   spacer(space) {
     return <View styles={{ height: space }} />;
+  
   }
-
+  //sleep / wait function
+  sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > milliseconds){
+        break;
+      }
+    }
+  }
+  
   auth() {
     console.log("auth function called");
     this.setState({ authError: false, isAuthed: false, loading: true });
@@ -89,7 +99,11 @@ class StudentLoginForm extends React.Component {
       //try to auth
       //catch error code, check for internet fail code, check for invald auth code
       // authentication is successful
-      console.log("in if state");
+      console.log("first no error check");
+      this.setState({ loading: true });
+      
+      //do things here
+
       this.setState({ isAuthed: true, loading: false });
       this.props.navigation.navigate("Grades");
     } else {
@@ -115,7 +129,6 @@ class StudentLoginForm extends React.Component {
             behavior="padding"
             //keyboardVerticalOffset={0}
             style={styles.loginContainer}
-            
           >
             <View
               style={{
@@ -124,7 +137,6 @@ class StudentLoginForm extends React.Component {
                 alignItems: "center"
               }}
             >
-              
               <View
                 style={{
                   flexDirection: "column",
@@ -188,14 +200,15 @@ class StudentLoginForm extends React.Component {
               {/*the component below shows ActivityIndicator if this.state.loading: true; else will show 
               login button*/}
               {this.state.loading ? (
-                <ActivityIndicator animating size="large" />
+                <Spinner color='blue' />
               ) : (
                 <Button primary onPress={() => this.auth()}>
                   <Text> Login </Text>
                 </Button>
-              )}
+              )
+              }
             </View>
-            </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
         </View>
       </Root>
     );

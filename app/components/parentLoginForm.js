@@ -11,7 +11,6 @@ import { Button, Text, Toast, Root } from "native-base";
 import { _ } from "lodash";
 import { withNavigation } from "react-navigation";
 
-
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
@@ -113,95 +112,13 @@ class ParentLoginForm extends React.Component {
         <View style={styles.wrapper}>
           <KeyboardAvoidingView
             behavior="padding"
-            
             style={styles.loginContainer}
           >
-            <View
-              style={{
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              <View
-                style={{
-                  height: 6
-                }}
-              />{" "}
-              //spacer
-              <View
-                style={{
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <Text> Parent Login </Text>
-                <Button
-                  block
-                  primary
-                  style={{ width: width - 69 }}
-                  onPress={() =>
-                    this.props.navigation.navigate("chooseDistrict")
-                  }
-                >
-                  <Text> Choose School / District </Text>
-                </Button>
-              </View>
-              <View
-                style={{
-                  height: 6
-                }}
-              />
-              //spacer
-              <Text
-                adjustsFontSizeToFit
-                numberOfLines={1}
-                style={styles.districtText}
-              >
-                {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}{" "}
-              </Text>
-              //removes quotes from string
-            </View>
-
-            <TextInput
-              placeholder="school email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholderTextColor="white"
-              style={styles.input}
-              value={this.state.username}
-            />
-
-            <TextInput
-              placeholder="password"
-              secureTextEntry
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholderTextColor="white"
-              style={styles.input}
-              value={this.state.password}
-            />
-
-            <View
-              style={{
-                
-                justifyContent: "center",
-                alignItems: "center",
-                
-              }}
-            >
-              //spacer //the below Component shows ActivityIndicator if
-              this.state.loading: true; else will show login button
-              {this.state.loading ? (
-                <ActivityIndicator animating size="large" />
-              ) : (
-                <Button primary onPress={() => this.auth()}>
-                  <Text> Login </Text>
-                </Button>
-              )}
-            </View>
+            {" "}
+            <Text style={{ width: width - 69 }}>
+              Parent Login is not supported yet. {"\n"}
+              Please use your child's login information to check their grades on the Student Login tab.
+            </Text>
           </KeyboardAvoidingView>
         </View>
       </Root>

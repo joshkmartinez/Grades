@@ -13,6 +13,7 @@ export default class App extends React.Component {
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
       FontAwesome: require("./node_modules/@expo/vector-icons/fonts/FontAwesome.ttf"),
+      Ionicons: require("./node_modules/@expo/vector-icons/fonts/Ionicons.ttf"),
       "Material Icons": require("./node_modules/@expo/vector-icons/fonts/MaterialIcons.ttf"),
       MaterialIcons: require("./node_modules/@expo/vector-icons/fonts/MaterialIcons.ttf")
     });
