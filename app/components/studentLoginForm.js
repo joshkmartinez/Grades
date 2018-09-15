@@ -12,6 +12,7 @@ import { _ } from "lodash";
 import { withNavigation, Header } from "react-navigation";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ScrollView } from "react-native-gesture-handler";
+import { Surface} from 'react-native-paper';
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
@@ -130,6 +131,11 @@ class StudentLoginForm extends React.Component {
             //keyboardVerticalOffset={0}
             style={styles.loginContainer}
           >
+          <Surface style={{padding: 8,
+    backgroundColor: "whitesmoke",
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 9,}}>
             <View
               style={{
                 flexDirection: "column",
@@ -208,6 +214,7 @@ class StudentLoginForm extends React.Component {
               )
               }
             </View>
+            </Surface>
           </KeyboardAvoidingView>
         </View>
       </Root>
@@ -221,7 +228,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     width: width - 42,
-    backgroundColor: "#bdc3c7",
+    backgroundColor: "whitesmoke",
     borderRadius: 9,
     top: "9%"
   },

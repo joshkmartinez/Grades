@@ -6,10 +6,11 @@ import {
   Dimensions,
   SafeAreaView,
   AsyncStorage,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from "react-native";
 import { List, SearchBar } from "react-native-elements";
-import { Text, Toast } from "native-base";
+import { Text, Toast, Root, Container } from "native-base";
 import { _ } from "lodash";
 
 let width = Dimensions.get("window").width;
@@ -77,30 +78,46 @@ export default class chooseDistrict extends React.Component {
 
   async storeData(link) {
     await AsyncStorage.setItem("link", link).catch(console.log);
-    console.log("DATA SAVED: " + link)
+    console.log("DATA SAVED: " + link);
 
     if ((await AsyncStorage.getItem("link")) !== null) {
-      console.log("async link data exists")
+      console.log("async link data exists");
     } else {
-      console.log("no async link data exists")
+      console.log("no async link data exists");
     }
   }
   async storeSchoolName(name) {
     await AsyncStorage.setItem("name", name).catch(console.log);
-    console.log("DATA SAVED: " + name)
+    console.log("DATA SAVED: " + name);
 
     if ((await AsyncStorage.getItem("name")) !== null) {
-      console.log("async name data exists")
+      console.log("async name data exists");
     } else {
       console.log("no async name data exists");
     }
   }
 
   schoolSelected(link, name) {
-    this.storeData(link)
-    this.storeSchoolName(name)
-    this.props.navigation.navigate("Login");
-    
+    console.log("chosen link:" + link)
+   console.log("the link length is:" + link.length)
+    if (link.length !== 0) {
+      this.storeData(link);
+      this.storeSchoolName(name);
+      this.props.navigation.navigate("Login");
+    } else {
+      console.log("school link is blank, cannot be chosen")
+      Alert.alert(
+        'Your school does not support the Aeries App',
+        'Please contact your administration',
+        [
+          
+          
+          {text: 'OK', onPress: () => console.log('Link error acknowledged')},
+        ],
+        { cancelable: false }
+      )
+      
+    }
   }
 
   handleSearch = text => {
@@ -157,6 +174,8 @@ export default class chooseDistrict extends React.Component {
   };
   render() {
     return (
+      <Container>
+      <Root>
       <SafeAreaView
         style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
@@ -198,6 +217,8 @@ export default class chooseDistrict extends React.Component {
           />
         </List>
       </SafeAreaView>
+      </Root>
+      </Container>
     );
   }
 }

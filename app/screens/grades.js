@@ -18,9 +18,10 @@ let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
 export default class Grades extends React.Component {
+  /*
   static navigationOptions = {
     title: "Grades"
-  };
+  };*/
   constructor() {
     super();
     this.state = {
