@@ -44,7 +44,7 @@ class StudentLoginForm extends React.Component {
 
       //console.log("UPDATED LINK STATE: " + this.state.schoolLink)
     } else {
-      console.log("LOGIN FILE: no async LINK data exists");
+      console.log("School Link data does NOT exist");
       this.setState({ districtText: "Select a school before proceeding" });
     }
   }
@@ -65,7 +65,7 @@ class StudentLoginForm extends React.Component {
       this.setState({ districtText: name });
       //console.log("UPDATED school name STATE: " + this.state.schoolLink)
     } else {
-      console.log("LOGIN FILE Check: no async NAME data exists");
+      console.log("School name is found");
     }
   }
 
@@ -112,7 +112,7 @@ class StudentLoginForm extends React.Component {
       Toast.show({
         text: "Error...",
         buttonText: "Ok",
-        duration: 3214, //in miliseconds
+        duration: 3210, //in miliseconds
         position: "top",
         type: "danger"
       });

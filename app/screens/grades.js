@@ -8,10 +8,11 @@ import {
   AsyncStorage,
   ActivityIndicator
 } from "react-native";
-import { Button, Text, Toast, Root } from "native-base";
-import { _ } from "lodash";
 import PTRView from "react-native-pull-to-refresh";
-import Tabbar from 'react-native-tabbar-bottom'
+import { Button, Text, Toast, Root } from "native-base";
+import { BottomNavigation } from "react-native-paper";
+import { Home } from "../components/";
+import { _ } from "lodash";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -21,59 +22,53 @@ export default class Grades extends React.Component {
     title: "Grades"
   };
   constructor() {
-    super()
+    super();
     this.state = {
-      page: "Home",
-    }
+      index: 0,
+      isAuthed: false,
+      routes: [
+        { key: "home", title: "Home", icon: "home" },
+        { key: "profile", title: "Profile", icon: "person" },
+        { key: "settings", title: "Settings", icon: "settings" }
+      ]
+    };
+    
   }
 
+  _handleIndexChange = index => this.setState({ index });
+
+  _renderScene = BottomNavigation.SceneMap({
+    home: HomeRoute,
+    settings: SettingsRoute,
+    profile: ProfileRoute
+  });
 
   refresh() {
-      //get grades and repopulate tabs
-      setTimeout(()=>{}, 2000)
-   
+    //get grades and repopulate tabs
+    setTimeout(() => {}, 2000);
+    this.setState({ isAuthed: true });
   }
 
   render() {
     return (
       <Root>
-      <PTRView onRefresh={this.refresh}>
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Text>Logged in:</Text>
-          {this.state.page === "Home" && <Text>show grades Component</Text>}
-        {this.state.page === "Profile" && <Text>Profile Component</Text>}
-        {this.state.page === "Settings" && <Text>Settings Component</Text>}
-        
-        
-        </View>
-      </PTRView>
-      <Tabbar type="ripple" rippleColor="#007aff" tabbarBgColor="#78909c"
-          stateFunc={(tab) => {
-            this.setState({page: tab.page})
-            //this.props.navigation.setParams({tabTitle: tab.title})
-          }}
-          activePage={this.state.page}
-          tabs={[
-            {
-              page: "Home",
-              //title: "HomeScreen", need to get this title to work
-              icon: "home",
-              badgeNumber: 1, //add new assignment notification number
-            },
-            
-            {
-              page: "Profile",
-              icon: "person",
-            },
-            {
-              page: "Settings",
-              icon: "settings",
-            },
-          ]}
+        <BottomNavigation
+          navigationState={this.state}
+          onIndexChange={this._handleIndexChange}
+          renderScene={this._renderScene}
         />
       </Root>
     );
   }
 }
+const HomeRoute = () => (
+  <PTRView onRefresh={() => this.refresh}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Logged in:</Text>
+    </View>
+  </PTRView>
+);
+
+const ProfileRoute = () => <Text>Profile</Text>;
+
+const SettingsRoute = () => <Text>Settings</Text>;

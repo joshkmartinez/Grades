@@ -10,11 +10,11 @@ import {
 import { Button, Text, Toast, Root } from "native-base";
 import { _ } from "lodash";
 import { withNavigation } from "react-navigation";
-
+import PTRView from "react-native-pull-to-refresh";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
-class ParentLoginForm extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -79,7 +79,9 @@ class ParentLoginForm extends React.Component {
   spacer(space) {
     return <View styles={{ height: space }} />;
   }
-
+refresh(){
+    
+}
   auth() {
     console.log("auth function called");
     this.setState({ authError: false, isAuthed: false, loading: true });
@@ -109,18 +111,16 @@ class ParentLoginForm extends React.Component {
 
     return (
       <Root>
-        <View style={styles.wrapper}>
-          <KeyboardAvoidingView
-            behavior="padding"
-            style={styles.loginContainer}
-          >
-            <Text style={{ width: width - 69 }}>
-              Parent Login is not supported yet. {"\n"}
-              Please use your child's login information to check their grades on
-              the Student Login tab.
-            </Text>
-          </KeyboardAvoidingView>
+        <PTRView onRefresh={this.refresh}>
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <Text>Logged in:</Text>
+         
+        
+        
         </View>
+      </PTRView>
       </Root>
     );
   }
@@ -135,35 +135,4 @@ const styles = {
     backgroundColor: "#bdc3c7",
     borderRadius: 9,
     top: "12%"
-  },
-
-  districtText: { top: 1 },
-
-  input: {
-    paddingHorizontal: 10,
-    color: "#2c3e50",
-    backgroundColor: "#95a5a6",
-    margin: 12,
-    height: 42,
-    width: width - 69,
-    borderRadius: 3
-  },
-
-  wrapper: {
-    //flex: ,
-    alignItems: "center",
-    justifyContent: "center"
-    //marginTop: -21
-  },
-
-  loginButton: {
-    borderRadius: 3,
-    marginTop: 9,
-    marginBottom: 21
-  },
-  error: {
-    color: "red",
-    textAlign: "center"
-  }
-};
-export default withNavigation(ParentLoginForm);
+  },};
