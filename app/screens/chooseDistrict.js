@@ -9,8 +9,9 @@ import {
   TouchableOpacity,
   Alert
 } from "react-native";
-import { List, SearchBar } from "react-native-elements";
-import { Text, Toast, Root, Container } from "native-base";
+import { List} from "react-native-elements";
+import { Searchbar } from 'react-native-paper';
+import { Text, Root, Container } from "native-base";
 import { _ } from "lodash";
 
 let width = Dimensions.get("window").width;
@@ -145,7 +146,7 @@ export default class chooseDistrict extends React.Component {
 
   renderHeader = () => {
     return (
-      <SearchBar
+      <Searchbar
         lightTheme
         multiline={false}
         placeholder="Search for your school"

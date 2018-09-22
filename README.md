@@ -3,3 +3,10 @@
 *I guess it works now...*
 
 *use yarn*
+
+Colors:
+#d50000 R
+#ff6d00 O
+#00c853 G
+#2962ff B
+#aa00ff V

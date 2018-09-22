@@ -1,18 +1,19 @@
 import React from "react";
 import {
   View,
-  TextInput,
+  //TextInput,
   KeyboardAvoidingView,
   Dimensions,
   AsyncStorage,
   ActivityIndicator
 } from "react-native";
-import { Button, Text, Toast, Root, Spinner } from "native-base";
+import {  Text, Toast, Root, Spinner } from "native-base";
 import { _ } from "lodash";
 import { withNavigation, Header } from "react-navigation";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ScrollView } from "react-native-gesture-handler";
-import { Surface} from 'react-native-paper';
+import { Surface, TextInput, Button } from "react-native-paper";
+
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
@@ -80,18 +81,17 @@ class StudentLoginForm extends React.Component {
   );
   spacer(space) {
     return <View styles={{ height: space }} />;
-  
   }
   //sleep / wait function
   sleep(milliseconds) {
     var start = new Date().getTime();
     for (var i = 0; i < 1e7; i++) {
-      if ((new Date().getTime() - start) > milliseconds){
+      if (new Date().getTime() - start > milliseconds) {
         break;
       }
     }
   }
-  
+
   auth() {
     console.log("auth function called");
     this.setState({ authError: false, isAuthed: false, loading: true });
@@ -102,10 +102,11 @@ class StudentLoginForm extends React.Component {
       // authentication is successful
       console.log("first no error check");
       this.setState({ loading: true });
-      
+
       //do things here
 
       this.setState({ isAuthed: true, loading: false });
+      //this.sleep(1234)
       this.props.navigation.navigate("Grades");
     } else {
       // auth error
@@ -131,16 +132,13 @@ class StudentLoginForm extends React.Component {
             //keyboardVerticalOffset={0}
             style={styles.loginContainer}
           >
-          <Surface style={{padding: 8,
-    backgroundColor: "whitesmoke",
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 9,}}>
-            <View
+            <Surface
               style={{
-                flexDirection: "column",
+                padding: 8,
+                backgroundColor: "whitesmoke",
+                alignItems: "center",
                 justifyContent: "center",
-                alignItems: "center"
+                elevation: 9
               }}
             >
               <View
@@ -150,70 +148,74 @@ class StudentLoginForm extends React.Component {
                   alignItems: "center"
                 }}
               >
-                <Button
-                  block
-                  primary
-                  style={{ width: width - 69 }}
-                  onPress={() =>
-                    this.props.navigation.navigate("chooseDistrict")
-                  }
+                <View
+                  style={{
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center"
+                  }}
                 >
-                  <Text> Choose School / District </Text>
-                </Button>
+                  <Button
+                    icon="search" mode="contained" color="whitesmoke"
+                    style={{ width: width - 69 }}
+                    onPress={() =>
+                      this.props.navigation.navigate("chooseDistrict")
+                    }
+                  >
+                    <Text> Choose School / District </Text>
+                  </Button>
+                </View>
+                <View
+                  style={{
+                    height: 6
+                  }}
+                />
+                <Text
+                  adjustsFontSizeToFit
+                  numberOfLines={1}
+                  style={styles.districtText}
+                >
+                  {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}
+                  {/*This is some regex that removes quotes from the string*/}
+                </Text>
               </View>
+
+              <TextInput
+                mode="flat"
+                label="school email"
+                //placeholder="school email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholderTextColor="white"
+                style={styles.input}
+                value={this.state.username}
+              />
+
+              <TextInput
+                label="password"
+                secureTextEntry
+                autoCorrect={false}
+                autoCapitalize="none"
+                placeholderTextColor="white"
+                style={styles.input}
+                value={this.state.password}
+              />
+
               <View
                 style={{
-                  height: 6
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center"
                 }}
-              />
-              <Text
-                adjustsFontSizeToFit
-                numberOfLines={1}
-                style={styles.districtText}
               >
-                {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}
-                {/*This is some regex that removes quotes from the string*/}
-              </Text>
-            </View>
-
-            <TextInput
-              placeholder="school email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholderTextColor="white"
-              style={styles.input}
-              value={this.state.username}
-            />
-
-            <TextInput
-              placeholder="password"
-              secureTextEntry
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholderTextColor="white"
-              style={styles.input}
-              value={this.state.password}
-            />
-
-            <View
-              style={{
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              {/*the component below shows ActivityIndicator if this.state.loading: true; else will show 
+                {/*the component below shows ActivityIndicator if this.state.loading: true; else will show 
               login button*/}
-              {this.state.loading ? (
-                <Spinner color='blue' />
-              ) : (
-                <Button primary onPress={() => this.auth()}>
+                <Button mode="contained" color="whitesmoke" onPress={() => this.auth()}>
                   <Text> Login </Text>
                 </Button>
-              )
-              }
-            </View>
+                {this.state.loading ? <Spinner color="blue" /> : <View />}
+              </View>
             </Surface>
           </KeyboardAvoidingView>
         </View>
@@ -236,13 +238,9 @@ const styles = {
   districtText: { top: 1 },
 
   input: {
-    paddingHorizontal: 10,
-    color: "#2c3e50",
-    backgroundColor: "#95a5a6",
-    margin: 12,
-    height: 42,
-    width: width - 69,
-    borderRadius: 3
+    //backgroundColor: "#8499B1", //greyblue
+    margin: 12, //height: 42,
+    width: width - 69
   },
 
   wrapper: {
