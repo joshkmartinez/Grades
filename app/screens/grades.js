@@ -11,7 +11,14 @@ import {
 } from "react-native";
 import PTRView from "react-native-pull-to-refresh";
 import { Text, Toast, Root } from "native-base";
-import { BottomNavigation, Surface, Button } from "react-native-paper";
+import {
+  BottomNavigation,
+  Surface,
+  Button,
+  List,
+  Headline,
+  Switch, Divider
+} from "react-native-paper";
 import { Home } from "../components/";
 import { _ } from "lodash";
 let width = Dimensions.get("window").width;
@@ -30,14 +37,16 @@ export default class Grades extends React.Component {
       isAuthed: false,
       routes: [
         { key: "home", title: "Home", icon: "home", color: "#8499B1" },
-        { key: "profile", title: "Profile", icon: "person", color: "#8499B1" },
+
         {
           key: "settings",
           title: "Settings",
           icon: "settings",
           color: "#8499B1"
         }
-      ]
+      ],
+
+      isSwitchOn: false
     };
   }
 
@@ -45,8 +54,7 @@ export default class Grades extends React.Component {
 
   _renderScene = BottomNavigation.SceneMap({
     home: HomeRoute,
-    settings: SettingsRoute,
-    profile: ProfileRoute
+    settings: SettingsRoute
   });
 
   refresh() {
@@ -124,20 +132,20 @@ const HomeRoute = () => (
   <PTRView onRefresh={() => this.refresh}>
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Logged in:</Text>
-      <Card name="Calculus BC" color="#d50000" letterGrade="A+" grade="99%"/>
-      <Card name="Calculus BC" color="#ff6d00" letterGrade="A+" grade="99%"/>
-      <Card name="Calculus BC" color="#00c853" letterGrade="A+" grade="99%"/>
-      <Card name="Calculus BC" color="#2962ff" letterGrade="A+" grade="99%"/>
-      <Card name="Calculus BC" color="#aa00ff" letterGrade="A+" grade="99%"/>
-      <Card name="Calculus BC" color="#c51162" letterGrade="A+" grade="99%"/>
+      <Card name="Calculus BC" color="#d50000" letterGrade="A+" grade="99%" />
+      <Card name="Calculus BC" color="#ff6d00" letterGrade="A+" grade="99%" />
+      <Card name="Calculus BC" color="#00c853" letterGrade="A+" grade="99%" />
+      <Card name="Calculus BC" color="#2962ff" letterGrade="A+" grade="99%" />
+      <Card name="Calculus BC" color="#aa00ff" letterGrade="A+" grade="99%" />
+      <Card name="Calculus BC" color="#c51162" letterGrade="A+" grade="99%" />
     </View>
   </PTRView>
 );
 
-const Card = (props) => (
+const Card = props => (
   <Surface
     style={{
-      margin:4,
+      margin: 4,
       padding: 8,
       backgroundColor: props.color,
       elevation: 3,
@@ -180,9 +188,43 @@ const Card = (props) => (
   </Surface>
 );
 
-const ProfileRoute = () => <Text>Profile</Text>;
-
-const SettingsRoute = () => <Text>Settings</Text>;
+const SettingsRoute = () => (
+  <View style={{ flex: 1, width: width - 21, alignItems: "center" }}>
+    <View style={{ alignItems: "center", justifyContent: "center" }}>
+      <Headline>Settings</Headline>
+    </View>
+    <Button
+      icon="person"
+      mode="contained"
+      onPress={() => console.log("Pressed")}
+    >
+      Logout
+    </Button>
+    <Divider />
+    {/* add a dark mode toggle
+    <Switch
+      value={isSwitchOn}
+      onValueChange={() => {
+        this.setState({ isSwitchOn: !isSwitchOn });
+      }}
+    />
+    
+*/}
+    <Button icon="help" mode="contained" onPress={() => console.log("Pressed")}>
+      Help
+    </Button>
+    <Divider />
+    <Button
+      icon="smartphone"
+      mode="contained"
+      onPress={() => console.log("Pressed")}
+    >
+      About/Credits
+    </Button>
+    <Divider />
+    {/*make is so the saved username and password are cleared when logout*/}
+  </View>
+);
 
 const responsiveFontSize = f => {
   return Math.sqrt(height * height + width * width) * (f / 100);

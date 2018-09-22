@@ -211,7 +211,7 @@ class StudentLoginForm extends React.Component {
               >
                 {/*the component below shows ActivityIndicator if this.state.loading: true; else will show 
               login button*/}
-                <Button mode="contained" color="whitesmoke" onPress={() => this.auth()}>
+                <Button icon="check" mode="contained" color="whitesmoke" onPress={() => this.auth()}>
                   <Text> Login </Text>
                 </Button>
                 {this.state.loading ? <Spinner color="blue" /> : <View />}
