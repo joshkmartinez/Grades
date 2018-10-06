@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
   Alert
 } from "react-native";
-import { List} from "react-native-elements";
-import { Searchbar } from 'react-native-paper';
+import { List } from "react-native-elements";
+import { Searchbar } from "react-native-paper";
 import { Text, Root, Container } from "native-base";
 import { _ } from "lodash";
 
@@ -99,25 +99,20 @@ export default class chooseDistrict extends React.Component {
   }
 
   schoolSelected(link, name) {
-    console.log("chosen link:" + link)
-   console.log("the link length is:" + link.length)
+    console.log("chosen link:" + link);
+    console.log("the link length is:" + link.length);
     if (link.length !== 0) {
       this.storeData(link);
       this.storeSchoolName(name);
       this.props.navigation.navigate("Login");
     } else {
-      console.log("school link is blank, cannot be chosen")
+      console.log("school link is blank, cannot be chosen");
       Alert.alert(
-        'Your school does not support the Aeries App',
-        'Please contact your administration',
-        [
-          
-          
-          {text: 'OK', onPress: () => console.log('Link error acknowledged')},
-        ],
+        "Your school does not support the Aeries App",
+        "Please contact your administration",
+        [{ text: "OK", onPress: () => console.log("Link error acknowledged") }],
         { cancelable: false }
-      )
-      
+      );
     }
   }
 
@@ -153,7 +148,9 @@ export default class chooseDistrict extends React.Component {
         onChangeText={query => this.setState({ query })}
         value={this.state.query}
         onEndEditing={this.makeRemoteRequest}
-        style={{ width: width, backgroundColor: "white" }}
+        style={{
+          backgroundColor: "whitesmoke"
+        }}
       />
     );
   };
@@ -176,49 +173,49 @@ export default class chooseDistrict extends React.Component {
   render() {
     return (
       <Container>
-      <Root>
-      <SafeAreaView
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
-        <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-          <FlatList
-            style={{ width: width }}
-            data={this.state.data}
-            renderItem={({ item }) => (
-              <View style={{ left: "9%", padding: 6 }}>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.schoolSelected(
-                      item.AeriesAppParentURL,
-                      item.SchoolName
-                    )
-                  }
-                >
-                  <Text
-                    style={{
-                      fontSize: 16
-                    }}
-                  >
-                    {item.SchoolName}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 12
-                    }}
-                  >
-                    {item.DistrictName}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
-            //keyExtractor={item => item.AeriesAppParentURL}
-            ItemSeparatorComponent={this.renderSeparator}
-            ListHeaderComponent={this.renderHeader}
-            ListFooterComponent={this.renderFooter}
-          />
-        </List>
-      </SafeAreaView>
-      </Root>
+        <Root>
+          <SafeAreaView
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+              <FlatList
+                style={{ width: width }}
+                data={this.state.data}
+                renderItem={({ item }) => (
+                  <View style={{ left: "9%", padding: 6 }}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        this.schoolSelected(
+                          item.AeriesAppParentURL,
+                          item.SchoolName
+                        )
+                      }
+                    >
+                      <Text
+                        style={{
+                          fontSize: 16
+                        }}
+                      >
+                        {item.SchoolName}
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 12
+                        }}
+                      >
+                        {item.DistrictName}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+                //keyExtractor={item => item.AeriesAppParentURL}
+                ItemSeparatorComponent={this.renderSeparator}
+                ListHeaderComponent={this.renderHeader}
+                ListFooterComponent={this.renderFooter}
+              />
+            </List>
+          </SafeAreaView>
+        </Root>
       </Container>
     );
   }

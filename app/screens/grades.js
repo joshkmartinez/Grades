@@ -17,13 +17,15 @@ import {
   Button,
   List,
   Headline,
-  Switch, Divider
+  Switch,
+  Divider
 } from "react-native-paper";
 import { Home } from "../components/";
 import { _ } from "lodash";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 import ClassCard from "../components/classCard";
+import SettingsList from "react-native-settings-list";
 export default class Grades extends React.Component {
   static navigationOptions = {
     title: "Grades",
@@ -62,57 +64,16 @@ export default class Grades extends React.Component {
 
     this.setState({ isAuthed: true });
   }
+
+  logout(){
+    //delete async login data and district data and go to login page
+    //disable back on login screen
+  }
+
   componentWillMount() {
     BackHandler.addEventListener("hardwareBackPress", function() {
       return true;
     });
-  }
-
-  subjectCard(className, grade, letterGrade) {
-    return (
-      <Surface
-        style={{
-          padding: 8,
-          backgroundColor: "#d50000",
-          elevation: 3,
-          justifyContent: "center",
-          width: width - 21,
-
-          height: height / 8 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
-        }}
-      >
-        <Text
-          style={{
-            textAlign: "right",
-            alignSelf: "stretch",
-            color: "white",
-            top: 1,
-            fontSize: responsiveFontSize(2.3)
-          }}
-        >
-          98%
-        </Text>
-        <Text
-          style={{
-            textAlign: "left",
-            color: "white",
-            fontSize: responsiveFontSize(2.9)
-          }}
-        >
-          AP Calculus
-        </Text>
-        <Text
-          style={{
-            textAlign: "right",
-            alignSelf: "stretch",
-            color: "white",
-            fontSize: responsiveFontSize(2.3)
-          }}
-        >
-          A+
-        </Text>
-      </Surface>
-    );
   }
 
   render() {
@@ -137,7 +98,7 @@ const HomeRoute = () => (
       <Card name="Calculus BC" color="#00c853" letterGrade="A+" grade="99%" />
       <Card name="Calculus BC" color="#2962ff" letterGrade="A+" grade="99%" />
       <Card name="Calculus BC" color="#aa00ff" letterGrade="A+" grade="99%" />
-      <Card name="Calculus BC" color="#c51162" letterGrade="A+" grade="99%" />
+      <Card name="Calculus BC" color="#3e2723" letterGrade="A+" grade="99%" />
     </View>
   </PTRView>
 );
@@ -189,39 +150,41 @@ const Card = props => (
 );
 
 const SettingsRoute = () => (
-  <View style={{ flex: 1, width: width - 21, alignItems: "center" }}>
-    <View style={{ alignItems: "center", justifyContent: "center" }}>
-      <Headline>Settings</Headline>
-    </View>
-    <Button
-      icon="person"
-      mode="contained"
-      onPress={() => console.log("Pressed")}
-    >
-      Logout
-    </Button>
-    <Divider />
-    {/* add a dark mode toggle
-    <Switch
-      value={isSwitchOn}
-      onValueChange={() => {
-        this.setState({ isSwitchOn: !isSwitchOn });
-      }}
-    />
+  <View style={{ flex: 1, width: width - 21, justifyContent: "center" }}>
+    <SettingsList backgroundColor="transparent">
+      
+        <SettingsList.Header
+          headerText="Settings"
+          headerStyle={{ color: "black" }}
+        />
+     
+
+      {/* add a dark mode toggle
+    <SettingsList.Item
+            hasNavArrow={false}
+            switchState={this.state.switchValue}
+            switchOnValueChange={this.onValueChange}
+            hasSwitch={true}
+            title='Switch Example'/>
     
 */}
-    <Button icon="help" mode="contained" onPress={() => console.log("Pressed")}>
-      Help
-    </Button>
-    <Divider />
-    <Button
-      icon="smartphone"
-      mode="contained"
-      onPress={() => console.log("Pressed")}
-    >
-      About/Credits
-    </Button>
-    <Divider />
+
+      <SettingsList.Item
+        itemWidth={50}
+        title="About/Credits"
+        onPress={() => Alert.alert("Go to credits website")}
+      />
+      <SettingsList.Item
+        itemWidth={50}
+        title="Help"
+        onPress={() => Alert.alert("Direct to help website")}
+      />
+      <SettingsList.Item
+        itemWidth={50}
+        title="Logout"
+        onPress={() => Alert.alert("Are you sure you want to log out?")}
+      />
+    </SettingsList>
     {/*make is so the saved username and password are cleared when logout*/}
   </View>
 );

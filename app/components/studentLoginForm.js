@@ -176,14 +176,13 @@ class StudentLoginForm extends React.Component {
                   style={styles.districtText}
                 >
                   {this.state.districtText.replace(/^"(.+(?="$))"$/, "$1")}
-                  {/*This is some regex that removes quotes from the string*/}
+                  {/*This is some regex that removes quotes from the string so it can display nicely*/}
                 </Text>
               </View>
 
               <TextInput
-                mode="flat"
-                label="school email"
-                //placeholder="school email"
+                mode="outlined"
+                placeholder="school email"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -193,7 +192,8 @@ class StudentLoginForm extends React.Component {
               />
 
               <TextInput
-                label="password"
+               mode="outlined"
+               placeholder="password"
                 secureTextEntry
                 autoCorrect={false}
                 autoCapitalize="none"
