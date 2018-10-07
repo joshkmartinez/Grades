@@ -65,7 +65,7 @@ export default class Grades extends React.Component {
     this.setState({ isAuthed: true });
   }
 
-  logout(){
+  logout() {
     //delete async login data and district data and go to login page
     //disable back on login screen
   }
@@ -152,12 +152,10 @@ const Card = props => (
 const SettingsRoute = () => (
   <View style={{ flex: 1, width: width - 21, justifyContent: "center" }}>
     <SettingsList backgroundColor="transparent">
-      
-        <SettingsList.Header
-          headerText="Settings"
-          headerStyle={{ color: "black" }}
-        />
-     
+      <SettingsList.Header
+        headerText="Settings"
+        headerStyle={{ color: "black" }}
+      />
 
       {/* add a dark mode toggle
     <SettingsList.Item
@@ -166,8 +164,7 @@ const SettingsRoute = () => (
             switchOnValueChange={this.onValueChange}
             hasSwitch={true}
             title='Switch Example'/>
-    
-*/}
+    */}
 
       <SettingsList.Item
         itemWidth={50}

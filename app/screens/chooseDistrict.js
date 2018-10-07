@@ -106,9 +106,9 @@ export default class chooseDistrict extends React.Component {
       this.storeSchoolName(name);
       this.props.navigation.navigate("Login");
     } else {
-      console.log("school link is blank, cannot be chosen");
+      console.log("school link is blank, cannot be chosen, school does not support the app");
       Alert.alert(
-        "Your school does not support the Aeries App",
+        "Sorry, your school does not support the Aeries App",
         "Please contact your administration",
         [{ text: "OK", onPress: () => console.log("Link error acknowledged") }],
         { cancelable: false }

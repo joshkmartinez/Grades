@@ -7,7 +7,7 @@ import {
   AsyncStorage,
   ActivityIndicator
 } from "react-native";
-import {  Text, Toast, Root, Spinner } from "native-base";
+import { Text, Toast, Root, Spinner } from "native-base";
 import { _ } from "lodash";
 import { withNavigation, Header } from "react-navigation";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -22,12 +22,13 @@ class StudentLoginForm extends React.Component {
     super(props);
     this.state = {
       isAuthed: false,
-      username: null,
+      username: "",
       authError: false,
-      password: null,
+      password: "",
       districtText: "",
       schoolLink: "",
-      loading: false
+      loading: false,
+      importedSavedLogin: false
     };
     this.auth = this.auth.bind(this);
   }
@@ -59,7 +60,7 @@ class StudentLoginForm extends React.Component {
         Toast.show({
           text: "School Chosen",
           buttonText: "Ok",
-          duration: 3214, //in miliseconds
+          duration: 4231, //in miliseconds
           position: "bottom",
           type: "success"
         });
@@ -70,30 +71,75 @@ class StudentLoginForm extends React.Component {
       console.log("School name is found");
     }
   }
+  debounced(delay, fn) {
+    let timerId;
+    return function(...args) {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+      timerId = setTimeout(() => {
+        fn(...args);
+        timerId = null;
+      }, delay);
+    };
+  }
+
+  async getSavedLogin() {
+    if (
+      (await AsyncStorage.getItem("username")) !== null &&
+      (await AsyncStorage.getItem("password")) !== null &&
+      this.state.importedSavedLogin === false
+    ) {
+      console.log("retrieving saved login info");
+      savedUsername = JSON.stringify(await AsyncStorage.getItem("username"));
+      savedPassword = JSON.stringify(await AsyncStorage.getItem("password"));
+      this.setState({
+        username: savedUsername.replace(/['"]+/g, ""),
+        password: savedPassword.replace(/['"]+/g, "")
+      });
+      this.setState({ importedSavedLogin: true });
+      console.log("saved username and password set");
+    } else {
+      console.log("No saved login found");
+    }
+  }
+
+  async saveLogin(username, password) {
+    console.log("saving username and password");
+    console.log("the length of " + username + " is " + username.length);
+    console.log("the length of " + password + " is " + password.length);
+    if (this.state.username.length > 3 && password.length > 3) {
+      await AsyncStorage.setItem("username", username).catch(console.log);
+      await AsyncStorage.setItem("password", password).catch(console.log);
+      console.log("Login info saved for: " + username);
+
+      if ((await AsyncStorage.getItem("username")) !== null) {
+        console.log("async username data exists");
+      } else {
+        console.log("no async username data exists");
+      }
+    } else {
+      //do nothing
+    }
+  }
 
   refreshSchoolandName = _.debounce(
     () => {
       this.checkIfLinkExists();
       this.checkIfSchoolNameExists();
     },
-    333
-    //this debounce function from lodash wont call the function until no editing has been made for 420 miliseconds (reduces api strain)
+    567
+    //this debounce function from lodash wont call the function until no editing has been made for 567 miliseconds (reduces api strain)
   );
   spacer(space) {
     return <View styles={{ height: space }} />;
   }
-  //sleep / wait function
-  sleep(milliseconds) {
-    var start = new Date().getTime();
-    for (var i = 0; i < 1e7; i++) {
-      if (new Date().getTime() - start > milliseconds) {
-        break;
-      }
-    }
-  }
 
   auth() {
     console.log("auth function called");
+
+    this.saveLogin(this.state.username, this.state.password);
+    //console.log("function passed")
     this.setState({ authError: false, isAuthed: false, loading: true });
 
     if (this.state.isAuthed === false && this.state.authError === false) {
@@ -112,7 +158,7 @@ class StudentLoginForm extends React.Component {
       // auth error
       this.setState({ isAuthed: false, loading: false });
       Toast.show({
-        text: "Error...",
+        text: "Login error. Make sure your username and password are correct.",
         buttonText: "Ok",
         duration: 3210, //in miliseconds
         position: "top",
@@ -123,6 +169,7 @@ class StudentLoginForm extends React.Component {
 
   render() {
     this.refreshSchoolandName();
+    this.getSavedLogin();
 
     return (
       <Root>
@@ -156,7 +203,9 @@ class StudentLoginForm extends React.Component {
                   }}
                 >
                   <Button
-                    icon="search" mode="contained" color="whitesmoke"
+                    icon="search"
+                    mode="contained"
+                    color="whitesmoke"
                     style={{ width: width - 69 }}
                     onPress={() =>
                       this.props.navigation.navigate("chooseDistrict")
@@ -188,17 +237,19 @@ class StudentLoginForm extends React.Component {
                 autoCorrect={false}
                 placeholderTextColor="white"
                 style={styles.input}
+                onChangeText={username => this.setState({ username })}
                 value={this.state.username}
               />
 
               <TextInput
-               mode="outlined"
-               placeholder="password"
+                mode="outlined"
+                placeholder="password"
                 secureTextEntry
                 autoCorrect={false}
                 autoCapitalize="none"
                 placeholderTextColor="white"
                 style={styles.input}
+                onChangeText={password => this.setState({ password })}
                 value={this.state.password}
               />
 
@@ -211,7 +262,12 @@ class StudentLoginForm extends React.Component {
               >
                 {/*the component below shows ActivityIndicator if this.state.loading: true; else will show 
               login button*/}
-                <Button icon="check" mode="contained" color="whitesmoke" onPress={() => this.auth()}>
+                <Button
+                  icon="check"
+                  mode="contained"
+                  color="whitesmoke"
+                  onPress={() => this.auth()}
+                >
                   <Text> Login </Text>
                 </Button>
                 {this.state.loading ? <Spinner color="blue" /> : <View />}
