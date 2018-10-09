@@ -25,14 +25,7 @@ export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthed: false,
-      username: null,
-      authError: false,
-      password: null,
-      districtText: "",
-      schoolLink: "",
-      loading: false,
-      userType: "student"
+      
     };
   }
   componentDidMount() {

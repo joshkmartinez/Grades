@@ -294,8 +294,7 @@ const styles = {
   districtText: { top: 1 },
 
   input: {
-    //backgroundColor: "#8499B1", //greyblue
-    margin: 12, //height: 42,
+    margin: 12,
     width: width - 69
   },
 
