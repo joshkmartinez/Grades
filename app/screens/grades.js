@@ -95,15 +95,15 @@ const Card = props => (
       backgroundColor: props.color,
       elevation: 3,
       justifyContent: "center",
-      width: width - 18,
+      width: width - 16,
 
-      height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
+      height: height / 10 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
     }}
   >
     <View style={{ alignItems: "center", flexDirection: "row", flex: 1 }}>
       <View
         style={{
-          backgroundColor: "blue",
+          //backgroundColor: "blue",
           height: 20,
           width: width - width / 2 - 21,
           justifyContent: "center",
@@ -115,7 +115,7 @@ const Card = props => (
             textAlign: "left",
             alignSelf: "stretch",
             color: "white",
-            fontSize: responsiveFontSize(3.4)
+            fontSize: responsiveFontSize(3.3)
           }}
         >
           {props.name}
@@ -123,10 +123,11 @@ const Card = props => (
       </View>
       <View
         style={{
-          backgroundColor: "red",
+          //backgroundColor: "red",
           height: 20,
           width: width - width / 2 - 20,
-          flexDirection: "column"
+          flexDirection: "column",
+          justifyContent: "center"
         }}
       >
         <Text
@@ -143,7 +144,7 @@ const Card = props => (
           style={{
             textAlign: "right",
             //alignSelf: "stretch",
-            color: "black",
+            color: "white",
             fontSize: responsiveFontSize(2.8)
           }}
         >
