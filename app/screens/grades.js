@@ -36,19 +36,18 @@ let height = Dimensions.get("window").height;
 const HomeRoute = () => (
   <PTRView onRefresh={() => this.refresh}>
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Logged in:</Text>
       <Card name="Calculus BC" color="#d50000" letterGrade="A+" grade="99%" />
-      <Card name="Calculus BC" color="#ff6d00" letterGrade="A+" grade="99%" />
+      <Card name="Calculus BC" color="#ff6d00" letterGrade="A" grade="92%" />
       <Card name="Calculus BC" color="#00c853" letterGrade="A+" grade="99%" />
-      <Card name="Calculus BC" color="#2962ff" letterGrade="A+" grade="99%" />
-      <Card name="Calculus BC" color="#aa00ff" letterGrade="A+" grade="99%" />
-      <Card name="Calculus BC" color="#3e2723" letterGrade="A+" grade="99%" />
+      <Card name="Calculus BC" color="#2962ff" letterGrade="B" grade="99%" />
+      <Card name="Calculus BC" color="#aa00ff" letterGrade="D+" grade="99%" />
+      <Card name="Calculus BC" color="#3e2723" letterGrade="C" grade="99%" />
     </View>
   </PTRView>
 );
 
 const Card = props => (
-  <Surface
+  /*<Surface
     style={{
       margin: 4,
       padding: 8,
@@ -89,6 +88,69 @@ const Card = props => (
     >
       {props.letterGrade}
     </Text>
+  </Surface>*/ <Surface
+    style={{
+      margin: 4,
+      padding: 8,
+      backgroundColor: props.color,
+      elevation: 3,
+      justifyContent: "center",
+      width: width - 18,
+
+      height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
+    }}
+  >
+    <View style={{ alignItems: "center", flexDirection: "row", flex: 1 }}>
+      <View
+        style={{
+          backgroundColor: "blue",
+          height: 20,
+          width: width - width / 2 - 21,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <Text
+          style={{
+            textAlign: "left",
+            alignSelf: "stretch",
+            color: "white",
+            fontSize: responsiveFontSize(3.4)
+          }}
+        >
+          {props.name}
+        </Text>
+      </View>
+      <View
+        style={{
+          backgroundColor: "red",
+          height: 20,
+          width: width - width / 2 - 20,
+          flexDirection: "column"
+        }}
+      >
+        <Text
+          style={{
+            textAlign: "right",
+            //alignSelf: "stretch",
+            color: "white",
+            fontSize: responsiveFontSize(2.8)
+          }}
+        >
+          {props.grade}
+        </Text>
+        <Text
+          style={{
+            textAlign: "right",
+            //alignSelf: "stretch",
+            color: "black",
+            fontSize: responsiveFontSize(2.8)
+          }}
+        >
+          {props.letterGrade}
+        </Text>
+      </View>
+    </View>{" "}
   </Surface>
 );
 
@@ -105,12 +167,9 @@ export class Grades extends React.Component {
     super();
     this.state = {
       index: 0,
-      isAuthed: false,
-      
+      isAuthed: false
     };
   }
-
- 
 
   refresh() {
     //get grades and repopulate tabs
@@ -124,7 +183,6 @@ export class Grades extends React.Component {
       return true;
     });
   }
-  
 
   render() {
     return (

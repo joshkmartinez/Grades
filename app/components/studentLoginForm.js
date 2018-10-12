@@ -176,7 +176,7 @@ class StudentLoginForm extends React.Component {
         <View style={styles.wrapper}>
           <KeyboardAvoidingView
             behavior="padding"
-            //keyboardVerticalOffset={0}
+            keyboardVerticalOffset={0}
             style={styles.loginContainer}
           >
             <Surface
@@ -282,13 +282,7 @@ class StudentLoginForm extends React.Component {
 
 const styles = {
   loginContainer: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    width: width - 42,
-    backgroundColor: "whitesmoke",
-    borderRadius: 9,
-    top: "9%"
+    top: "3%"
   },
 
   districtText: { top: 1 },
