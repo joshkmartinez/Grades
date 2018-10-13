@@ -1,3 +1,5 @@
 export { default as Grades } from './grades'
 export { default as Login } from './login'
 export { default as chooseDistrict } from './chooseDistrict'
+export { default as Settings } from './settings'
+export { default as classGrades } from './classGrades'

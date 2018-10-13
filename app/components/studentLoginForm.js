@@ -199,7 +199,8 @@ class StudentLoginForm extends React.Component {
                   style={{
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    padding: 3
                   }}
                 >
                   <Button
@@ -214,11 +215,6 @@ class StudentLoginForm extends React.Component {
                     <Text> Choose School / District </Text>
                   </Button>
                 </View>
-                <View
-                  style={{
-                    height: 6
-                  }}
-                />
                 <Text
                   adjustsFontSizeToFit
                   numberOfLines={1}

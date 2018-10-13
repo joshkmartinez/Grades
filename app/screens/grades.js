@@ -47,50 +47,9 @@ const HomeRoute = () => (
 );
 
 const Card = props => (
-  /*<Surface
+  <Surface
     style={{
-      margin: 4,
-      padding: 8,
-      backgroundColor: props.color,
-      elevation: 3,
-      justifyContent: "center",
-      width: width - 21,
-
-      height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
-    }}
-  >
-    <Text
-      style={{
-        textAlign: "right",
-        alignSelf: "stretch",
-        color: "white",
-        fontSize: responsiveFontSize(2.2)
-      }}
-    >
-      {props.grade}
-    </Text>
-    <Text
-      style={{
-        textAlign: "left",
-        color: "white",
-        fontSize: responsiveFontSize(2.6)
-      }}
-    >
-      {props.name}
-    </Text>
-    <Text
-      style={{
-        textAlign: "right",
-        alignSelf: "stretch",
-        color: "white",
-        fontSize: responsiveFontSize(2.3)
-      }}
-    >
-      {props.letterGrade}
-    </Text>
-  </Surface>*/ <Surface
-    style={{
-      margin: 4,
+      margin: 3,
       padding: 8,
       backgroundColor: props.color,
       elevation: 3,
@@ -151,7 +110,7 @@ const Card = props => (
           {props.letterGrade}
         </Text>
       </View>
-    </View>{" "}
+    </View>
   </Surface>
 );
 
@@ -160,8 +119,9 @@ const responsiveFontSize = f => {
 };
 export class Grades extends React.Component {
   static navigationOptions = {
-    title: " ", //no title for now
+    title: "Grades", //no title for now
     headerLeft: null,
+    headerRight: <Button icon="settings" />,
     gesturesEnabled: false
   };
   constructor() {
