@@ -178,6 +178,17 @@ export default class chooseDistrict extends React.Component {
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
             <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
+            <Searchbar
+        lightTheme
+        multiline={false}
+        placeholder="Search for your school"
+        onChangeText={query => this.setState({ query })}
+        value={this.state.query}
+        onEndEditing={this.makeRemoteRequest}
+        style={{
+          backgroundColor: "whitesmoke"
+        }}
+      />
               <FlatList
                 style={{ width: width }}
                 data={this.state.data}
@@ -210,8 +221,8 @@ export default class chooseDistrict extends React.Component {
                 )}
                 keyExtractor={item => item.SchoolName}
                 ItemSeparatorComponent={this.renderSeparator}
-                ListHeaderComponent={this.renderHeader}
-                ListFooterComponent={this.renderFooter}
+                ListHeaderComponent={this.renderFooter}
+                //ListFooterComponent={this.renderFooter}
               />
             </List>
           </SafeAreaView>
