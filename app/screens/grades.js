@@ -8,7 +8,8 @@ import {
   AsyncStorage,
   ActivityIndicator,
   BackHandler,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from "react-native";
 import { withNavigation } from "react-navigation";
 import PTRView from "react-native-pull-to-refresh";
@@ -47,7 +48,20 @@ export class Grades extends React.Component {
     this.state = {
       index: 0,
       isAuthed: false,
-      data: [],
+      data: [
+        {
+          name: "English",
+          grade: 83,
+          letterGrade: "A+",
+          color: "#d50ee3"
+        },
+        {
+          name: "CALC",
+          grade: 90,
+          letterGrade: "B+",
+          color: "#d50000"
+        }
+      ],
       loading: false
     };
   }
@@ -64,12 +78,73 @@ export class Grades extends React.Component {
       return true;
     });
   }
+  makeRemoteRequest = () => {
+    /*
+    const { page, seed } = this.state;
+    const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
+    this.setState({ loading: true });
+  
+    fetch(url)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          data: page === 1 ? res.results : [...this.state.data, ...res.results],
+          error: res.error || null,
+          loading: false,
+          refreshing: false
+        });
+      })
+      .catch(error => {
+        this.setState({ error, loading: false });
+      });*/
+    //do request stuff
+  };
 
+  handleRefresh = () => {
+    this.makeRemoteRequest();
+  };
+
+  renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "86%",
+          backgroundColor: "#CED0CE",
+          marginLeft: "14%"
+        }}
+      />
+    );
+  };
+
+  renderHeader = () => {
+    return (
+      <View>
+        <Text>pls work</Text>
+      </View>
+    );
+  };
+  classSelected = className => {};
+  renderFooter = () => {
+    if (!this.state.loading) return null;
+
+    return (
+      <View
+        style={{
+          paddingVertical: 20,
+          borderTopWidth: 1,
+          borderColor: "#CED0CE"
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    );
+  };
   render() {
     return (
       <Root>
         <ScrollableTabView initialPage={0} tabBarPosition="top">
-          <HomeRoute tabLabel="Grades" />
+          <HomeRoute tabLabel="Grades" data={this.state.data} />
 
           <View
             style={{ flex: 1, width: width - 9, justifyContent: "center" }}
@@ -120,7 +195,8 @@ export class Grades extends React.Component {
     );
   }
 }
-const HomeRoute = () => (
+
+const HomeRoute = ({ data }) => (
   /*
   <PTRView onRefresh={() => this.refresh}>
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -131,17 +207,82 @@ const HomeRoute = () => (
       <Card name="Calculus BC" color="#aa00ff" letterGrade="D+" grade="99%" />
       <Card name="Calculus BC" color="#3e2723" letterGrade="C" grade="99%" />
     </View>
-  </PTRView>*/ <List
-  >
+  </PTRView>*/
+  <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0, flex: 1 }}>
     <FlatList
-      data={this.state.data}
+      style={{ width: width }}
+      data={data}
       renderItem={({ item }) => (
-        <Card
-          name={item.name}
-          letterGrade={item.letterGrade}
-          grade={item.grade}
-        />
+        <Surface
+          style={{
+            margin: 3,
+            padding: 6,
+            backgroundColor: item.color,
+            //elevation: 3,
+            justifyContent: "center",
+            width: width - 16,
+
+            height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
+          }}
+        >
+          <View style={{ alignItems: "center", flexDirection: "row", flex: 1 }}>
+            <View
+              style={{
+                //backgroundColor: "blue",
+                //height: 20,
+                width: width - width / 2 - 21,
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "left",
+                  //alignSelf: "stretch",
+                  color: "white",
+                  fontSize: responsiveFontSize(3)
+                }}
+              >
+                {item.name}
+              </Text>
+            </View>
+            <View
+              style={{
+                //backgroundColor: "red",
+                //height: 20,
+                width: width - width / 2 - 20,
+                flexDirection: "column",
+                justifyContent: "center"
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "right",
+                  //alignSelf: "stretch",
+                  color: "white",
+                  fontSize: responsiveFontSize(2.6)
+                }}
+              >
+                {item.grade}
+              </Text>
+              <Text
+                style={{
+                  textAlign: "right",
+                  //alignSelf: "stretch",
+                  color: "white",
+                  fontSize: responsiveFontSize(2.6)
+                }}
+              >
+                {item.letterGrade}
+              </Text>
+            </View>
+          </View>
+        </Surface>
       )}
+      ItemSeparatorComponent={this.renderSeparator}
+      //ListHeaderComponent={this.renderHeader}
+      ListFooterComponent={this.renderFooter}
+      keyExtractor={item => item.name}
     />
   </List>
 );

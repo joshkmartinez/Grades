@@ -208,7 +208,7 @@ export default class chooseDistrict extends React.Component {
                     </TouchableOpacity>
                   </View>
                 )}
-                //keyExtractor={item => item.AeriesAppParentURL}
+                keyExtractor={item => item.SchoolName}
                 ItemSeparatorComponent={this.renderSeparator}
                 ListHeaderComponent={this.renderHeader}
                 ListFooterComponent={this.renderFooter}
