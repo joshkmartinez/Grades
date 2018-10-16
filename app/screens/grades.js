@@ -126,20 +126,20 @@ export class Grades extends React.Component {
   };
 
   renderSeparator = () => {
-    return (
-      <View
+    return (<View>
+      {/*<View
         style={{
           height: 1,
           width: "86%",
           backgroundColor: "#CED0CE",
           marginLeft: "14%"
         }}
-      />
+      />*/}</View>
     );
   };
 
   renderHeader = () => {
-    return <Text style={{}}>pls work</Text>;
+    return <View/>;
   };
   classSelected = className => {
     //open a page with the grades showing
@@ -152,10 +152,9 @@ export class Grades extends React.Component {
         style={{
           paddingVertical: 20,
           borderTopWidth: 1,
-          borderColor: "whitesmoke"
         }}
       >
-        <ActivityIndicator animating size="large" />
+        {/*<ActivityIndicator animating size="large" />*/}
       </View>
     );
   };
@@ -266,112 +265,6 @@ export class Grades extends React.Component {
   }
 }
 
-const HomeRoute = ({ data }, { isLoading }) => (
-  /*
-  <PTRView onRefresh={() => this.refresh}>
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Card name="Calculus BC" color="#d50000" letterGrade="A+" grade="99%" />
-      <Card name="Calculus BC" color="#ff6d00" letterGrade="A" grade="92%" />
-      <Card name="Calculus BC" color="#00c853" letterGrade="A+" grade="99%" />
-      <Card name="Calculus BC" color="#2962ff" letterGrade="B" grade="99%" />
-      <Card name="Calculus BC" color="#aa00ff" letterGrade="D+" grade="99%" />
-      <Card name="Calculus BC" color="#3e2723" letterGrade="C" grade="99%" />
-    </View>
-  </PTRView>*/
-  <SafeAreaView
-    style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-  >
-    <List
-      containerStyle={{
-        borderTopWidth: 0,
-        borderBottomWidth: 0,
-        marginTop: 6,
-        flex: 1,
-        backgroundColor: "transparent"
-      }}
-    >
-      <FlatList
-        //style={{ width: width }}
-        data={data}
-        renderItem={({ item }) => (
-          <Surface
-            style={{
-              margin: 3,
-              padding: 6,
-              backgroundColor: item.color,
-              //elevation: 3,
-              justifyContent: "center",
-              width: width - 16,
-
-              height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
-            }}
-          >
-            <View
-              style={{ alignItems: "center", flexDirection: "row", flex: 1 }}
-            >
-              <View
-                style={{
-                  //backgroundColor: "blue",
-                  //height: 20,
-                  width: width - width / 2 - 21,
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <Text
-                  style={{
-                    textAlign: "left",
-                    //alignSelf: "stretch",
-                    color: "white",
-                    fontSize: responsiveFontSize(3)
-                  }}
-                >
-                  {item.name}
-                </Text>
-              </View>
-              <View
-                style={{
-                  //backgroundColor: "red",
-                  //height: 20,
-                  width: width - width / 2 - 20,
-                  flexDirection: "column",
-                  justifyContent: "center"
-                }}
-              >
-                <Text
-                  style={{
-                    textAlign: "right",
-                    //alignSelf: "stretch",
-                    color: "white",
-                    fontSize: responsiveFontSize(2.6)
-                  }}
-                >
-                  {item.grade}
-                </Text>
-                <Text
-                  style={{
-                    textAlign: "right",
-                    //alignSelf: "stretch",
-                    color: "white",
-                    fontSize: responsiveFontSize(2.6)
-                  }}
-                >
-                  {item.letterGrade}
-                </Text>
-              </View>
-            </View>
-          </Surface>
-        )}
-        ItemSeparatorComponent={this.renderSeparator}
-        ListHeaderComponent={this.renderHeader}
-        ListFooterComponent={this.renderFooter}
-        keyExtractor={item => item.name}
-        onRefresh={this.handleRefresh}
-        refreshing={isLoading}
-      />
-    </List>
-  </SafeAreaView>
-);
 const settingsPage = () => {
   <View
     style={{ flex: 1, width: width - 9, justifyContent: "center" }}
