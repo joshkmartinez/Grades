@@ -61,7 +61,8 @@ export class Grades extends React.Component {
           grade: 90,
           letterGrade: "B+",
           color: "#d50000"
-        },{
+        },
+        {
           name: "AP Spanish 4",
           grade: 96,
           letterGrade: "C+",
@@ -111,15 +112,12 @@ export class Grades extends React.Component {
       .then(res => res.json())
       .then(res => {
         this.setState({
-          
-          loading: false,
-          
+          loading: false
         });
       })
       .catch(error => {
         this.setState({ error, loading: false });
       });
-
   };
 
   handleRefresh = () => {
@@ -141,11 +139,7 @@ export class Grades extends React.Component {
   };
 
   renderHeader = () => {
-    return (
-
-        <Text style={{}}>pls work</Text>
-      
-    );
+    return <Text style={{}}>pls work</Text>;
   };
   classSelected = className => {
     //open a page with the grades showing
@@ -170,105 +164,109 @@ export class Grades extends React.Component {
       <Root
         styles={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
-       <SafeAreaView
-    style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-  >
-    <List
-      containerStyle={{
-        borderTopWidth: 0,
-        borderBottomWidth: 0,
-        marginTop: 6,
-        flex: 1,
-        backgroundColor: "transparent"
-      }}
-    >
-      <FlatList
-        //style={{ width: width }}
-        data={this.state.data}
-        renderItem={({ item }) => (
-          <Surface
-            style={{
-              margin: 3,
-              padding: 6,
-              backgroundColor: item.color,
-              //elevation: 3,
-              justifyContent: "center",
-              width: width - 16,
-
-              height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
+        <SafeAreaView
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <List
+            containerStyle={{
+              borderTopWidth: 0,
+              borderBottomWidth: 0,
+              marginTop: 6,
+              flex: 1,
+              backgroundColor: "transparent"
             }}
           >
-            <View
-              style={{ alignItems: "center", flexDirection: "row", flex: 1 }}
-            >
-              <View
-                style={{
-                  //backgroundColor: "blue",
-                  //height: 20,
-                  width: width - width / 2 - 21,
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <Text
+            <FlatList
+              //style={{ width: width }}
+              data={this.state.data}
+              renderItem={({ item }) => (
+                <Surface
                   style={{
-                    textAlign: "left",
-                    //alignSelf: "stretch",
-                    color: "white",
-                    fontSize: responsiveFontSize(3)
+                    margin: 3,
+                    padding: 6,
+                    backgroundColor: item.color,
+                    //elevation: 3,
+                    justifyContent: "center",
+                    width: width - 16,
+
+                    height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
                   }}
                 >
-                  {item.name}
-                </Text>
-              </View>
-              <View
-                style={{
-                  //backgroundColor: "red",
-                  //height: 20,
-                  width: width - width / 2 - 20,
-                  flexDirection: "column",
-                  justifyContent: "center"
-                }}
-              >
-                <Text
-                  style={{
-                    textAlign: "right",
-                    //alignSelf: "stretch",
-                    color: "white",
-                    fontSize: responsiveFontSize(2.6)
-                  }}
-                >
-                  {item.grade}
-                </Text>
-                <Text
-                  style={{
-                    textAlign: "right",
-                    //alignSelf: "stretch",
-                    color: "white",
-                    fontSize: responsiveFontSize(2.6)
-                  }}
-                >
-                  {item.letterGrade}
-                </Text>
-              </View>
-            </View>
-          </Surface>
-        )}
-        ItemSeparatorComponent={this.renderSeparator}
-        ListHeaderComponent={this.renderHeader}
-        ListFooterComponent={this.renderFooter}
-        keyExtractor={item => item.name}
-        onRefresh={this.handleRefresh}
-        refreshing={this.state.loading}
-      />
-    </List>
-  </SafeAreaView>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      flexDirection: "row",
+                      flex: 1
+                    }}
+                  >
+                    <View
+                      style={{
+                        //backgroundColor: "blue",
+                        //height: 20,
+                        width: width - width / 2 - 21,
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Text
+                        style={{
+                          textAlign: "left",
+                          //alignSelf: "stretch",
+                          color: "white",
+                          fontSize: responsiveFontSize(3)
+                        }}
+                      >
+                        {item.name}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        //backgroundColor: "red",
+                        //height: 20,
+                        width: width - width / 2 - 20,
+                        flexDirection: "column",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <Text
+                        style={{
+                          textAlign: "right",
+                          //alignSelf: "stretch",
+                          color: "white",
+                          fontSize: responsiveFontSize(2.6)
+                        }}
+                      >
+                        {item.grade}
+                      </Text>
+                      <Text
+                        style={{
+                          textAlign: "right",
+                          //alignSelf: "stretch",
+                          color: "white",
+                          fontSize: responsiveFontSize(2.6)
+                        }}
+                      >
+                        {item.letterGrade}
+                      </Text>
+                    </View>
+                  </View>
+                </Surface>
+              )}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListHeaderComponent={this.renderHeader}
+              ListFooterComponent={this.renderFooter}
+              keyExtractor={item => item.name}
+              onRefresh={this.handleRefresh}
+              refreshing={this.state.loading}
+            />
+          </List>
+        </SafeAreaView>
       </Root>
     );
   }
 }
 
-const HomeRoute = ({ data }, {isLoading}) => (
+const HomeRoute = ({ data }, { isLoading }) => (
   /*
   <PTRView onRefresh={() => this.refresh}>
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>

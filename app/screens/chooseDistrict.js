@@ -106,7 +106,9 @@ export default class chooseDistrict extends React.Component {
       this.storeSchoolName(name);
       this.props.navigation.navigate("Login");
     } else {
-      console.log("school link is blank, cannot be chosen, school does not support the app");
+      console.log(
+        "school link is blank, cannot be chosen, school does not support the app"
+      );
       Alert.alert(
         "Sorry, your school does not support the Aeries App",
         " 😢 ",
@@ -178,17 +180,17 @@ export default class chooseDistrict extends React.Component {
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
             <List containerStyle={{ borderTopWidth: 0, borderBottomWidth: 0 }}>
-            <Searchbar
-        lightTheme
-        multiline={false}
-        placeholder="Search for your school"
-        onChangeText={query => this.setState({ query })}
-        value={this.state.query}
-        onEndEditing={this.makeRemoteRequest}
-        style={{
-          backgroundColor: "whitesmoke"
-        }}
-      />
+              <Searchbar
+                lightTheme
+                multiline={false}
+                placeholder="Search for your school"
+                onChangeText={query => this.setState({ query })}
+                value={this.state.query}
+                onEndEditing={this.makeRemoteRequest}
+                style={{
+                  backgroundColor: "whitesmoke"
+                }}
+              />
               <FlatList
                 style={{ width: width }}
                 data={this.state.data}
