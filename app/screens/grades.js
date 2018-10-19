@@ -36,6 +36,7 @@ import { Home } from "../components/";
 import { _ } from "lodash";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
+let colors = ["#e53935", "#fb8c00", "#43a047", "#1e88e5", "#8e24aa", "#6d4c41","#123456"];
 
 export class Grades extends React.Component {
   static navigationOptions = {
@@ -48,25 +49,55 @@ export class Grades extends React.Component {
     super();
     this.state = {
       index: 0,
+      colorIndex: 0,
       isAuthed: false,
       data: [
         {
           name: "English 4H IB",
           grade: 83,
           letterGrade: "A+",
-          color: "#d50ee3"
+          
         },
         {
           name: "AP Calculus BC",
           grade: 90,
           letterGrade: "B+",
-          color: "#d50000"
+         
         },
         {
           name: "AP Spanish 4",
           grade: 96,
           letterGrade: "C+",
-          color: "#123456"
+          
+        },
+        {
+          name: "Physics",
+          grade: 86,
+          letterGrade: "B",
+          
+        },
+        {
+          name: "AP US History",
+          grade: 97.3,
+          letterGrade: "A",
+          
+        },
+        {
+          name: "AP CS A",
+          grade: 101,
+          letterGrade: "A+",
+          
+        },
+        {
+          name: "PE",
+          grade: 12,
+          letterGrade: "F",
+          
+        },{
+          name: "AP World History",
+          grade: 93,
+          letterGrade: "A",
+          
         }
       ],
       loading: false
@@ -124,22 +155,27 @@ export class Grades extends React.Component {
     this.setState({ loading: true });
     this.makeRemoteRequest();
   };
+  
 
   renderSeparator = () => {
-    return (<View>
-      {/*<View
+    return (
+      
+      <View>
+      
+        {/*<View
         style={{
           height: 1,
           width: "86%",
           backgroundColor: "#CED0CE",
           marginLeft: "14%"
         }}
-      />*/}</View>
+      />*/}
+      </View>
     );
   };
 
   renderHeader = () => {
-    return <View/>;
+    return <View />;
   };
   classSelected = className => {
     //open a page with the grades showing
@@ -151,7 +187,7 @@ export class Grades extends React.Component {
       <View
         style={{
           paddingVertical: 20,
-          borderTopWidth: 1,
+          borderTopWidth: 1
         }}
       >
         {/*<ActivityIndicator animating size="large" />*/}
@@ -178,12 +214,12 @@ export class Grades extends React.Component {
             <FlatList
               //style={{ width: width }}
               data={this.state.data}
-              renderItem={({ item }) => (
+              renderItem={({ item, index }) => (
                 <Surface
                   style={{
                     margin: 3,
                     padding: 6,
-                    backgroundColor: item.color,
+                    backgroundColor: colors[index%colors.length],
                     //elevation: 3,
                     justifyContent: "center",
                     width: width - 16,
@@ -191,6 +227,8 @@ export class Grades extends React.Component {
                     height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
                   }}
                 >
+                  
+                  
                   <View
                     style={{
                       alignItems: "center",
@@ -260,7 +298,9 @@ export class Grades extends React.Component {
             />
           </List>
         </SafeAreaView>
+        
       </Root>
+      
     );
   }
 }
