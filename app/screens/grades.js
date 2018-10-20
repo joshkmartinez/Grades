@@ -55,49 +55,42 @@ export class Grades extends React.Component {
         {
           name: "English 4H IB",
           grade: 83,
-          letterGrade: "A+",
-          
+          letterGrade: "A+"
         },
         {
           name: "AP Calculus BC",
           grade: 90,
-          letterGrade: "B+",
-         
+          letterGrade: "B+"
         },
         {
           name: "AP Spanish 4",
           grade: 96,
-          letterGrade: "C+",
-          
+          letterGrade: "C+"
         },
         {
           name: "Physics",
           grade: 86,
-          letterGrade: "B",
-          
+          letterGrade: "B"
         },
         {
           name: "AP US History",
           grade: 97.3,
-          letterGrade: "A",
-          
+          letterGrade: "A"
         },
         {
           name: "AP CS A",
           grade: 101,
-          letterGrade: "A+",
-          
+          letterGrade: "A+"
         },
         {
           name: "PE",
           grade: 12,
-          letterGrade: "F",
-          
-        },{
+          letterGrade: "F"
+        },
+        {
           name: "AP World History",
           grade: 93,
-          letterGrade: "A",
-          
+          letterGrade: "A"
         }
       ],
       loading: false
@@ -155,13 +148,10 @@ export class Grades extends React.Component {
     this.setState({ loading: true });
     this.makeRemoteRequest();
   };
-  
 
   renderSeparator = () => {
     return (
-      
       <View>
-      
         {/*<View
         style={{
           height: 1,
@@ -219,7 +209,7 @@ export class Grades extends React.Component {
                   style={{
                     margin: 3,
                     padding: 6,
-                    backgroundColor: colors[index%colors.length],
+                    backgroundColor: colors[index % colors.length],
                     //elevation: 3,
                     justifyContent: "center",
                     width: width - 16,
@@ -227,8 +217,6 @@ export class Grades extends React.Component {
                     height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
                   }}
                 >
-                  
-                  
                   <View
                     style={{
                       alignItems: "center",
@@ -298,9 +286,7 @@ export class Grades extends React.Component {
             />
           </List>
         </SafeAreaView>
-        
       </Root>
-      
     );
   }
 }
