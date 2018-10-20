@@ -36,7 +36,7 @@ import { Home } from "../components/";
 import { _ } from "lodash";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
-let colors = ["#e53935", "#fb8c00", "#43a047", "#1e88e5", "#8e24aa", "#6d4c41","#123456"];
+let colors = ["#e53935", "#fb8c00", "#43a047", "#1e88e5", "#8e24aa", "#6d4c41"];
 
 export class Grades extends React.Component {
   static navigationOptions = {
@@ -139,7 +139,7 @@ export class Grades extends React.Component {
 
     this.setState({ loading: true });
 
-    fetch("https://randomuser.me/api/?seed=33&page=3&results=42")
+    fetch("https://randomuser.me/api/?seed=33&page=3&results=69")
       .then(res => res.json())
       .then(res => {
         this.setState({
