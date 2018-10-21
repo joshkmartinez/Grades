@@ -50,7 +50,8 @@ export class Grades extends React.Component {
   static navigationOptions = {
     title: "Grades",
     headerLeft: null,
-    headerRight: <View />,
+    headerRight: <View style={{height:99}}/>,
+    //header: null,
     gesturesEnabled: false
   };
   constructor() {
@@ -113,7 +114,7 @@ export class Grades extends React.Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener("hardwareBackPress", function() {
+    BackHandler.addEventListener("hardwareBackPress", function () {
       return true;
     });
   }
@@ -217,7 +218,7 @@ export class Grades extends React.Component {
                   <Surface
                     style={{
                       margin: 3,
-                      padding: 6,
+                      padding: 9,
                       backgroundColor: colors[index % colors.length],
                       //elevation: 3,
                       justifyContent: "center",
@@ -298,56 +299,51 @@ export class Grades extends React.Component {
             </List>
             <Appbar
               style={{
-                width:width,
+                width: width,
                 height: 40,
                 backgroundColor: "white",
                 borderTopWidth: 1,
-                borderColor: "#CED0CE"
+                borderColor: "#CED0CE",
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
               }}
-            ><View styles={{ alignSelf: "flex-start", width:width/2, backgroundColor: "#123456" }}>
+            >
+              <View
+                styles={{
+                  left: 42, position: "absolute",
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() =>
+                    Alert.alert(
+                      "Log out",
+                      "Do you want to log out?",
+                      [
+                        {
+                          text: "No",
+                          onPress: () => console.log("Cancel Pressed")
+                        },
+                        {
+                          text: "Yes",
+                          onPress: () => this.props.navigation.navigate("Login")
+                        }
+                      ],
+                      { cancelable: false }
+                    )
+                  }
+                >
+                  <Text style={{ textAlign: "left" }}>Log out</Text>
+                </TouchableOpacity>
+              </View>
               <TouchableOpacity
-                onPress={() =>
-                  Alert.alert(
-                    "Log out",
-                    "Do you want to log out?",
-                    [
-                      {
-                        text: "No",
-                        onPress: () => console.log("Cancel Pressed")
-                      },
-                      {
-                        text: "Yes",
-                        onPress: () => this.props.navigation.navigate("Login")
-                      }
-                    ],
-                    { cancelable: false }
-                  )
+                onPress={() => this.props.navigation.navigate("Settings")
                 }
               >
-                <Text style={{textAlign:"left"}}>Log out</Text>
-              </TouchableOpacity></View>
-              <View style={{ alignItems: "flex-end", width:width/2 }}>
-                <Menu>
-                  <MenuTrigger>
-                    <Button icon="settings" />
-                  </MenuTrigger>
-                  <MenuOptions>
-                    <MenuOption />
-                    <TouchableOpacity
-                      onPress={() => this.props.navigation.navigate("Login")}
-                    >
-                      <Text style={{textAlign:"right"}}>Credits</Text>
-                    </TouchableOpacity>
-                    <MenuOption>
-                      <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate("Login")}
-                      >
-                        <Text style={{ textAlign: "center" }}>Help</Text>
-                      </TouchableOpacity>
-                    </MenuOption>
-                  </MenuOptions>
-                </Menu>
-              </View>
+                <Text style={{ textAlign: "left" }}>Settings</Text>
+              </TouchableOpacity>
+              
+
             </Appbar>
           </SafeAreaView>
         </MenuProvider>
@@ -356,52 +352,6 @@ export class Grades extends React.Component {
   }
 }
 
-const settingsPage = () => {
-  <View
-    style={{ flex: 1, width: width - 9, justifyContent: "center" }}
-    tabLabel="Settings"
-  >
-    <SettingsList backgroundColor="transparent">
-      <SettingsList.Header
-        headerText="Settings"
-        headerStyle={{ color: "black" }}
-      />
-
-      <SettingsList.Item
-        itemWidth={50}
-        title="About/Credits"
-        onPress={() => Alert.alert("Go to credits website")}
-      />
-      <SettingsList.Item
-        itemWidth={50}
-        title="Help"
-        onPress={() => Alert.alert("Direct to help website")}
-      />
-      <SettingsList.Item
-        itemWidth={50}
-        title="Logout"
-        onPress={() =>
-          Alert.alert(
-            "Log out",
-            "Do you want to log out?",
-            [
-              {
-                text: "No",
-                onPress: () => console.log("Cancel Pressed")
-              },
-              {
-                text: "Yes",
-                onPress: () => this.props.navigation.navigate("Login")
-              }
-            ],
-            { cancelable: false }
-          )
-        }
-      />
-    </SettingsList>
-    {/*make is so the saved username and password are cleared when logout*/}
-  </View>;
-};
 const responsiveFontSize = f => {
   return Math.sqrt(height * height + width * width) * (f / 100);
 };

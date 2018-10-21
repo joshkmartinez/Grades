@@ -2,15 +2,16 @@ import React from "react";
 import {
   //View,
   //KeyboardAvoidingView,
-  Dimensions
+  Dimensions,
   //AsyncStorage,
-  //ActivityIndicator
+  //ActivityIndicator,
+  View,
+  Alert
 } from "react-native";
 //import { Button, Text, Toast, Root, Container } from "native-base";
 import { _ } from "lodash";
 import { withNavigation } from "react-navigation";
-import { default as Student } from "../components/studentLoginForm";
-import { default as Parent } from "../components/parentLoginForm";
+import SettingsList from "react-native-settings-list";
 import ScrollableTabView, {
   DefaultTabBar
 } from "react-native-scrollable-tab-view";
@@ -29,22 +30,22 @@ export class Settings extends React.Component {
   }
   componentDidMount() {
     {
-      /*make sure user has internet*/
+     
     }
   }
 
   render() {
     return (
-      <View styles={{ flex: 1 }}>
-        <SettingsList backgroundColor="transparent">
+      
+        <SettingsList backgroundColor="transparent" borderColor="grey" styles={{flex:1, }}>
           <SettingsList.Header
-            headerText="Settings"
+            //headerText="Settings"
             headerStyle={{ color: "black" }}
           />
 
           <SettingsList.Item
             itemWidth={50}
-            title="About/Credits"
+            title="About / Credits"
             onPress={() => Alert.alert("Go to credits website")}
           />
           <SettingsList.Item
@@ -54,27 +55,12 @@ export class Settings extends React.Component {
           />
           <SettingsList.Item
             itemWidth={50}
-            title="Logout"
-            onPress={() =>
-              Alert.alert(
-                "Log out",
-                "Do you want to log out?",
-                [
-                  {
-                    text: "No",
-                    onPress: () => console.log("Cancel Pressed")
-                  },
-                  {
-                    text: "Yes",
-                    onPress: () => this.props.navigation.navigate("Login")
-                  }
-                ],
-                { cancelable: false }
-              )
-            }
+            title="Log out"
+            onPress={() => this.props.navigation.navigate("Login")}
           />
+          
         </SettingsList>
-      </View>
+      
     );
   }
 }
