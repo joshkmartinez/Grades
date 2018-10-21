@@ -36,7 +36,8 @@ import {
   Divider,
   Paragraph,
   Dialog,
-  Portal
+  Portal,
+  Appbar
 } from "react-native-paper";
 import { List, ListItem } from "react-native-elements";
 import { Home } from "../components/";
@@ -295,15 +296,15 @@ export class Grades extends React.Component {
                 refreshing={this.state.loading}
               />
             </List>
-            <View
-              styles={{
-                //height: 21,
-                flexDirection: "row",
-                //flex: 1,
-                justifyContent: "space-between",
-                alignItems: "center"
+            <Appbar
+              style={{
+                width:width,
+                height: 40,
+                backgroundColor: "white",
+                borderTopWidth: 1,
+                borderColor: "#CED0CE"
               }}
-            >
+            ><View styles={{ alignSelf: "flex-start", width:width/2, backgroundColor: "#123456" }}>
               <TouchableOpacity
                 onPress={() =>
                   Alert.alert(
@@ -323,30 +324,31 @@ export class Grades extends React.Component {
                   )
                 }
               >
-                <Text>Log out</Text>
-              </TouchableOpacity>
-
-              <Menu>
-                <MenuTrigger>
-                  <Button icon="settings" />
-                </MenuTrigger>
-                <MenuOptions>
-                  <MenuOption />
-                  <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate("Login")}
-                  >
-                    <Text style={{ textAlign: "center" }}>Credits</Text>
-                  </TouchableOpacity>
-                  <MenuOption>
+                <Text style={{textAlign:"left"}}>Log out</Text>
+              </TouchableOpacity></View>
+              <View style={{ alignItems: "flex-end", width:width/2 }}>
+                <Menu>
+                  <MenuTrigger>
+                    <Button icon="settings" />
+                  </MenuTrigger>
+                  <MenuOptions>
+                    <MenuOption />
                     <TouchableOpacity
                       onPress={() => this.props.navigation.navigate("Login")}
                     >
-                      <Text style={{ textAlign: "center" }}>Help</Text>
+                      <Text style={{textAlign:"right"}}>Credits</Text>
                     </TouchableOpacity>
-                  </MenuOption>
-                </MenuOptions>
-              </Menu>
-            </View>
+                    <MenuOption>
+                      <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate("Login")}
+                      >
+                        <Text style={{ textAlign: "center" }}>Help</Text>
+                      </TouchableOpacity>
+                    </MenuOption>
+                  </MenuOptions>
+                </Menu>
+              </View>
+            </Appbar>
           </SafeAreaView>
         </MenuProvider>
       </Root>
