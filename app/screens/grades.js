@@ -12,6 +12,13 @@ import {
   SafeAreaView,
   TouchableOpacity
 } from "react-native";
+import {
+  Menu,
+  MenuProvider,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger
+} from "react-native-popup-menu";
 import { withNavigation } from "react-navigation";
 import PTRView from "react-native-pull-to-refresh";
 import SettingsList from "react-native-settings-list";
@@ -42,7 +49,7 @@ export class Grades extends React.Component {
   static navigationOptions = {
     title: "Grades",
     headerLeft: null,
-    headerRight: <Button icon="settings" />,
+    headerRight: <View />,
     gesturesEnabled: false
   };
   constructor() {
@@ -132,7 +139,7 @@ export class Grades extends React.Component {
 
     this.setState({ loading: true });
 
-    fetch("https://randomuser.me/api/?seed=33&page=3&results=69")
+    fetch("https://randomuser.me/api/?seed=33&page=3&results=567")
       .then(res => res.json())
       .then(res => {
         this.setState({
@@ -189,103 +196,159 @@ export class Grades extends React.Component {
       <Root
         styles={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
-        <SafeAreaView
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <List
-            containerStyle={{
-              borderTopWidth: 0,
-              borderBottomWidth: 0,
-              marginTop: 6,
-              flex: 1,
-              backgroundColor: "transparent"
-            }}
+        <MenuProvider>
+          <SafeAreaView
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
-            <FlatList
-              //style={{ width: width }}
-              data={this.state.data}
-              renderItem={({ item, index }) => (
-                <Surface
-                  style={{
-                    margin: 3,
-                    padding: 6,
-                    backgroundColor: colors[index % colors.length],
-                    //elevation: 3,
-                    justifyContent: "center",
-                    width: width - 16,
-
-                    height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
-                  }}
-                >
-                  <View
+            <List
+              containerStyle={{
+                borderTopWidth: 0,
+                borderBottomWidth: 0,
+                marginTop: 6,
+                flex: 1,
+                backgroundColor: "transparent"
+              }}
+            >
+              <FlatList
+                //style={{ width: width }}
+                data={this.state.data}
+                renderItem={({ item, index }) => (
+                  <Surface
                     style={{
-                      alignItems: "center",
-                      flexDirection: "row",
-                      flex: 1
+                      margin: 3,
+                      padding: 6,
+                      backgroundColor: colors[index % colors.length],
+                      //elevation: 3,
+                      justifyContent: "center",
+                      width: width - 16,
+
+                      height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
                     }}
                   >
                     <View
                       style={{
-                        //backgroundColor: "blue",
-                        //height: 20,
-                        width: width - width / 2 - 21,
-                        justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
+                        flexDirection: "row",
+                        flex: 1
                       }}
                     >
-                      <Text
+                      <View
                         style={{
-                          textAlign: "left",
-                          //alignSelf: "stretch",
-                          color: "white",
-                          fontSize: responsiveFontSize(3)
+                          //backgroundColor: "blue",
+                          //height: 20,
+                          width: width - width / 2 - 21,
+                          //justifyContent: "center",
+                          //alignItems: "center",
+                          flexDirection: "row"
                         }}
                       >
-                        {item.name}
-                      </Text>
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            textAlign: "left",
+                            alignSelf: "stretch",
+                            color: "white",
+                            fontSize: responsiveFontSize(3)
+                          }}
+                        >
+                          {item.name}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          //backgroundColor: "red",
+                          //height: 20,
+                          width: width - width / 2 - 20,
+                          flexDirection: "column",
+                          justifyContent: "center"
+                        }}
+                      >
+                        <Text
+                          style={{
+                            textAlign: "right",
+                            //alignSelf: "stretch",
+                            color: "white",
+                            fontSize: responsiveFontSize(2.6)
+                          }}
+                        >
+                          {item.grade}
+                        </Text>
+                        <Text
+                          style={{
+                            textAlign: "right",
+                            //alignSelf: "stretch",
+                            color: "white",
+                            fontSize: responsiveFontSize(2.6)
+                          }}
+                        >
+                          {item.letterGrade}
+                        </Text>
+                      </View>
                     </View>
-                    <View
-                      style={{
-                        //backgroundColor: "red",
-                        //height: 20,
-                        width: width - width / 2 - 20,
-                        flexDirection: "column",
-                        justifyContent: "center"
-                      }}
+                  </Surface>
+                )}
+                ItemSeparatorComponent={this.renderSeparator}
+                ListHeaderComponent={this.renderHeader}
+                ListFooterComponent={this.renderFooter}
+                keyExtractor={item => item.name}
+                onRefresh={this.handleRefresh}
+                refreshing={this.state.loading}
+              />
+            </List>
+            <View
+              styles={{
+                //height: 21,
+                flexDirection: "row",
+                //flex: 1,
+                justifyContent: "space-between",
+                alignItems: "center"
+              }}
+            >
+              <TouchableOpacity
+                onPress={() =>
+                  Alert.alert(
+                    "Log out",
+                    "Do you want to log out?",
+                    [
+                      {
+                        text: "No",
+                        onPress: () => console.log("Cancel Pressed")
+                      },
+                      {
+                        text: "Yes",
+                        onPress: () => this.props.navigation.navigate("Login")
+                      }
+                    ],
+                    { cancelable: false }
+                  )
+                }
+              >
+                <Text>Log out</Text>
+              </TouchableOpacity>
+
+              <Menu>
+                <MenuTrigger>
+                  <Button icon="settings" />
+                </MenuTrigger>
+                <MenuOptions>
+                  <MenuOption />
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate("Login")}
+                  >
+                    <Text style={{ textAlign: "center" }}>Credits</Text>
+                  </TouchableOpacity>
+                  <MenuOption>
+                    <TouchableOpacity
+                      onPress={() => this.props.navigation.navigate("Login")}
                     >
-                      <Text
-                        style={{
-                          textAlign: "right",
-                          //alignSelf: "stretch",
-                          color: "white",
-                          fontSize: responsiveFontSize(2.6)
-                        }}
-                      >
-                        {item.grade}
-                      </Text>
-                      <Text
-                        style={{
-                          textAlign: "right",
-                          //alignSelf: "stretch",
-                          color: "white",
-                          fontSize: responsiveFontSize(2.6)
-                        }}
-                      >
-                        {item.letterGrade}
-                      </Text>
-                    </View>
-                  </View>
-                </Surface>
-              )}
-              ItemSeparatorComponent={this.renderSeparator}
-              ListHeaderComponent={this.renderHeader}
-              ListFooterComponent={this.renderFooter}
-              keyExtractor={item => item.name}
-              onRefresh={this.handleRefresh}
-              refreshing={this.state.loading}
-            />
-          </List>
-        </SafeAreaView>
+                      <Text style={{ textAlign: "center" }}>Help</Text>
+                    </TouchableOpacity>
+                  </MenuOption>
+                </MenuOptions>
+              </Menu>
+            </View>
+          </SafeAreaView>
+        </MenuProvider>
       </Root>
     );
   }
