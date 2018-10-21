@@ -12,13 +12,7 @@ import {
   SafeAreaView,
   TouchableOpacity
 } from "react-native";
-import {
-  Menu,
-  MenuProvider,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger
-} from "react-native-popup-menu";
+
 import { withNavigation } from "react-navigation";
 import PTRView from "react-native-pull-to-refresh";
 import SettingsList from "react-native-settings-list";
@@ -39,7 +33,7 @@ import {
   Portal,
   Appbar
 } from "react-native-paper";
-import { List, ListItem } from "react-native-elements";
+import { List } from "react-native-elements";
 import { Home } from "../components/";
 import { _ } from "lodash";
 let width = Dimensions.get("window").width;
@@ -198,7 +192,7 @@ export class Grades extends React.Component {
       <Root
         styles={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
-        <MenuProvider>
+        
           <SafeAreaView
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
@@ -215,7 +209,9 @@ export class Grades extends React.Component {
                 //style={{ width: width }}
                 data={this.state.data}
                 renderItem={({ item, index }) => (
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate("classGrades")}>
                   <Surface
+                  
                     style={{
                       margin: 3,
                       padding: 9,
@@ -288,6 +284,7 @@ export class Grades extends React.Component {
                       </View>
                     </View>
                   </Surface>
+                  </TouchableOpacity>
                 )}
                 ItemSeparatorComponent={this.renderSeparator}
                 ListHeaderComponent={this.renderHeader}
@@ -346,7 +343,7 @@ export class Grades extends React.Component {
 
             </Appbar>
           </SafeAreaView>
-        </MenuProvider>
+        
       </Root>
     );
   }
