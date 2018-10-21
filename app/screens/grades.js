@@ -44,7 +44,7 @@ export class Grades extends React.Component {
   static navigationOptions = {
     title: "Grades",
     headerLeft: null,
-    headerRight: <View style={{height:99}}/>,
+    headerRight: <View style={{ height: 99 }} />,
     //header: null,
     gesturesEnabled: false
   };
@@ -192,26 +192,26 @@ export class Grades extends React.Component {
       <Root
         styles={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
-        
-          <SafeAreaView
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+
+        <SafeAreaView
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <List
+            containerStyle={{
+              borderTopWidth: 0,
+              borderBottomWidth: 0,
+              marginTop: 6,
+              flex: 1,
+              backgroundColor: "transparent"
+            }}
           >
-            <List
-              containerStyle={{
-                borderTopWidth: 0,
-                borderBottomWidth: 0,
-                marginTop: 6,
-                flex: 1,
-                backgroundColor: "transparent"
-              }}
-            >
-              <FlatList
-                //style={{ width: width }}
-                data={this.state.data}
-                renderItem={({ item, index }) => (
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate("classGrades")}>
+            <FlatList
+              //style={{ width: width }}
+              data={this.state.data}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("classGrades")}>
                   <Surface
-                  
+
                     style={{
                       margin: 3,
                       padding: 9,
@@ -284,66 +284,63 @@ export class Grades extends React.Component {
                       </View>
                     </View>
                   </Surface>
-                  </TouchableOpacity>
-                )}
-                ItemSeparatorComponent={this.renderSeparator}
-                ListHeaderComponent={this.renderHeader}
-                ListFooterComponent={this.renderFooter}
-                keyExtractor={item => item.name}
-                onRefresh={this.handleRefresh}
-                refreshing={this.state.loading}
-              />
-            </List>
-            <Appbar
-              style={{
-                width: width,
-                height: 40,
-                backgroundColor: "white",
-                borderTopWidth: 1,
-                borderColor: "#CED0CE",
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <View
-                styles={{
-                  left: 42, position: "absolute",
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() =>
-                    Alert.alert(
-                      "Log out",
-                      "Do you want to log out?",
-                      [
-                        {
-                          text: "No",
-                          onPress: () => console.log("Cancel Pressed")
-                        },
-                        {
-                          text: "Yes",
-                          onPress: () => this.props.navigation.navigate("Login")
-                        }
-                      ],
-                      { cancelable: false }
-                    )
-                  }
-                >
-                  <Text style={{ textAlign: "left" }}>Log out</Text>
                 </TouchableOpacity>
-              </View>
+              )}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListHeaderComponent={this.renderHeader}
+              ListFooterComponent={this.renderFooter}
+              keyExtractor={item => item.name}
+              onRefresh={this.handleRefresh}
+              refreshing={this.state.loading}
+            />
+          </List>
+          <Appbar
+            style={{
+              width: width,
+              height: 40,
+              backgroundColor: "white",
+              borderTopWidth: 1,
+              borderColor: "#CED0CE",
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <View
+            >
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate("Settings")
+                onPress={() =>
+                  Alert.alert(
+                    "Log out",
+                    "Do you want to log out?",
+                    [
+                      {
+                        text: "No",
+                        onPress: () => console.log("Cancel Pressed")
+                      },
+                      {
+                        text: "Yes",
+                        onPress: () => this.props.navigation.navigate("Login")
+                      }
+                    ],
+                    { cancelable: false }
+                  )
                 }
               >
-                <Text style={{ textAlign: "left" }}>Settings</Text>
+                <Text style={{ textAlign: "left" }}>Log out</Text>
               </TouchableOpacity>
-              
+            </View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Settings")
+              }
+            >
+              <Text style={{ textAlign: "left" }}>Settings</Text>
+            </TouchableOpacity>
 
-            </Appbar>
-          </SafeAreaView>
-        
+
+          </Appbar>
+        </SafeAreaView>
+
       </Root>
     );
   }
