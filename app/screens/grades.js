@@ -12,7 +12,7 @@ import {
   SafeAreaView,
   TouchableOpacity
 } from "react-native";
-
+import { Constants } from 'expo';
 import { withNavigation } from "react-navigation";
 import PTRView from "react-native-pull-to-refresh";
 import SettingsList from "react-native-settings-list";
@@ -45,7 +45,7 @@ export class Grades extends React.Component {
     title: "Grades",
     headerLeft: null,
     headerRight: <View style={{ height: 99 }} />,
-    //header: null,
+    header: null,
     gesturesEnabled: false
   };
   constructor() {
@@ -135,7 +135,7 @@ export class Grades extends React.Component {
 
     this.setState({ loading: true });
 
-    fetch("https://randomuser.me/api/?seed=33&page=3&results=567")
+    fetch("https://randomuser.me/api/?seed=33&page=3&results=666")
       .then(res => res.json())
       .then(res => {
         this.setState({
@@ -200,7 +200,7 @@ export class Grades extends React.Component {
             containerStyle={{
               borderTopWidth: 0,
               borderBottomWidth: 0,
-              marginTop: 6,
+              marginTop: Constants.statusBarHeight,
               flex: 1,
               backgroundColor: "transparent"
             }}
@@ -219,15 +219,16 @@ export class Grades extends React.Component {
                       //elevation: 3,
                       justifyContent: "center",
                       width: width - 16,
-
-                      height: height / 9 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
+                      borderRadius:3,
+                      height: height / 10 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
                     }}
                   >
                     <View
                       style={{
                         alignItems: "center",
                         flexDirection: "row",
-                        flex: 1
+                        flex: 1,
+                        
                       }}
                     >
                       <View
@@ -269,7 +270,7 @@ export class Grades extends React.Component {
                             fontSize: responsiveFontSize(2.6)
                           }}
                         >
-                          {item.grade}
+                          {item.grade}%
                         </Text>
                         <Text
                           style={{

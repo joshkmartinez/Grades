@@ -34,10 +34,10 @@ import ScrollableTabView, {
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
-
+let colors = ["#e53935", "#fb8c00", "#43a047", "#1e88e5", "#8e24aa", "#6d4c41"];
 export class classGrades extends React.Component {
   static navigationOptions = {
-    title: "$ClassName"
+    title: "$ClassName - $%"
   };
 
   constructor(props) {
@@ -53,6 +53,54 @@ export class classGrades extends React.Component {
           pointsOutOf: 10
         },
         {
+          name: "Chapter 3 Reading Guide",
+          grade: 100,
+          letterGrade: "A+",
+          category: "Homework",
+          pointsEarned: 10,
+          pointsOutOf: 10
+        },
+        {
+          name: "Pop Quiz",
+          grade: 80,
+          letterGrade: "B-",
+          category: "Tests",
+          pointsEarned: 4,
+          pointsOutOf: 5
+        },
+        {
+          name: "Essay",
+          grade: 90,
+          letterGrade: "A-",
+          category: "Essays",
+          pointsEarned: 90,
+          pointsOutOf: 100
+        },
+        {
+          name: "Group Presentation",
+          grade: 100,
+          letterGrade: "A-",
+          category: "Classwork",
+          pointsEarned: 50,
+          pointsOutOf: 50
+        },
+        {
+          name: "Characters W/S",
+          grade: 95,
+          letterGrade: "A-",
+          category: "Classwork",
+          pointsEarned: 19,
+          pointsOutOf: 20
+        },
+        {
+          name: "Vocabulary Test",
+          grade: 98,
+          letterGrade: "A+",
+          category: "Test",
+          pointsEarned: 98,
+          pointsOutOf: 100
+        },
+        {
           name: "Book 3 Exam",
           grade: 100,
           letterGrade: "A+",
@@ -61,7 +109,7 @@ export class classGrades extends React.Component {
           pointsOutOf: 50
         },
         {
-          name: "Really Long Pop Quiz (Maybe with some of this)",
+          name: "Really Long Pop Quiz with a super long name",
           grade: 95,
           letterGrade: "A",
           category: "Classwork",
@@ -185,12 +233,13 @@ export class classGrades extends React.Component {
                   style={{
                     margin: 3,
                     padding: 6,
-                    backgroundColor: "grey",
+                    backgroundColor: colors[index % colors.length],
                     //elevation: 3,
                     justifyContent: "center",
-                    width: width - 16,
+                    width: width - 15,
+                    borderRadius:3,
 
-                    height: 60
+                    height: height/12
                   }}
                 >
                   <View
@@ -202,9 +251,9 @@ export class classGrades extends React.Component {
                   >
                     <View
                         style={{
-                          backgroundColor: "blue",
+                          //backgroundColor: "blue",
                           //height: 20,
-                          width: width - (width / 5.69),
+                          width: width - (width / 5),
                           //justifyContent: "center",
                           //alignItems: "center",
                           //flexDirection: "row"
@@ -236,9 +285,8 @@ export class classGrades extends React.Component {
                     </View>
                     <View
                         style={{
-                          backgroundColor: "red",
-                          //height: 20,
-                          //width: width / 4,
+                          //backgroundColor: "red",
+          
                           flexDirection: "column",
                           justifyContent: "center"
                         }}
