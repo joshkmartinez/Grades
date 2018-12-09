@@ -35,26 +35,25 @@ export class classGrades extends React.Component {
   static navigationOptions = {
     title: "$ClassName - $%",
     headerRight: (
-      <View styles={{ alignItems: "center", justifyContent: "center" }}>
-        <Button>
-          <TouchableOpacity
-            onPress={() =>
-              Alert.alert(
-                "What-if Grade Calculator",
-                "This feature is currently in development.",
-                [
-                  {
-                    text: "Ok"
-                  }
-                ],
-                { cancelable: false }
-              )
-            }
-          >
-            <Icon type="FontAwesome" name="edit" />
-          </TouchableOpacity>
-        </Button>
-      </View>
+      
+        <TouchableOpacity
+          style={{ alignItems: "center", justifyContent: "center" }}
+          onPress={() =>
+            Alert.alert(
+              "What-if Grade Calculator",
+              "This feature is currently in development.",
+              [
+                {
+                  text: "Ok"
+                }
+              ],
+              { cancelable: false }
+            )
+          }
+        ><View styles={{ alignItems: "center", justifyContent: "center" }}>
+          <Text>✍️   </Text>
+        </View></TouchableOpacity>
+      
     )
   };
 
@@ -271,7 +270,7 @@ export class classGrades extends React.Component {
                       style={{
                         //backgroundColor: "blue",
                         //height: 20,
-                        width: width - width / 5
+                        width: width - width / 4.69
                         //justifyContent: "center",
                         //alignItems: "center",
                         //flexDirection: "row"
@@ -284,6 +283,7 @@ export class classGrades extends React.Component {
                           textAlign: "left",
                           alignSelf: "stretch",
                           color: "white",
+                          fontWeight: "bold",
                           fontSize: responsiveFontSize(1.89)
                         }}
                       >
@@ -304,7 +304,7 @@ export class classGrades extends React.Component {
                     <View
                       style={{
                         //backgroundColor: "red",
-
+                        alignItems: "center",
                         flexDirection: "column",
                         justifyContent: "center"
                       }}
@@ -314,6 +314,7 @@ export class classGrades extends React.Component {
                           textAlign: "right",
                           //alignSelf: "stretch",
                           color: "white",
+                          fontWeight: "bold",
                           fontSize: responsiveFontSize(1.7)
                         }}
                       >
@@ -324,6 +325,7 @@ export class classGrades extends React.Component {
                           textAlign: "right",
                           //alignSelf: "stretch",
                           color: "white",
+                          fontWeight: "bold",
                           fontSize: responsiveFontSize(1.55)
                         }}
                       >

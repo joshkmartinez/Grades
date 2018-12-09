@@ -218,7 +218,7 @@ export class Grades extends React.Component {
                       backgroundColor: colors[index % colors.length],
                       //elevation: 3,
                       justifyContent: "center",
-                      width: width - 16,
+                      width: width - 15,
                       borderRadius: 3,
                       height: height / 10 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
                     }}
