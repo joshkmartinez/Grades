@@ -185,7 +185,8 @@ class StudentLoginForm extends React.Component {
                 backgroundColor: "whitesmoke",
                 alignItems: "center",
                 justifyContent: "center",
-                elevation: 9
+                elevation: 9,
+                borderRadius: 3
               }}
             >
               <View

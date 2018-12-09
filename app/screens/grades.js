@@ -12,7 +12,7 @@ import {
   SafeAreaView,
   TouchableOpacity
 } from "react-native";
-import { Constants } from 'expo';
+import { Constants } from "expo";
 import { withNavigation } from "react-navigation";
 import PTRView from "react-native-pull-to-refresh";
 import SettingsList from "react-native-settings-list";
@@ -108,7 +108,7 @@ export class Grades extends React.Component {
   }
 
   componentWillMount() {
-    BackHandler.addEventListener("hardwareBackPress", function () {
+    BackHandler.addEventListener("hardwareBackPress", function() {
       return true;
     });
   }
@@ -192,7 +192,6 @@ export class Grades extends React.Component {
       <Root
         styles={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
-
         <SafeAreaView
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
@@ -209,9 +208,10 @@ export class Grades extends React.Component {
               //style={{ width: width }}
               data={this.state.data}
               renderItem={({ item, index }) => (
-                <TouchableOpacity onPress={() => this.props.navigation.navigate("classGrades")}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate("classGrades")}
+                >
                   <Surface
-
                     style={{
                       margin: 3,
                       padding: 9,
@@ -219,7 +219,7 @@ export class Grades extends React.Component {
                       //elevation: 3,
                       justifyContent: "center",
                       width: width - 16,
-                      borderRadius:3,
+                      borderRadius: 3,
                       height: height / 10 //divided by the number of classes you have, to a max of like 8, have a space at the bottom
                     }}
                   >
@@ -227,8 +227,7 @@ export class Grades extends React.Component {
                       style={{
                         alignItems: "center",
                         flexDirection: "row",
-                        flex: 1,
-                        
+                        flex: 1
                       }}
                     >
                       <View
@@ -302,9 +301,9 @@ export class Grades extends React.Component {
               backgroundColor: "white",
               borderTopWidth: 1,
               borderColor: "#CED0CE",
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center"
             }}
           >
             <View>
@@ -335,11 +334,8 @@ export class Grades extends React.Component {
             >
               <Text style={{ textAlign: "left" }}>Settings</Text>
             </TouchableOpacity>
-
-
           </Appbar>
         </SafeAreaView>
-
       </Root>
     );
   }

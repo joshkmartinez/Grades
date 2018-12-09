@@ -1,12 +1,13 @@
 import React from "react";
 import {
   View,
-  //KeyboardAvoidingView,
+  TouchableOpacity,
   Dimensions,
   //AsyncStorage,
   //ActivityIndicator,
   SafeAreaView,
-  FlatList
+  FlatList,
+  Alert
 } from "react-native";
 //import { Button, Text, Toast, Root, Container } from "native-base";
 import { _ } from "lodash";
@@ -25,19 +26,36 @@ import {
   Appbar
 } from "react-native-paper";
 import { withNavigation } from "react-navigation";
-import { Text, Toast, Root } from "native-base";
-import { default as Student } from "../components/studentLoginForm";
-import { default as Parent } from "../components/parentLoginForm";
-import ScrollableTabView, {
-  DefaultTabBar
-} from "react-native-scrollable-tab-view";
-
+import { Text, Icon, Root } from "native-base";
+import { default as EditButton } from "../components/editButton";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 let colors = ["#e53935", "#fb8c00", "#43a047", "#1e88e5", "#8e24aa", "#6d4c41"];
 export class classGrades extends React.Component {
   static navigationOptions = {
-    title: "$ClassName - $%"
+    title: "$ClassName - $%",
+    headerRight: (
+      <View styles={{ alignItems: "center", justifyContent: "center" }}>
+        <Button>
+          <TouchableOpacity
+            onPress={() =>
+              Alert.alert(
+                "What-if Grade Calculator",
+                "This feature is currently in development.",
+                [
+                  {
+                    text: "Ok"
+                  }
+                ],
+                { cancelable: false }
+              )
+            }
+          >
+            <Icon type="FontAwesome" name="edit" />
+          </TouchableOpacity>
+        </Button>
+      </View>
+    )
   };
 
   constructor(props) {
@@ -156,7 +174,7 @@ export class classGrades extends React.Component {
 
     this.setState({ loading: true });
 
-    fetch("https://randomuser.me/api/?seed=33&page=3&results=567")
+    fetch("https://randomuser.me/api/?seed=33&page=3&results=666")
       .then(res => res.json())
       .then(res => {
         this.setState({
@@ -237,9 +255,9 @@ export class classGrades extends React.Component {
                     //elevation: 3,
                     justifyContent: "center",
                     width: width - 15,
-                    borderRadius:3,
+                    borderRadius: 3,
 
-                    height: height/12
+                    height: height / 12
                   }}
                 >
                   <View
@@ -250,15 +268,15 @@ export class classGrades extends React.Component {
                     }}
                   >
                     <View
-                        style={{
-                          //backgroundColor: "blue",
-                          //height: 20,
-                          width: width - (width / 5),
-                          //justifyContent: "center",
-                          //alignItems: "center",
-                          //flexDirection: "row"
-                        }}
-                      >
+                      style={{
+                        //backgroundColor: "blue",
+                        //height: 20,
+                        width: width - width / 5
+                        //justifyContent: "center",
+                        //alignItems: "center",
+                        //flexDirection: "row"
+                      }}
+                    >
                       <Text
                         ///adjustsFontSizeToFit
                         numberOfLines={1}
@@ -284,13 +302,13 @@ export class classGrades extends React.Component {
                       </Text>
                     </View>
                     <View
-                        style={{
-                          //backgroundColor: "red",
-          
-                          flexDirection: "column",
-                          justifyContent: "center"
-                        }}
-                      >
+                      style={{
+                        //backgroundColor: "red",
+
+                        flexDirection: "column",
+                        justifyContent: "center"
+                      }}
+                    >
                       <Text
                         style={{
                           textAlign: "right",

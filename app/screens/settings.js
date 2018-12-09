@@ -30,37 +30,36 @@ export class Settings extends React.Component {
   }
   componentDidMount() {
     {
-     
     }
   }
-
   render() {
     return (
-      
-        <SettingsList backgroundColor="transparent" borderColor="grey" styles={{flex:1, }}>
-          <SettingsList.Header
-            //headerText="Settings"
-            headerStyle={{ color: "black" }}
-          />
+      <SettingsList
+        backgroundColor="transparent"
+        borderColor="grey"
+        styles={{ flex: 1 }}
+      >
+        <SettingsList.Header
+          //headerText="Settings"
+          headerStyle={{ color: "black" }}
+        />
 
-          <SettingsList.Item
-            itemWidth={50}
-            title="About / Credits"
-            onPress={() => Alert.alert("Go to credits website")}
-          />
-          <SettingsList.Item
-            itemWidth={50}
-            title="Help"
-            onPress={() => Alert.alert("Direct to help website")}
-          />
-          <SettingsList.Item
-            itemWidth={50}
-            title="Log out"
-            onPress={() => this.props.navigation.navigate("Login")}
-          />
-          
-        </SettingsList>
-      
+        <SettingsList.Item
+          itemWidth={50}
+          title="About / Credits"
+          onPress={() => Alert.alert("Go to credits website")}
+        />
+        <SettingsList.Item
+          itemWidth={50}
+          title="Help"
+          onPress={() => Alert.alert("Direct to help website")}
+        />
+        <SettingsList.Item
+          itemWidth={50}
+          title="Log out"
+          onPress={() => this.props.navigation.navigate("Login")}
+        />
+      </SettingsList>
     );
   }
 }

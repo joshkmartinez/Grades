@@ -114,7 +114,7 @@ class ParentLoginForm extends React.Component {
             behavior="padding"
             style={styles.loginContainer}
           >
-            <Text style={{ width: width - 69 }}>
+            <Text style={{ width: width - 50 }}>
               Parent Login is not supported yet. {"\n"}
               Please use your child's login information to check their grades on
               the Student Login tab.
@@ -150,7 +150,7 @@ const styles = {
   },
 
   wrapper: {
-    //flex: ,
+    borderRadius: 3,
     alignItems: "center",
     justifyContent: "center"
     //marginTop: -21
