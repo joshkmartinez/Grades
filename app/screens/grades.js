@@ -306,8 +306,7 @@ export class Grades extends React.Component {
               alignItems: 'center',
             }}
           >
-            <View
-            >
+            <View>
               <TouchableOpacity
                 onPress={() =>
                   Alert.alert(
@@ -331,8 +330,7 @@ export class Grades extends React.Component {
               </TouchableOpacity>
             </View>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("Settings")
-              }
+              onPress={() => this.props.navigation.navigate("Settings")}
             >
               <Text style={{ textAlign: "left" }}>Settings</Text>
             </TouchableOpacity>
