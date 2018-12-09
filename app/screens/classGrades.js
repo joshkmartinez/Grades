@@ -202,9 +202,9 @@ export class classGrades extends React.Component {
                   >
                     <View
                         style={{
-                          //backgroundColor: "blue",
+                          backgroundColor: "blue",
                           //height: 20,
-                          width: width - width / 2 - 21,
+                          width: width - (width / 5.69),
                           //justifyContent: "center",
                           //alignItems: "center",
                           //flexDirection: "row"
@@ -236,9 +236,9 @@ export class classGrades extends React.Component {
                     </View>
                     <View
                         style={{
-                          //backgroundColor: "red",
+                          backgroundColor: "red",
                           //height: 20,
-                          width: width - width / 2 - 20,
+                          //width: width / 4,
                           flexDirection: "column",
                           justifyContent: "center"
                         }}
