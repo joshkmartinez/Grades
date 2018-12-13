@@ -35,25 +35,25 @@ export class classGrades extends React.Component {
   static navigationOptions = {
     title: "$ClassName - $%",
     headerRight: (
-      
-        <TouchableOpacity
-          style={{ alignItems: "center", justifyContent: "center" }}
-          onPress={() =>
-            Alert.alert(
-              "What-if Grade Calculator",
-              "This feature is currently in development.",
-              [
-                {
-                  text: "Ok"
-                }
-              ],
-              { cancelable: false }
-            )
-          }
-        ><View styles={{ alignItems: "center", justifyContent: "center" }}>
-          <Text>✍️   </Text>
-        </View></TouchableOpacity>
-      
+      <TouchableOpacity
+        style={{ alignItems: "center", justifyContent: "center" }}
+        onPress={() =>
+          Alert.alert(
+            "What-if Grade Calculator",
+            "This feature is currently in development.",
+            [
+              {
+                text: "Ok"
+              }
+            ],
+            { cancelable: false }
+          )
+        }
+      >
+        <View styles={{ alignItems: "center", justifyContent: "center" }}>
+          <Text>✍️ </Text>
+        </View>
+      </TouchableOpacity>
     )
   };
 
@@ -283,7 +283,7 @@ export class classGrades extends React.Component {
                           textAlign: "left",
                           alignSelf: "stretch",
                           color: "white",
-                          fontWeight: "bold",
+                          //fontWeight: "bold",
                           fontSize: responsiveFontSize(1.89)
                         }}
                       >
