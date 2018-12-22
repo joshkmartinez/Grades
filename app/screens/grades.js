@@ -298,9 +298,8 @@ export class Grades extends React.Component {
             style={{
               width: width,
               height: 40,
-              backgroundColor: "white",
-              borderTopWidth: 1,
-              borderColor: "#CED0CE",
+              backgroundColor: "transparent",
+              
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center"

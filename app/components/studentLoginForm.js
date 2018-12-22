@@ -279,7 +279,7 @@ class StudentLoginForm extends React.Component {
 
 const styles = {
   loginContainer: {
-    top: "3%"
+    top: "39%"
   },
 
   districtText: { top: 1 },
@@ -290,8 +290,12 @@ const styles = {
   },
 
   wrapper: {
-    alignItems: "center",
-    justifyContent: "center"
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center"
   },
 
   loginButton: {
