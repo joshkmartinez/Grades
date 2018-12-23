@@ -13,7 +13,7 @@ import { withNavigation, Header } from "react-navigation";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ScrollView } from "react-native-gesture-handler";
 import { Surface, TextInput, Button } from "react-native-paper";
-
+import axios from "axios";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 
@@ -45,9 +45,9 @@ class StudentLoginForm extends React.Component {
 
       this.setState({ schoolLink: link });
 
-      //console.log("UPDATED LINK STATE: " + this.state.schoolLink)
+      //console.log("UPDATED LINK: " + this.state.schoolLink)
     } else {
-      console.log("School Link data does NOT exist");
+      //console.log("School Link data does NOT exist");
       this.setState({ districtText: "Select a school before proceeding" });
     }
   }
@@ -60,8 +60,8 @@ class StudentLoginForm extends React.Component {
         Toast.show({
           text: "School Chosen",
           buttonText: "Ok",
-          duration: 4231, //in miliseconds
-          position: "bottom",
+          duration: 3210, //in miliseconds
+          position: "top",
           type: "success"
         });
       }
@@ -100,7 +100,7 @@ class StudentLoginForm extends React.Component {
       this.setState({ importedSavedLogin: true });
       console.log("saved username and password set");
     } else {
-      console.log("No saved login found");
+      //console.log("No saved login found");
     }
   }
 
@@ -130,14 +130,17 @@ class StudentLoginForm extends React.Component {
     console.log("authed state saved");
   }
 
-  refreshSchoolandName = _.debounce(
-    () => {
-      this.checkIfLinkExists();
-      this.checkIfSchoolNameExists();
-    },
-    567
-    //this debounce function from lodash wont call the function until no editing has been made for 567 miliseconds (reduces api strain)
-  );
+  async saveGrades(html) {
+    console.log("SAVING GRADES");
+
+    await AsyncStorage.setItem("grades", html).catch(console.log);
+    console.log("GRADES SAVED");
+  }
+
+  refreshSchoolandName = _.debounce(() => {
+    this.checkIfLinkExists();
+    this.checkIfSchoolNameExists();
+  }, 420);
   spacer(space) {
     return <View styles={{ height: space }} />;
   }
@@ -156,11 +159,11 @@ class StudentLoginForm extends React.Component {
       //console.log("first no error check");
       this.setState({ loading: true });
 
-      //do things here
+      this.sendAuth();
 
       this.setState({ isAuthed: true, loading: false });
       this.saveAuthState("yes");
-      //this.sleep(1234)
+
       this.props.navigation.navigate("Grades");
     } else {
       // auth error
@@ -174,6 +177,41 @@ class StudentLoginForm extends React.Component {
       });
     }
   }
+
+  sendAuth = _.debounce(
+    () => {
+      console.log("send Auth func called");
+
+      const params = new URLSearchParams();
+      params.append("checkCookiesEnabled", "true");
+      params.append("checkMobileDevice", "false");
+      params.append("checkStandaloneMode", "false");
+      params.append("checkTabletDevice", "false");
+      params.append("portalAccountPassword", this.state.password);
+      params.append("portalAccountUsername", this.state.username);
+      params.append("portalAccountUsernameLabel", "");
+      params.append("submit", "");
+      axios
+        .get(
+          this.state.schoolLink.replace(/['"]+/g, "") +
+            "/LoginParent.aspx?page=GradebookSummary.aspx",
+          { withCredentials: true }
+        )
+        .then(function(response) {
+          saveGrades(response);
+          console.log(response);
+        })
+        .catch(function(error) {
+          // handle error
+          console.log(error);
+        })
+        .then(function() {
+          // always executed
+        });
+    },
+    //this debounce function from lodash wont call the function until no editing has been made for 321 miliseconds (reduces api strain)
+    321
+  );
 
   render() {
     this.refreshSchoolandName();

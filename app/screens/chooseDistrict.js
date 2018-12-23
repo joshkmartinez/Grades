@@ -48,7 +48,7 @@ export default class chooseDistrict extends React.Component {
       console.log(this.state.query);
       let theQuery = this.state.query;
       let parsed = this.parseQuery(theQuery);
-      console.log("Parsed query: " + parsed);
+      //console.log("Parsed query: " + parsed);
       this.setState({ parsedQuery: parsed });
       fetch(
         `https://ping.aeries.com/api/v1/schoolsearch/ca/AeriesAppParent/${parsed}`
@@ -73,19 +73,19 @@ export default class chooseDistrict extends React.Component {
           this.setState({ error: true });
         });
     },
-    //this debounce function from lodash wont call the function until no editing has been made for 250 miliseconds (reduces api strain)
-    250
+    //this debounce function from lodash wont call the function until no editing has been made for 321 miliseconds (reduces api strain)
+    321
   );
 
   async storeData(link) {
     await AsyncStorage.setItem("link", link).catch(console.log);
     console.log("DATA SAVED: " + link);
-
+    /*
     if ((await AsyncStorage.getItem("link")) !== null) {
       console.log("async link data exists");
     } else {
       console.log("no async link data exists");
-    }
+    }*/
   }
   async storeSchoolName(name) {
     await AsyncStorage.setItem("name", name).catch(console.log);

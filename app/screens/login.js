@@ -12,7 +12,6 @@ import { default as Parent } from "../components/parentLoginForm";
 import ScrollableTabView, {
   DefaultTabBar
 } from "react-native-scrollable-tab-view";
-import { View } from "native-base";
 
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;

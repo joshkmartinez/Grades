@@ -135,7 +135,7 @@ export class Grades extends React.Component {
 
     this.setState({ loading: true });
 
-    fetch("https://randomuser.me/api/?seed=33&page=3&results=666")
+    fetch("https://randomuser.me/api/?seed=33&page=3&results=420")
       .then(res => res.json())
       .then(res => {
         this.setState({
@@ -148,7 +148,7 @@ export class Grades extends React.Component {
   };
   async saveAuthState(authedBool) {
     if (typeof authedBool !== "boolean") {
-      console.log("saving auth state");
+      //console.log("saving auth state");
       //console.log("the length of " + username + " is " + username.length);
       //console.log("the length of " + password + " is " + password.length);
 
@@ -161,16 +161,16 @@ export class Grades extends React.Component {
   }
   async getAuthedState() {
     if ((await AsyncStorage.getItem("authState")) !== null) {
-      console.log("getting AuthedState");
+      //console.log("getting AuthedState");
 
       authedvar = JSON.stringify(await AsyncStorage.getItem("authState"));
       this.setState({
         isAuthed: authedvar
       });
 
-      console.log("authed State saved");
+      //console.log("authed State saved");
     } else {
-      console.log("No authed state found");
+      //console.log("No authed state found");
     }
   }
 
@@ -180,8 +180,8 @@ export class Grades extends React.Component {
   };
 
   logOut = () => {
-    this.props.navigation.navigate("Login");
     this.saveAuthState("no");
+    this.props.navigation.navigate("Login");
   };
 
   renderSeparator = () => {
