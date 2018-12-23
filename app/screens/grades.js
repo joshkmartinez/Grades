@@ -146,10 +146,42 @@ export class Grades extends React.Component {
         this.setState({ error, loading: false });
       });
   };
+  async saveAuthState(authedBool) {
+    if (typeof authedBool !== "boolean") {
+      console.log("saving auth state");
+      //console.log("the length of " + username + " is " + username.length);
+      //console.log("the length of " + password + " is " + password.length);
+
+      await AsyncStorage.setItem("authState", authedBool).catch(console.log);
+
+      console.log("authed state saved");
+    } else {
+      console.log("you can't store a bool!");
+    }
+  }
+  async getAuthedState() {
+    if ((await AsyncStorage.getItem("authState")) !== null) {
+      console.log("getting AuthedState");
+
+      authedvar = JSON.stringify(await AsyncStorage.getItem("authState"));
+      this.setState({
+        isAuthed: authedvar
+      });
+
+      console.log("authed State saved");
+    } else {
+      console.log("No authed state found");
+    }
+  }
 
   handleRefresh = () => {
     this.setState({ loading: true });
     this.makeRemoteRequest();
+  };
+
+  logOut = () => {
+    this.props.navigation.navigate("Login");
+    this.saveAuthState("no");
   };
 
   renderSeparator = () => {
@@ -188,6 +220,7 @@ export class Grades extends React.Component {
     );
   };
   render() {
+    this.getAuthedState();
     return (
       <Root
         styles={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -299,7 +332,6 @@ export class Grades extends React.Component {
               width: width,
               height: 40,
               backgroundColor: "transparent",
-              
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center"
@@ -318,7 +350,7 @@ export class Grades extends React.Component {
                       },
                       {
                         text: "Yes",
-                        onPress: () => this.props.navigation.navigate("Login")
+                        onPress: () => this.logOut()
                       }
                     ],
                     { cancelable: false }

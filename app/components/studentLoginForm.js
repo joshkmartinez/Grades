@@ -106,8 +106,8 @@ class StudentLoginForm extends React.Component {
 
   async saveLogin(username, password) {
     console.log("saving username and password");
-    console.log("the length of " + username + " is " + username.length);
-    console.log("the length of " + password + " is " + password.length);
+    //console.log("the length of " + username + " is " + username.length);
+    //console.log("the length of " + password + " is " + password.length);
     if (this.state.username.length > 3 && password.length > 3) {
       await AsyncStorage.setItem("username", username).catch(console.log);
       await AsyncStorage.setItem("password", password).catch(console.log);
@@ -121,6 +121,13 @@ class StudentLoginForm extends React.Component {
     } else {
       //do nothing
     }
+  }
+  async saveAuthState(authedBool) {
+    console.log("saving auth state");
+    //console.log("the length of " + username + " is " + username.length);
+    //console.log("the length of " + password + " is " + password.length);
+    await AsyncStorage.setItem("authState", authedBool).catch(console.log);
+    console.log("authed state saved");
   }
 
   refreshSchoolandName = _.debounce(
@@ -146,12 +153,13 @@ class StudentLoginForm extends React.Component {
       //try to auth
       //catch error code, check for internet fail code, check for invald auth code
       // authentication is successful
-      console.log("first no error check");
+      //console.log("first no error check");
       this.setState({ loading: true });
 
       //do things here
 
       this.setState({ isAuthed: true, loading: false });
+      this.saveAuthState("yes");
       //this.sleep(1234)
       this.props.navigation.navigate("Grades");
     } else {
@@ -181,12 +189,12 @@ class StudentLoginForm extends React.Component {
           >
             <Surface
               style={{
-                padding: 8,
+                padding: 9,
                 backgroundColor: "whitesmoke",
                 alignItems: "center",
                 justifyContent: "center",
-                elevation: 9,
-                borderRadius: 3
+                elevation: 3,
+                borderRadius: 6
               }}
             >
               <View
@@ -279,7 +287,7 @@ class StudentLoginForm extends React.Component {
 
 const styles = {
   loginContainer: {
-    top: "39%"
+    top: "30%"
   },
 
   districtText: { top: 1 },

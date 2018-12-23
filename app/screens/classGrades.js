@@ -86,11 +86,11 @@ export class classGrades extends React.Component {
           pointsOutOf: 5
         },
         {
-          name: "Essay",
+          name: "Essay on this book",
           grade: 90,
-          letterGrade: "A-",
+          letterGrade: "A+",
           category: "Essays",
-          pointsEarned: 90,
+          pointsEarned: 100,
           pointsOutOf: 100
         },
         {
@@ -237,7 +237,7 @@ export class classGrades extends React.Component {
             containerStyle={{
               borderTopWidth: 0,
               borderBottomWidth: 0,
-              marginTop: 6,
+              marginTop: 1,
               flex: 1,
               backgroundColor: "transparent"
             }}
@@ -249,11 +249,11 @@ export class classGrades extends React.Component {
                 <Surface
                   style={{
                     margin: 3,
-                    padding: 6,
+                    padding: 3,
                     backgroundColor: colors[index % colors.length],
                     //elevation: 3,
                     justifyContent: "center",
-                    width: width - 15,
+                    width: width - 9,
                     borderRadius: 3,
 
                     height: height / 12
@@ -270,7 +270,7 @@ export class classGrades extends React.Component {
                       style={{
                         //backgroundColor: "blue",
                         //height: 20,
-                        width: width - width / 4.69
+                        width: width - width / 5
                         //justifyContent: "center",
                         //alignItems: "center",
                         //flexDirection: "row"
@@ -301,37 +301,41 @@ export class classGrades extends React.Component {
                         {item.category}
                       </Text>
                     </View>
-                    <View
-                      style={{
-                        //backgroundColor: "red",
-                        alignItems: "center",
-                        flexDirection: "column",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <Text
+                    
+                      <View
                         style={{
-                          textAlign: "right",
-                          //alignSelf: "stretch",
-                          color: "white",
-                          fontWeight: "bold",
-                          fontSize: responsiveFontSize(1.7)
+                          //backgroundColor: "red",
+                          alignItems: "flex-end",
+                          flexDirection: "column",
+                          justifyContent: "flex-end",
+                          width:width/7
                         }}
                       >
-                        {item.pointsEarned + "/" + item.pointsOutOf}
-                      </Text>
-                      <Text
-                        style={{
-                          textAlign: "right",
-                          //alignSelf: "stretch",
-                          color: "white",
-                          fontWeight: "bold",
-                          fontSize: responsiveFontSize(1.55)
-                        }}
-                      >
-                        {item.letterGrade}
-                      </Text>
-                    </View>
+                        <Text numberOfLines={1}
+                          style={{
+                            textAlign: "right",
+                            alignSelf: "stretch",
+
+                            color: "white",
+                            //fontWeight: "bold",
+                            fontSize: responsiveFontSize(1.5)
+                          }}
+                        >
+                          {item.pointsEarned + "/" + item.pointsOutOf}
+                        </Text>
+                        <Text
+                          style={{
+                            textAlign: "right",
+                            alignSelf: "stretch",
+                            color: "white",
+                            //fontWeight: "bold",
+                            fontSize: responsiveFontSize(1.42)
+                          }}
+                        >
+                          {item.letterGrade}
+                        </Text>
+                      </View>
+                    
                   </View>
                 </Surface>
               )}
