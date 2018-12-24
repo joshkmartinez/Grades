@@ -10,9 +10,9 @@ import {
 import { Text, Toast, Root, Spinner } from "native-base";
 import { _ } from "lodash";
 import { withNavigation, Header } from "react-navigation";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ScrollView } from "react-native-gesture-handler";
 import { Surface, TextInput, Button } from "react-native-paper";
+import 'url-search-params-polyfill';
 import axios from "axios";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -112,14 +112,12 @@ class StudentLoginForm extends React.Component {
       await AsyncStorage.setItem("username", username).catch(console.log);
       await AsyncStorage.setItem("password", password).catch(console.log);
       console.log("Login info saved for: " + username);
-
+      /*
       if ((await AsyncStorage.getItem("username")) !== null) {
         console.log("async username data exists");
       } else {
         console.log("no async username data exists");
-      }
-    } else {
-      //do nothing
+      }*/
     }
   }
   async saveAuthState(authedBool) {
@@ -132,6 +130,8 @@ class StudentLoginForm extends React.Component {
 
   async saveGrades(html) {
     console.log("SAVING GRADES");
+    
+
 
     await AsyncStorage.setItem("grades", html).catch(console.log);
     console.log("GRADES SAVED");
@@ -171,7 +171,7 @@ class StudentLoginForm extends React.Component {
       Toast.show({
         text: "Login error. Make sure your username and password are correct.",
         buttonText: "Ok",
-        duration: 3210, //in miliseconds
+        duration: 3214, //in miliseconds
         position: "top",
         type: "danger"
       });
@@ -181,7 +181,7 @@ class StudentLoginForm extends React.Component {
   sendAuth = _.debounce(
     () => {
       console.log("send Auth func called");
-
+      // not supported on IOS - thats why I have url-search-params-polyfill
       const params = new URLSearchParams();
       params.append("checkCookiesEnabled", "true");
       params.append("checkMobileDevice", "false");
@@ -195,11 +195,13 @@ class StudentLoginForm extends React.Component {
         .get(
           this.state.schoolLink.replace(/['"]+/g, "") +
             "/LoginParent.aspx?page=GradebookSummary.aspx",
+          params,
           { withCredentials: true }
         )
         .then(function(response) {
-          saveGrades(response);
+          
           console.log(response);
+          this.saveGrades
         })
         .catch(function(error) {
           // handle error
