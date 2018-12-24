@@ -12,7 +12,8 @@ import { _ } from "lodash";
 import { withNavigation, Header } from "react-navigation";
 import { ScrollView } from "react-native-gesture-handler";
 import { Surface, TextInput, Button } from "react-native-paper";
-import 'url-search-params-polyfill';
+import "url-search-params-polyfill";
+import html2json from "html2json";
 import axios from "axios";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
@@ -31,6 +32,8 @@ class StudentLoginForm extends React.Component {
       importedSavedLogin: false
     };
     this.auth = this.auth.bind(this);
+    this.saveGrades = this.saveGrades.bind(this);
+    this.needToUpdateGrades = this.needToUpdateGrades.bind(this);
   }
   componentDidMount() {
     // make sure user has internet
@@ -129,12 +132,15 @@ class StudentLoginForm extends React.Component {
   }
 
   async saveGrades(html) {
-    console.log("SAVING GRADES");
-    
+    json = html2json(html);
+    await AsyncStorage.setItem("grades", json).catch(console.log);
+    console.log("Cached grades saved!");
+  }
 
-
-    await AsyncStorage.setItem("grades", html).catch(console.log);
-    console.log("GRADES SAVED");
+  async needToUpdateGrades(yesorno) {
+    await AsyncStorage.setItem("needToUpdateGrades", yesorno).catch(
+      console.log
+    );
   }
 
   refreshSchoolandName = _.debounce(() => {
@@ -199,9 +205,10 @@ class StudentLoginForm extends React.Component {
           { withCredentials: true }
         )
         .then(function(response) {
-          
+          //executed with response
+          () => this.saveGrades(response);
+          () => this.needToUpdateGrades("yes");
           console.log(response);
-          this.saveGrades
         })
         .catch(function(error) {
           // handle error

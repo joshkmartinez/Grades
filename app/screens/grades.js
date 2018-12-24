@@ -17,6 +17,7 @@ import { withNavigation } from "react-navigation";
 import PTRView from "react-native-pull-to-refresh";
 import SettingsList from "react-native-settings-list";
 import { Text, Toast, Root } from "native-base";
+import html2json from "html2json";
 import ScrollableTabView, {
   DefaultTabBar
 } from "react-native-scrollable-tab-view";
@@ -54,6 +55,8 @@ export class Grades extends React.Component {
       index: 0,
       colorIndex: 0,
       isAuthed: false,
+      grades: "",
+      needToUpdate: false,
       data: [
         {
           name: "English 4H IB",
@@ -173,6 +176,21 @@ export class Grades extends React.Component {
       //console.log("No authed state found");
     }
   }
+  async getNeedToUpdate() {
+    if ((await AsyncStorage.getItem("needToUpdateGrades")) !== null) {
+      doI = JSON.stringify(await AsyncStorage.getItem("needToUpdateGrades"));
+      if (doI === "yes") {
+        this.setState({
+          needToUpdate: true
+        });
+      }
+    }
+  }
+  async needToUpdateChange(yesorno) {
+    await AsyncStorage.setItem("needToUpdateGrades", yesorno).catch(
+      console.log
+    );
+  }
 
   handleRefresh = () => {
     this.setState({ loading: true });
@@ -221,6 +239,14 @@ export class Grades extends React.Component {
   };
   render() {
     this.getAuthedState();
+    this.getNeedToUpdate();
+    if (this.needToUpdate) {
+      this.makeRemoteRequest();
+      this.setState({
+        needToUpdate: false
+      });
+      this.needToUpdateChange("no");
+    }
     return (
       <Root
         styles={{ flex: 1, alignItems: "center", justifyContent: "center" }}
