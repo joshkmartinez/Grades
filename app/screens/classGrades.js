@@ -34,6 +34,7 @@ let colors = ["#e53935", "#fb8c00", "#43a047", "#1e88e5", "#8e24aa", "#6d4c41"];
 export class classGrades extends React.Component {
   static navigationOptions = {
     title: "$ClassName - $%",
+    gesturesEnabled: true,
     headerRight: (
       <TouchableOpacity
         style={{ alignItems: "center", justifyContent: "center" }}

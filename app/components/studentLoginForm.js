@@ -1,7 +1,6 @@
 import React from "react";
 import {
   View,
-  //TextInput,
   KeyboardAvoidingView,
   Dimensions,
   AsyncStorage,
@@ -63,7 +62,7 @@ class StudentLoginForm extends React.Component {
         Toast.show({
           text: "School Chosen",
           buttonText: "Ok",
-          duration: 3210, //in miliseconds
+          duration: 1234, //in miliseconds
           position: "top",
           type: "success"
         });
@@ -73,18 +72,6 @@ class StudentLoginForm extends React.Component {
     } else {
       console.log("School name is found");
     }
-  }
-  debounced(delay, fn) {
-    let timerId;
-    return function(...args) {
-      if (timerId) {
-        clearTimeout(timerId);
-      }
-      timerId = setTimeout(() => {
-        fn(...args);
-        timerId = null;
-      }, delay);
-    };
   }
 
   async getSavedLogin() {
@@ -174,53 +161,72 @@ class StudentLoginForm extends React.Component {
     } else {
       // auth error
       this.setState({ isAuthed: false, loading: false });
+      /*
       Toast.show({
         text: "Login error. Make sure your username and password are correct.",
         buttonText: "Ok",
         duration: 3214, //in miliseconds
         position: "top",
         type: "danger"
-      });
+      });*/
     }
   }
 
-  sendAuth = _.debounce(
-    () => {
-      console.log("send Auth func called");
-      // not supported on IOS - thats why I have url-search-params-polyfill
-      const params = new URLSearchParams();
-      params.append("checkCookiesEnabled", "true");
-      params.append("checkMobileDevice", "false");
-      params.append("checkStandaloneMode", "false");
-      params.append("checkTabletDevice", "false");
-      params.append("portalAccountPassword", this.state.password);
-      params.append("portalAccountUsername", this.state.username);
-      params.append("portalAccountUsernameLabel", "");
-      params.append("submit", "");
-      axios
-        .get(
-          this.state.schoolLink.replace(/['"]+/g, "") +
-            "/LoginParent.aspx?page=GradebookSummary.aspx",
-          params,
-          { withCredentials: true }
-        )
-        .then(function(response) {
-          //executed with response
-          () => this.saveGrades(response);
-          () => this.needToUpdateGrades("yes");
-          console.log(response);
-        })
-        .catch(function(error) {
-          // handle error
-          console.log(error);
-        })
-        .then(function() {
-          // always executed
+  sendAuth = async () => {
+    console.log("send Auth func called");
+    //save user and pass
+    this.setState({ loading: true });
+    // not supported on IOS - thats why I have url-search-params-polyfill
+    const params = new URLSearchParams();
+    params.append("checkCookiesEnabled", "true");
+    params.append("checkMobileDevice", "false");
+    params.append("checkStandaloneMode", "false");
+    params.append("checkTabletDevice", "false");
+    params.append(
+      "portalAccountPassword",
+      this.state.password.replace(/['"]+/g, "")
+    );
+    params.append(
+      "portalAccountUsername",
+      this.state.username.replace(/['"]+/g, "")
+    );
+    //these values are blank
+    params.append("portalAccountUsernameLabel", "");
+    params.append("submit", "");
+    console.log("PARAMS: " + params);
+    await axios
+      .get(
+        this.state.schoolLink.replace(/['"]+/g, "") +
+          "/LoginParent.aspx?page=GradebookSummary.aspx",
+        params,
+        { withCredentials: true }
+      )
+      .then(response => {
+        //executed with response data
+        //check if incorrect username / password
+        this.saveGrades(response); //these dont work?
+        this.needToUpdateGrades("yes"); // ^
+        this.setState({ isAuthed: true, loading: false });
+        this.saveAuthState("yes");
+        console.log(response);
+        this.props.navigation.navigate("Grades");
+      })
+      .catch(error => {
+        // handle error
+        console.log(error);
+        this.setState({ isAuthed: false, loading: false });
+        Toast.show({
+          text: error.toString(),
+          buttonText: "Ok",
+          duration: 3200, //in miliseconds
+          position: "top",
+          type: "danger"
         });
-    },
-    //this debounce function from lodash wont call the function until no editing has been made for 321 miliseconds (reduces api strain)
-    321
-  );
+      })
+      .then(() => {
+        // always executed
+      });
+  };
 
   render() {
     this.refreshSchoolandName();
@@ -318,7 +324,7 @@ class StudentLoginForm extends React.Component {
                   icon="check"
                   mode="contained"
                   color="whitesmoke"
-                  onPress={() => this.auth()}
+                  onPress={() => this.sendAuth()}
                 >
                   <Text> Login </Text>
                 </Button>

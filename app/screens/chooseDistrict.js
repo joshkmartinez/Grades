@@ -110,8 +110,8 @@ export default class chooseDistrict extends React.Component {
         "school link is blank, cannot be chosen, school does not support the app"
       );
       Alert.alert(
-        "Sorry, your school does not support the Aeries App",
-        " 😢 ",
+        "Sorry 😢, your school does not support the Aeries App",
+        "Please contact your administration",
         [{ text: "OK", onPress: () => console.log("Link error acknowledged") }],
         { cancelable: false }
       );
