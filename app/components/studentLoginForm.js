@@ -31,9 +31,6 @@ class StudentLoginForm extends React.Component {
       loginDisabled: true,
       importedSavedLogin: false
     };
-    this.auth = this.auth.bind(this);
-    this.saveGrades = this.saveGrades.bind(this);
-    this.needToUpdateGrades = this.needToUpdateGrades.bind(this);
   }
   componentDidMount() {
     // make sure user has internet
@@ -139,40 +136,6 @@ class StudentLoginForm extends React.Component {
     return <View styles={{ height: space }} />;
   }
 
-  auth() {
-    console.log("auth function called");
-
-    this.saveLogin(this.state.username, this.state.password);
-    //console.log("function passed")
-    this.setState({ authError: false, isAuthed: false, loading: true });
-
-    if (this.state.isAuthed === false && this.state.authError === false) {
-      //try to auth
-      //catch error code, check for internet fail code, check for invald auth code
-      // authentication is successful
-      //console.log("first no error check");
-      this.setState({ loading: true });
-
-      this.sendAuth();
-
-      this.setState({ isAuthed: true, loading: false });
-      this.saveAuthState("yes");
-
-      this.props.navigation.navigate("Grades");
-    } else {
-      // auth error
-      this.setState({ isAuthed: false, loading: false });
-      /*
-      Toast.show({
-        text: "Login error. Make sure your username and password are correct.",
-        buttonText: "Ok",
-        duration: 3214, //in miliseconds
-        position: "top",
-        type: "danger"
-      });*/
-    }
-  }
-
   sendAuth = async () => {
     console.log("send Auth func called");
     this.saveLogin(this.state.username, this.state.password);
@@ -194,8 +157,6 @@ class StudentLoginForm extends React.Component {
     //these values are blank
     params.append("portalAccountUsernameLabel", "");
     params.append("submit", "");
-    console.log("PARAMS: " + params);
-    console.log("HERE: " + this.state.schoolLink.replace(/['"]+/g, ""));
     await axios
       .post(
         this.state.schoolLink.replace(/['"]+/g, "") +
