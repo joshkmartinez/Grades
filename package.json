@@ -20,6 +20,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
+    "@3846masa/axios-cookiejar-support": "^0.4.2",
     "@expo/vector-icons": "^6.3.1",
     "axios": "^0.18.0",
     "expo": "^27.0.1",

@@ -40,7 +40,10 @@ import { _ } from "lodash";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 let colors = ["#e53935", "#fb8c00", "#43a047", "#1e88e5", "#8e24aa", "#6d4c41"];
-
+String.prototype.replaceAll = function(search, replacement) {
+  var target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
+};
 export class Grades extends React.Component {
   static navigationOptions = {
     title: "Grades",
@@ -101,13 +104,6 @@ export class Grades extends React.Component {
       ],
       loading: false
     };
-  }
-
-  refresh() {
-    //get grades and repopulate tabs
-    //refresh
-
-    this.setState({ isAuthed: true });
   }
 
   componentWillMount() {
@@ -186,6 +182,25 @@ export class Grades extends React.Component {
       }
     }
   }
+ replaceAll=(str, find, replace) =>{
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+  async getSavedGrades() {
+    if (
+      (await AsyncStorage.getItem("grades")) !== null
+    ) {
+     
+      let grades = await AsyncStorage.getItem("grades");
+      this.replaceAll(grades,"\n","")
+      this.replaceAll(grades,"\t","")
+      this.replaceAll(grades,"\r","")
+      //console.log("BEFORE:   "+grades)
+      this.setState({
+        grades: grades
+      });
+     //console.log("SAVED GRADES:   "+this.state.grades)
+    }
+  }
   async needToUpdateChange(yesorno) {
     await AsyncStorage.setItem("needToUpdateGrades", yesorno).catch(
       console.log
@@ -194,6 +209,7 @@ export class Grades extends React.Component {
 
   handleRefresh = () => {
     this.setState({ loading: true });
+    this.getSavedGrades();
     this.makeRemoteRequest();
   };
 
@@ -240,8 +256,9 @@ export class Grades extends React.Component {
   render() {
     this.getAuthedState();
     this.getNeedToUpdate();
-    if (this.needToUpdate) {
-      this.makeRemoteRequest();
+    
+    if (this.state.needToUpdate) {
+      this.handleRefresh();
       this.setState({
         needToUpdate: false
       });

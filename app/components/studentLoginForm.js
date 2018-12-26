@@ -16,7 +16,15 @@ import html2json from "html2json";
 import axios from "axios";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
+axios.interceptors.request.use(request => {
+  console.log('Starting Request', request)
+  return request
+})
 
+axios.interceptors.response.use(response => {
+  console.log('Response:', response)
+  return response
+})
 class StudentLoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -112,14 +120,16 @@ class StudentLoginForm extends React.Component {
     console.log("saving auth state");
     //console.log("the length of " + username + " is " + username.length);
     //console.log("the length of " + password + " is " + password.length);
+    //authBool is "yes" or "no"
+    //** */you cannot async store a boolean**
     await AsyncStorage.setItem("authState", authedBool).catch(console.log);
     console.log("authed state saved");
   }
 
   async saveGrades(html) {
-    json = html2json(html);
-    await AsyncStorage.setItem("grades", json).catch(console.log);
-    console.log("Cached grades saved!");
+    //json = html2json(html.request._response);
+    console.log("THIS IS SAVED: " +html.request._response);
+    await AsyncStorage.setItem("grades", html.request._response).catch(console.log);
   }
 
   async needToUpdateGrades(yesorno) {
@@ -131,7 +141,7 @@ class StudentLoginForm extends React.Component {
   refreshSchoolandName = _.debounce(() => {
     this.checkIfLinkExists();
     this.checkIfSchoolNameExists();
-  }, 420);
+  }, 333);
   spacer(space) {
     return <View styles={{ height: space }} />;
   }
@@ -157,6 +167,7 @@ class StudentLoginForm extends React.Component {
     //these values are blank
     params.append("portalAccountUsernameLabel", "");
     params.append("submit", "");
+    //console.log(params.toString())
     await axios
       .post(
         this.state.schoolLink.replace(/['"]+/g, "") +
@@ -166,9 +177,11 @@ class StudentLoginForm extends React.Component {
             params
           },
           headers: {
-            "Content-Type": "multipart/form-data"
+            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+            "Cache-Control":"max-age=0"
           },
-          withCredentials: true
+          //the problem is sending the cookie
+  withCredentials: true 
         }
       )
       .then(response => {
