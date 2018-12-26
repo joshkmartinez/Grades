@@ -28,6 +28,7 @@ class StudentLoginForm extends React.Component {
       districtText: "",
       schoolLink: "",
       loading: false,
+      loginDisabled: true,
       importedSavedLogin: false
     };
     this.auth = this.auth.bind(this);
@@ -174,7 +175,7 @@ class StudentLoginForm extends React.Component {
 
   sendAuth = async () => {
     console.log("send Auth func called");
-    //save user and pass
+    this.saveLogin(this.state.username, this.state.password);
     this.setState({ loading: true });
     // not supported on IOS - thats why I have url-search-params-polyfill
     const params = new URLSearchParams();
@@ -194,16 +195,24 @@ class StudentLoginForm extends React.Component {
     params.append("portalAccountUsernameLabel", "");
     params.append("submit", "");
     console.log("PARAMS: " + params);
+    console.log("HERE: " + this.state.schoolLink.replace(/['"]+/g, ""));
     await axios
-      .get(
+      .post(
         this.state.schoolLink.replace(/['"]+/g, "") +
           "/LoginParent.aspx?page=GradebookSummary.aspx",
-        params,
-        { withCredentials: true }
+        {
+          params: {
+            params
+          },
+          headers: {
+            "Content-Type": "multipart/form-data"
+          },
+          withCredentials: true
+        }
       )
       .then(response => {
         //executed with response data
-        //check if incorrect username / password
+        //check if incorrect username / password <-parse for it
         this.saveGrades(response); //these dont work?
         this.needToUpdateGrades("yes"); // ^
         this.setState({ isAuthed: true, loading: false });
@@ -217,7 +226,7 @@ class StudentLoginForm extends React.Component {
         this.setState({ isAuthed: false, loading: false });
         Toast.show({
           text: error.toString(),
-          buttonText: "Ok",
+          buttonText: "OK",
           duration: 3200, //in miliseconds
           position: "top",
           type: "danger"
@@ -227,11 +236,15 @@ class StudentLoginForm extends React.Component {
         // always executed
       });
   };
+  canLogin = () => {
+    //if all forms filled out then make button enabled
+    //buttonDisabled
+  };
 
   render() {
     this.refreshSchoolandName();
     this.getSavedLogin();
-
+    this.canLogin();
     return (
       <Root>
         <View style={styles.wrapper}>
@@ -322,6 +335,7 @@ class StudentLoginForm extends React.Component {
               login button*/}
                 <Button
                   icon="check"
+                  //disabled={this.state.buttonDisabled}
                   mode="contained"
                   color="whitesmoke"
                   onPress={() => this.sendAuth()}
@@ -340,7 +354,7 @@ class StudentLoginForm extends React.Component {
 
 const styles = {
   loginContainer: {
-    top: "30%"
+    top: "29%"
   },
 
   districtText: { top: 1 },
