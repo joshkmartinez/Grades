@@ -12,19 +12,21 @@ import { withNavigation, Header } from "react-navigation";
 import { ScrollView } from "react-native-gesture-handler";
 import { Surface, TextInput, Button } from "react-native-paper";
 import "url-search-params-polyfill";
-import html2json from "html2json";
+//import html2json from "html2json";
 import axios from "axios";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
+//var html2json = require('html2json').html2json;
 axios.interceptors.request.use(request => {
-  console.log('Starting Request', request)
-  return request
-})
-
+  console.log("Starting Request:   ", request);
+  return request;
+});
+axios.defaults.withCredentials = true;
+axios.defaults.jar = true;
 axios.interceptors.response.use(response => {
-  console.log('Response:', response)
-  return response
-})
+  console.log("Response from request:   ", response);
+  return response;
+});
 class StudentLoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -125,15 +127,32 @@ class StudentLoginForm extends React.Component {
     await AsyncStorage.setItem("authState", authedBool).catch(console.log);
     console.log("authed state saved");
   }
+  createElementFromHTML(htmlString) {
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+  
+    // Change this to div.childNodes to support multiple top-level nodes
+    return div.firstChild; 
+  }
+  async saveAssignments(html){
+   
+    //console.log("ASS:  "+html.request._response)
+    /*
+    await AsyncStorage.setItem("assignments", html).catch(
+      console.log
+    );*/
+  }
 
   async saveGrades(html) {
     //json = html2json(html.request._response);
-    console.log("THIS IS SAVED: " +html.request._response);
-    await AsyncStorage.setItem("grades", html.request._response).catch(console.log);
+    this.saveAssignments(html)
+    await AsyncStorage.setItem("grades", html.request._response).catch(
+      console.log
+    );
   }
 
-  async needToUpdateGrades(yesorno) {
-    await AsyncStorage.setItem("needToUpdateGrades", yesorno).catch(
+  async needToUpdateGrades(yn) {
+    await AsyncStorage.setItem("needToUpdateGrades", yn).catch(
       console.log
     );
   }
@@ -172,16 +191,15 @@ class StudentLoginForm extends React.Component {
       .post(
         this.state.schoolLink.replace(/['"]+/g, "") +
           "/LoginParent.aspx?page=GradebookSummary.aspx",
+
+        params,
+
         {
-          params: {
-            params
-          },
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
-            "Cache-Control":"max-age=0"
+            "Content-Type": "multipart/form-data",
+            
           },
-          //the problem is sending the cookie
-  withCredentials: true 
+          
         }
       )
       .then(response => {
