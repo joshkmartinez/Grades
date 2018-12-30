@@ -24,13 +24,13 @@ export default class App extends React.Component {
       return (
         <View
           style={{
-            top: "42%",
+            top: "39%",
             borderColor: "whitesmoke",
             alignItems: "center",
             justifyContent: "center"
           }}
         >
-          <Text> Loading Fonts... </Text>
+          <Text> Loading... </Text>
           <ActivityIndicator animating size="large" />
         </View>
       );

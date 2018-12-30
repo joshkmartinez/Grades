@@ -11,31 +11,38 @@ import { _ } from "lodash";
 import { withNavigation, Header } from "react-navigation";
 import { ScrollView } from "react-native-gesture-handler";
 import { Surface, TextInput, Button } from "react-native-paper";
-import "url-search-params-polyfill";
-//import html2json from "html2json";
+//import "url-search-params-polyfill";
+
 import axios from "axios";
+
+import { parse, stringify } from "himalaya";
+const queryString = require("query-string");
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 //var html2json = require('html2json').html2json;
 axios.interceptors.request.use(request => {
-  console.log("Starting Request:   ", request);
+  console.log("Sending Request:   ", request);
   return request;
 });
-axios.defaults.withCredentials = true;
-axios.defaults.jar = true;
+//axios.defaults.withCredentials = true;
+//axios.defaults.jar = true;
 axios.interceptors.response.use(response => {
   console.log("Response from request:   ", response);
   return response;
 });
+
 class StudentLoginForm extends React.Component {
   constructor(props) {
     super(props);
+    //this.saveGrades = this.saveGrades.bind(this);
+
     this.state = {
       isAuthed: false,
       username: "",
       authError: false,
       password: "",
       districtText: "",
+      grades: "",
       schoolLink: "",
       loading: false,
       loginDisabled: true,
@@ -97,8 +104,6 @@ class StudentLoginForm extends React.Component {
       });
       this.setState({ importedSavedLogin: true });
       console.log("saved username and password set");
-    } else {
-      //console.log("No saved login found");
     }
   }
 
@@ -106,17 +111,10 @@ class StudentLoginForm extends React.Component {
     console.log("saving username and password");
     //console.log("the length of " + username + " is " + username.length);
     //console.log("the length of " + password + " is " + password.length);
-    if (this.state.username.length > 3 && password.length > 3) {
-      await AsyncStorage.setItem("username", username).catch(console.log);
-      await AsyncStorage.setItem("password", password).catch(console.log);
-      console.log("Login info saved for: " + username);
-      /*
-      if ((await AsyncStorage.getItem("username")) !== null) {
-        console.log("async username data exists");
-      } else {
-        console.log("no async username data exists");
-      }*/
-    }
+
+    await AsyncStorage.setItem("username", username).catch(console.log);
+    await AsyncStorage.setItem("password", password).catch(console.log);
+    console.log("Login info saved for: " + username);
   }
   async saveAuthState(authedBool) {
     console.log("saving auth state");
@@ -127,34 +125,29 @@ class StudentLoginForm extends React.Component {
     await AsyncStorage.setItem("authState", authedBool).catch(console.log);
     console.log("authed state saved");
   }
-  createElementFromHTML(htmlString) {
-    var div = document.createElement('div');
-    div.innerHTML = htmlString.trim();
-  
-    // Change this to div.childNodes to support multiple top-level nodes
-    return div.firstChild; 
+
+  saveGrades = async html => {
+    //json = html2json(html.request._response);
+
+    this.saveAssignments(html);
+    await AsyncStorage.setItem("grades", html).catch(console.log);
+  };
+  async getGrades() {
+    if ((await AsyncStorage.getItem("grades")) !== null) {
+      this.setState({
+        grades: await AsyncStorage.getItem("grades")
+      });
+    }
   }
-  async saveAssignments(html){
-   
+  needToUpdateGrades = async yn => {
+    await AsyncStorage.setItem("needToUpdateGrades", yn).catch(console.log);
+  };
+  async saveAssignments(html) {
     //console.log("ASS:  "+html.request._response)
     /*
     await AsyncStorage.setItem("assignments", html).catch(
       console.log
     );*/
-  }
-
-  async saveGrades(html) {
-    //json = html2json(html.request._response);
-    this.saveAssignments(html)
-    await AsyncStorage.setItem("grades", html.request._response).catch(
-      console.log
-    );
-  }
-
-  async needToUpdateGrades(yn) {
-    await AsyncStorage.setItem("needToUpdateGrades", yn).catch(
-      console.log
-    );
   }
 
   refreshSchoolandName = _.debounce(() => {
@@ -167,67 +160,51 @@ class StudentLoginForm extends React.Component {
 
   sendAuth = async () => {
     console.log("send Auth func called");
+    console.log("LINK:   " + this.state.schoolLink.replace(/['"]+/g, ""));
     this.saveLogin(this.state.username, this.state.password);
     this.setState({ loading: true });
-    // not supported on IOS - thats why I have url-search-params-polyfill
-    const params = new URLSearchParams();
-    params.append("checkCookiesEnabled", "true");
-    params.append("checkMobileDevice", "false");
-    params.append("checkStandaloneMode", "false");
-    params.append("checkTabletDevice", "false");
-    params.append(
+
+    var data = new FormData();
+    data.append("checkCookiesEnabled", "true");
+    data.append("checkMobileDevice", "false");
+    data.append("checkStandaloneMode", "false");
+    data.append("checkTabletDevice", "false");
+    data.append(
       "portalAccountPassword",
       this.state.password.replace(/['"]+/g, "")
     );
-    params.append(
+    data.append(
       "portalAccountUsername",
       this.state.username.replace(/['"]+/g, "")
     );
-    //these values are blank
-    params.append("portalAccountUsernameLabel", "");
-    params.append("submit", "");
-    //console.log(params.toString())
-    await axios
-      .post(
-        this.state.schoolLink.replace(/['"]+/g, "") +
-          "/LoginParent.aspx?page=GradebookSummary.aspx",
+    data.append("portalAccountUsernameLabel", "");
+    data.append("submit", "");
 
-        params,
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
 
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            
-          },
-          
-        }
-      )
-      .then(response => {
-        //executed with response data
-        //check if incorrect username / password <-parse for it
-        this.saveGrades(response); //these dont work?
-        this.needToUpdateGrades("yes"); // ^
-        this.setState({ isAuthed: true, loading: false });
-        this.saveAuthState("yes");
-        console.log(response);
-        this.props.navigation.navigate("Grades");
-      })
-      .catch(error => {
-        // handle error
-        console.log(error);
-        this.setState({ isAuthed: false, loading: false });
-        Toast.show({
-          text: error.toString(),
-          buttonText: "OK",
-          duration: 3200, //in miliseconds
-          position: "top",
-          type: "danger"
-        });
-      })
-      .then(() => {
-        // always executed
-      });
+    printDstuff = async response => {
+      console.log(response);
+      this.setState({ grades: response });
+      console.log(this.state.grades);
+      const html = this.state.grades;
+      const json = parse(html);
+      console.log("json --->" + JSON.stringify(json));
+    };
+    await xhr.addEventListener("readystatechange", function() {
+      if (this.readyState === this.DONE) {
+        printDstuff(this.responseText);
+      }
+    });
+
+    await xhr.open(
+      "POST",
+      "https://familyportal.svusd.org/ParentPortal/LoginParent.aspx?page=GradebookSummary.aspx"
+    );
+
+    await xhr.send(data);
   };
+
   canLogin = () => {
     //if all forms filled out then make button enabled
     //buttonDisabled
