@@ -185,11 +185,11 @@ class StudentLoginForm extends React.Component {
 
     printDstuff = async response => {
       console.log(response);
-      this.setState({ grades: response });
+      await this.setState({ grades: response });
       console.log(this.state.grades);
-      const html = this.state.grades;
-      const json = parse(html);
-      console.log("json --->" + JSON.stringify(json));
+    const html = this.state.grades;
+    const json = parse(html);
+    console.log("json --->" + JSON.stringify(json));
     };
     await xhr.addEventListener("readystatechange", function() {
       if (this.readyState === this.DONE) {
@@ -203,6 +203,7 @@ class StudentLoginForm extends React.Component {
     );
 
     await xhr.send(data);
+    
   };
 
   canLogin = () => {
