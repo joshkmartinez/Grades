@@ -190,6 +190,17 @@ class StudentLoginForm extends React.Component {
     const html = this.state.grades;
     const json = parse(html);
     console.log("json --->" + JSON.stringify(json));
+    if(json[3].children[8].children[2].children[7].children[1].children[7].children[3].children[3].children[0].content === "The Username and Password entered are incorrect.")
+    {
+      this.setState({ isAuthed: false, loading: false });
+      Toast.show({
+        text: "The Username or Password entered is incorrect.",
+        buttonText: "OK",
+        duration: 4321, //in miliseconds
+        position: "top",
+        type: "danger"
+      });
+    }
     };
     await xhr.addEventListener("readystatechange", function() {
       if (this.readyState === this.DONE) {
