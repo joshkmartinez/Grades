@@ -14,12 +14,11 @@ import { Surface, TextInput, Button } from "react-native-paper";
 //import "url-search-params-polyfill";
 
 import axios from "axios";
-
-import { parse, stringify } from "himalaya";
+//import CookieManager from 'react-native-cookies';
+import { parse } from "himalaya";
 const queryString = require("query-string");
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
-//var html2json = require('html2json').html2json;
 axios.interceptors.request.use(request => {
   console.log("Sending Request:   ", request);
   return request;
@@ -30,7 +29,12 @@ axios.interceptors.response.use(response => {
   console.log("Response from request:   ", response);
   return response;
 });
-
+var RCTNetworking = require('RCTNetworking')
+function clearCookies () {
+  RCTNetworking.clearCookies((cleared) => {
+    console.log('Cookies cleared, had cookies=' + cleared.toString())
+  })
+}
 class StudentLoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -129,7 +133,7 @@ class StudentLoginForm extends React.Component {
   saveGrades = async html => {
     //json = html2json(html.request._response);
 
-    this.saveAssignments(html);
+    
     await AsyncStorage.setItem("grades", html).catch(console.log);
   };
   async getGrades() {
@@ -142,12 +146,10 @@ class StudentLoginForm extends React.Component {
   needToUpdateGrades = async yn => {
     await AsyncStorage.setItem("needToUpdateGrades", yn).catch(console.log);
   };
-  async saveAssignments(html) {
-    //console.log("ASS:  "+html.request._response)
-    /*
-    await AsyncStorage.setItem("assignments", html).catch(
-      console.log
-    );*/
+  async saveAssignments(json) {
+    newjson=json[3].children[3].children[1].children[5].children[0].content
+    console.log(newjson)
+    await AsyncStorage.setItem("assignments", newjson).catch(console.log);
   }
 
   refreshSchoolandName = _.debounce(() => {
@@ -189,8 +191,9 @@ class StudentLoginForm extends React.Component {
       console.log(this.state.grades);
     const html = this.state.grades;
     const json = parse(html);
-    console.log("json --->" + JSON.stringify(json));
-    if(json[3].children[8].children[2].children[7].children[1].children[7].children[3].children[3].children[0].content === "The Username and Password entered are incorrect.")
+    console.log("JSON:   " + JSON.stringify(json));
+    await this.setState({ grades: json });
+    try{if (json[3].children[8].children[2].children[7].children[1].children[7].children[3].children[3].children[0].content === "The Username and Password entered are incorrect.")
     {
       this.setState({ isAuthed: false, loading: false });
       Toast.show({
@@ -200,7 +203,17 @@ class StudentLoginForm extends React.Component {
         position: "top",
         type: "danger"
       });
-    }
+      
+    }}catch(error){
+      await this.saveAssignments(this.state.grades)
+      this.setState({ isAuthed: true, loading: false });
+        this.saveAuthState("yes");
+        
+        this.props.navigation.navigate("Grades");}
+    if(true)
+    {
+      
+    } 
     };
     await xhr.addEventListener("readystatechange", function() {
       if (this.readyState === this.DONE) {
@@ -212,7 +225,7 @@ class StudentLoginForm extends React.Component {
       "POST",
       "https://familyportal.svusd.org/ParentPortal/LoginParent.aspx?page=GradebookSummary.aspx"
     );
-
+      clearCookies()
     await xhr.send(data);
     
   };
@@ -323,7 +336,7 @@ class StudentLoginForm extends React.Component {
                 >
                   <Text> Login </Text>
                 </Button>
-                {this.state.loading ? <Spinner color="blue" /> : <View />}
+                {this.state.loading ? <Spinner color="black" /> : <View />}
               </View>
             </Surface>
           </KeyboardAvoidingView>
