@@ -34,16 +34,19 @@ import {
   Portal,
   Appbar
 } from "react-native-paper";
+import { parse } from "himalaya";
 import { List } from "react-native-elements";
 import { Home } from "../components/";
 import { _ } from "lodash";
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
 let colors = ["#e53935", "#fb8c00", "#43a047", "#1e88e5", "#8e24aa", "#6d4c41"];
-String.prototype.replaceAll = function(search, replacement) {
-  var target = this;
-  return target.replace(new RegExp(search, 'g'), replacement);
-};
+var RCTNetworking = require("RCTNetworking");
+function clearCookies() {
+  RCTNetworking.clearCookies(cleared => {
+    console.log("Cookies cleared, had cookies=" + cleared.toString());
+  });
+}
 export class Grades extends React.Component {
   static navigationOptions = {
     title: "Grades",
@@ -111,39 +114,78 @@ export class Grades extends React.Component {
       return true;
     });
   }
-  makeRemoteRequest = () => {
-    /*
-    const { page, seed } = this.state;
-    const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
-    this.setState({ loading: true });
-  
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: page === 1 ? res.results : [...this.state.data, ...res.results],
-          error: res.error || null,
-          loading: false,
-          refreshing: false
-        });
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });*/
-    //do request stuff
-
+  async saveAssignments(json) {
+    newjson = json[3].children[3].children[1].children[5].children[0].content;
+    console.log(newjson);
+    await AsyncStorage.setItem("assignments", newjson).catch(console.log);
+  }
+  makeRemoteRequest = async () => {
+    console.log("send Auth func called");
+    //console.log("LINK:   " + this.state.schoolLink.replace(/['"]+/g, ""));
+    //this.saveLogin(this.state.username, this.state.password);
     this.setState({ loading: true });
 
-    fetch("https://randomuser.me/api/?seed=33&page=3&results=420")
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          loading: false
-        });
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
+    var data = new FormData();
+    data.append("checkCookiesEnabled", "true");
+    data.append("checkMobileDevice", "false");
+    data.append("checkStandaloneMode", "false");
+    data.append("checkTabletDevice", "false");
+    data.append(
+      "portalAccountPassword",
+      JSON.stringify(await AsyncStorage.getItem("password")).replace(
+        /['"]+/g,
+        ""
+      )
+    );
+    data.append(
+      "portalAccountUsername",
+      JSON.stringify(await AsyncStorage.getItem("username")).replace(
+        /['"]+/g,
+        ""
+      )
+    );
+    data.append("portalAccountUsernameLabel", "");
+    data.append("submit", "");
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    printDstuff = async response => {
+      //console.log(response);
+      await this.setState({ grades: response });
+      //console.log(this.state.grades);
+      const html = this.state.grades;
+      const json = parse(html);
+      console.log("JSON:   " + JSON.stringify(json));
+      await this.setState({ grades: json });
+      try {
+        if (
+          json[3].children[8].children[2].children[7].children[1].children[7]
+            .children[3].children[3].children[0].content ===
+          "The Username and Password entered are incorrect."
+        ) {
+          this.setState({ isAuthed: false, loading: false });
+          this.logOut();
+        }
+      } catch (error) {
+        await this.saveAssignments(this.state.grades);
+        this.setState({ isAuthed: true, loading: false });
+        this.saveAuthState("yes");
+      }
+    };
+    await xhr.addEventListener("readystatechange", function() {
+      if (this.readyState === this.DONE) {
+        printDstuff(this.responseText);
+      }
+    });
+
+    await xhr.open(
+      "POST",
+      JSON.stringify(await AsyncStorage.getItem("link")).replace(/['"]+/g, "") +
+        "/LoginParent.aspx?page=GradebookSummary.aspx"
+    );
+    clearCookies();
+    await xhr.send(data);
   };
   async saveAuthState(authedBool) {
     if (typeof authedBool !== "boolean") {
@@ -182,23 +224,20 @@ export class Grades extends React.Component {
       }
     }
   }
- replaceAll=(str, find, replace) =>{
-    return str.replace(new RegExp(find, 'g'), replace);
-}
+  replaceAll = (str, find, replace) => {
+    return str.replace(new RegExp(find, "g"), replace);
+  };
   async getSavedGrades() {
-    if (
-      (await AsyncStorage.getItem("grades")) !== null
-    ) {
-     
+    if ((await AsyncStorage.getItem("grades")) !== null) {
       let grades = await AsyncStorage.getItem("grades");
-      this.replaceAll(grades,"\n","")
-      this.replaceAll(grades,"\t","")
-      this.replaceAll(grades,"\r","")
+      this.replaceAll(grades, "\n", "");
+      this.replaceAll(grades, "\t", "");
+      this.replaceAll(grades, "\r", "");
       //console.log("BEFORE:   "+grades)
       this.setState({
         grades: grades
       });
-     //console.log("SAVED GRADES:   "+this.state.grades)
+      //console.log("SAVED GRADES:   "+this.state.grades)
     }
   }
   async needToUpdateChange(yesorno) {
@@ -256,7 +295,7 @@ export class Grades extends React.Component {
   render() {
     this.getAuthedState();
     this.getNeedToUpdate();
-    
+
     if (this.state.needToUpdate) {
       this.handleRefresh();
       this.setState({
