@@ -29,11 +29,11 @@ axios.interceptors.response.use(response => {
   console.log("Response from request:   ", response);
   return response;
 });
-var RCTNetworking = require('RCTNetworking')
-function clearCookies () {
-  RCTNetworking.clearCookies((cleared) => {
-    console.log('Cookies cleared, had cookies=' + cleared.toString())
-  })
+var RCTNetworking = require("RCTNetworking");
+function clearCookies() {
+  RCTNetworking.clearCookies(cleared => {
+    console.log("Cookies cleared, had cookies=" + cleared.toString());
+  });
 }
 class StudentLoginForm extends React.Component {
   constructor(props) {
@@ -133,7 +133,6 @@ class StudentLoginForm extends React.Component {
   saveGrades = async html => {
     //json = html2json(html.request._response);
 
-    
     await AsyncStorage.setItem("grades", html).catch(console.log);
   };
   async getGrades() {
@@ -147,8 +146,8 @@ class StudentLoginForm extends React.Component {
     await AsyncStorage.setItem("needToUpdateGrades", yn).catch(console.log);
   };
   async saveAssignments(json) {
-    newjson=json[3].children[3].children[1].children[5].children[0].content
-    console.log(newjson)
+    newjson = json[3].children[3].children[1].children[5].children[0].content;
+    console.log(newjson);
     await AsyncStorage.setItem("assignments", newjson).catch(console.log);
   }
 
@@ -189,31 +188,34 @@ class StudentLoginForm extends React.Component {
       console.log(response);
       await this.setState({ grades: response });
       console.log(this.state.grades);
-    const html = this.state.grades;
-    const json = parse(html);
-    console.log("JSON:   " + JSON.stringify(json));
-    await this.setState({ grades: json });
-    try{if (json[3].children[8].children[2].children[7].children[1].children[7].children[3].children[3].children[0].content === "The Username and Password entered are incorrect.")
-    {
-      this.setState({ isAuthed: false, loading: false });
-      Toast.show({
-        text: "The Username or Password entered is incorrect.",
-        buttonText: "OK",
-        duration: 4321, //in miliseconds
-        position: "top",
-        type: "danger"
-      });
-      
-    }}catch(error){
-      await this.saveAssignments(this.state.grades)
-      this.setState({ isAuthed: true, loading: false });
+      const html = this.state.grades;
+      const json = parse(html);
+      console.log("JSON:   " + JSON.stringify(json));
+      await this.setState({ grades: json });
+      try {
+        if (
+          json[3].children[8].children[2].children[7].children[1].children[7]
+            .children[3].children[3].children[0].content ===
+          "The Username and Password entered are incorrect."
+        ) {
+          this.setState({ isAuthed: false, loading: false });
+          Toast.show({
+            text: "The Username or Password entered is incorrect.",
+            buttonText: "OK",
+            duration: 4321, //in miliseconds
+            position: "top",
+            type: "danger"
+          });
+        }
+      } catch (error) {
+        await this.saveAssignments(this.state.grades);
+        this.setState({ isAuthed: true, loading: false });
         this.saveAuthState("yes");
-        
-        this.props.navigation.navigate("Grades");}
-    if(true)
-    {
-      
-    } 
+
+        this.props.navigation.navigate("Grades");
+      }
+      if (true) {
+      }
     };
     await xhr.addEventListener("readystatechange", function() {
       if (this.readyState === this.DONE) {
@@ -225,9 +227,8 @@ class StudentLoginForm extends React.Component {
       "POST",
       "https://familyportal.svusd.org/ParentPortal/LoginParent.aspx?page=GradebookSummary.aspx"
     );
-      clearCookies()
+    clearCookies();
     await xhr.send(data);
-    
   };
 
   canLogin = () => {
