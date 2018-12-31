@@ -225,7 +225,7 @@ class StudentLoginForm extends React.Component {
 
     await xhr.open(
       "POST",
-      "https://familyportal.svusd.org/ParentPortal/LoginParent.aspx?page=GradebookSummary.aspx"
+      this.state.schoolLink.replace(/['"]+/g, "") + "/LoginParent.aspx?page=GradebookSummary.aspx"
     );
     clearCookies();
     await xhr.send(data);
