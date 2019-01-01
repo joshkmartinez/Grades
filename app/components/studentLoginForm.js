@@ -4,7 +4,8 @@ import {
   KeyboardAvoidingView,
   Dimensions,
   AsyncStorage,
-  ActivityIndicator
+  ActivityIndicator,
+  Keyboard
 } from "react-native";
 import { Text, Toast, Root, Spinner } from "native-base";
 import { _ } from "lodash";
@@ -32,7 +33,7 @@ axios.interceptors.response.use(response => {
 var RCTNetworking = require("RCTNetworking");
 function clearCookies() {
   RCTNetworking.clearCookies(cleared => {
-    console.log("Cookies cleared, had cookies=" + cleared.toString());
+    console.log("Cookies cleared, had cookies = " + cleared.toString());
   });
 }
 class StudentLoginForm extends React.Component {
@@ -46,6 +47,7 @@ class StudentLoginForm extends React.Component {
       authError: false,
       password: "",
       districtText: "",
+      names: [],
       grades: "",
       schoolLink: "",
       loading: false,
@@ -151,6 +153,34 @@ class StudentLoginForm extends React.Component {
     await AsyncStorage.setItem("assignments", newjson).catch(console.log);
   }
 
+  async saveClasses(json) {
+    //while ans != null
+    i = 5;
+    name = "";
+    prevName = "test";
+    names = [];
+    while (name != undefined) {
+      try {
+        name =
+          json[3].children[3].children[1].children[19].children[1].children[1]
+            .children[5].children[0].children[11].children[1].children[1]
+            .children[1].children[1].children[14].children[5].children[1]
+            .children[1].children[1].children[0].children[0].children[1]
+            .children[i].children[5].children[0].children[0].content;
+      } catch (e) {
+        console.log("reached class end");
+        break;
+      }
+      i += 2;
+
+      names.push(name);
+    }
+    JSON.stringify(names);
+    console.log("Class names:   " + names);
+    this.setState({ names: JSON.stringify(names) });
+    await AsyncStorage.setItem("classes", JSON.stringify(names)).catch(console.log);
+  }
+
   refreshSchoolandName = _.debounce(() => {
     this.checkIfLinkExists();
     this.checkIfSchoolNameExists();
@@ -161,10 +191,10 @@ class StudentLoginForm extends React.Component {
 
   sendAuth = async () => {
     console.log("send Auth func called");
-    console.log("LINK:   " + this.state.schoolLink.replace(/['"]+/g, ""));
+    Keyboard.dismiss();
+    //console.log("LINK:   " + this.state.schoolLink.replace(/['"]+/g, ""));
     this.saveLogin(this.state.username, this.state.password);
     this.setState({ loading: true });
-
     var data = new FormData();
     data.append("checkCookiesEnabled", "true");
     data.append("checkMobileDevice", "false");
@@ -185,7 +215,7 @@ class StudentLoginForm extends React.Component {
     xhr.withCredentials = true;
 
     printDstuff = async response => {
-      console.log(response);
+      //console.log(response);
       await this.setState({ grades: response });
       console.log(this.state.grades);
       const html = this.state.grades;
@@ -209,6 +239,7 @@ class StudentLoginForm extends React.Component {
         }
       } catch (error) {
         await this.saveAssignments(this.state.grades);
+        await this.saveClasses(this.state.grades);
         this.setState({ isAuthed: true, loading: false });
         this.saveAuthState("yes");
 
@@ -225,7 +256,8 @@ class StudentLoginForm extends React.Component {
 
     await xhr.open(
       "POST",
-      this.state.schoolLink.replace(/['"]+/g, "") + "/LoginParent.aspx?page=GradebookSummary.aspx"
+      this.state.schoolLink.replace(/['"]+/g, "") +
+        "/LoginParent.aspx?page=GradebookSummary.aspx"
     );
     clearCookies();
     await xhr.send(data);
