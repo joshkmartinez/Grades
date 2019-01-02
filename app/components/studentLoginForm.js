@@ -178,7 +178,68 @@ class StudentLoginForm extends React.Component {
     JSON.stringify(names);
     console.log("Class names:   " + names);
     this.setState({ names: JSON.stringify(names) });
-    await AsyncStorage.setItem("classes", JSON.stringify(names)).catch(console.log);
+    await AsyncStorage.setItem("classes", JSON.stringify(names)).catch(
+      console.log
+    );
+  }
+  async savePercents(json) {
+    //while ans != null
+    i = 5;
+    name = "";
+    prevName = "test";
+    names = [];
+    while (name != undefined) {
+      try {
+        name =
+          json[3].children[3].children[1].children[19].children[1].children[1]
+            .children[5].children[0].children[11].children[1].children[1]
+            .children[1].children[1].children[14].children[5].children[1]
+            .children[1].children[1].children[0].children[0].children[1]
+            .children[i].children[13].children[0].children[0].content;
+      } catch (e) {
+        console.log("reached class end");
+        break;
+      }
+      i += 2;
+
+      names.push(name);
+    }
+    JSON.stringify(names);
+    console.log("Class percents:   " + names);
+    this.setState({ names: JSON.stringify(names) });
+    await AsyncStorage.setItem("percents", JSON.stringify(names)).catch(
+      console.log
+    );
+  }
+
+  async saveLetterGrades(json) {
+    //while ans != null
+    i = 5;
+    name = "";
+    prevName = "test";
+    names = [];
+    while (name != undefined) {
+      try {
+        name =
+          json[3].children[3].children[1].children[19].children[1].children[1]
+            .children[5].children[0].children[11].children[1].children[1]
+            .children[1].children[1].children[14].children[5].children[1]
+            .children[1].children[1].children[0].children[0].children[1]
+            .children[i].children[17].children[0].children[0].content;
+      } catch (e) {
+        console.log("reached class end");
+        break;
+      }
+      i += 2;
+
+      names.push(name);
+    }
+    JSON.stringify(names);
+    console.log("Class letter grades:   " + names);
+    this.setState({ names: JSON.stringify(names) });
+    await AsyncStorage.setItem("letter", JSON.stringify(names)).catch(
+      console.log
+    );
   }
 
   refreshSchoolandName = _.debounce(() => {
@@ -240,6 +301,8 @@ class StudentLoginForm extends React.Component {
       } catch (error) {
         await this.saveAssignments(this.state.grades);
         await this.saveClasses(this.state.grades);
+        await this.savePercents(this.state.grades);
+        await this.saveLetterGrades(this.state.grades);
         this.setState({ isAuthed: true, loading: false });
         this.saveAuthState("yes");
 

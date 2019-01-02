@@ -10,7 +10,8 @@ import {
   BackHandler,
   FlatList,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
+  Keyboard
 } from "react-native";
 import { Constants } from "expo";
 import { withNavigation } from "react-navigation";
@@ -63,6 +64,11 @@ export class Grades extends React.Component {
       isAuthed: false,
       grades: "",
       needToUpdate: false,
+      assignments: [],
+      percents: [],
+      letterGrades: [],
+      classNames: [],
+      combined: [],
       data: [
         {
           name: "English 4H IB",
@@ -113,6 +119,8 @@ export class Grades extends React.Component {
     BackHandler.addEventListener("hardwareBackPress", function() {
       return true;
     });
+    this.getSaved();
+    //this.combine()
   }
   async saveAssignments(json) {
     newjson = json[3].children[3].children[1].children[5].children[0].content;
@@ -121,10 +129,8 @@ export class Grades extends React.Component {
   }
   makeRemoteRequest = async () => {
     console.log("send Auth func called");
-    //console.log("LINK:   " + this.state.schoolLink.replace(/['"]+/g, ""));
-    //this.saveLogin(this.state.username, this.state.password);
+    Keyboard.dismiss();
     this.setState({ loading: true });
-
     var data = new FormData();
     data.append("checkCookiesEnabled", "true");
     data.append("checkMobileDevice", "false");
@@ -132,17 +138,11 @@ export class Grades extends React.Component {
     data.append("checkTabletDevice", "false");
     data.append(
       "portalAccountPassword",
-      JSON.stringify(await AsyncStorage.getItem("password")).replace(
-        /['"]+/g,
-        ""
-      )
+      JSON.stringify(await AsyncStorage.getItem("password")).replace(/['"]+/g, "")
     );
     data.append(
       "portalAccountUsername",
-      JSON.stringify(await AsyncStorage.getItem("username")).replace(
-        /['"]+/g,
-        ""
-      )
+      JSON.stringify(await AsyncStorage.getItem("username")).replace(/['"]+/g, "")
     );
     data.append("portalAccountUsernameLabel", "");
     data.append("submit", "");
@@ -153,7 +153,7 @@ export class Grades extends React.Component {
     printDstuff = async response => {
       //console.log(response);
       await this.setState({ grades: response });
-      //console.log(this.state.grades);
+      console.log(this.state.grades);
       const html = this.state.grades;
       const json = parse(html);
       console.log("JSON:   " + JSON.stringify(json));
@@ -165,12 +165,25 @@ export class Grades extends React.Component {
           "The Username and Password entered are incorrect."
         ) {
           this.setState({ isAuthed: false, loading: false });
-          this.logOut();
+          Toast.show({
+            text: "The Username or Password entered is incorrect.",
+            buttonText: "OK",
+            duration: 4321, //in miliseconds
+            position: "top",
+            type: "danger"
+          });
         }
       } catch (error) {
         await this.saveAssignments(this.state.grades);
+        await this.saveClasses(this.state.grades);
+        await this.savePercents(this.state.grades);
+        await this.saveLetterGrades(this.state.grades);
         this.setState({ isAuthed: true, loading: false });
         this.saveAuthState("yes");
+
+        this.props.navigation.navigate("Grades");
+      }
+      if (true) {
       }
     };
     await xhr.addEventListener("readystatechange", function() {
@@ -200,6 +213,105 @@ export class Grades extends React.Component {
       console.log("you can't store a bool!");
     }
   }
+  async combine() {
+    for (let s of this.state.classNames) {
+      this.setState({ combined: combined.p });
+    }
+  }
+  async saveAssignments(json) {
+    newjson = json[3].children[3].children[1].children[5].children[0].content;
+    console.log(newjson);
+    await AsyncStorage.setItem("assignments", newjson).catch(console.log);
+  }
+
+  async saveClasses(json) {
+    //while ans != null
+    i = 5;
+    name = "";
+    prevName = "test";
+    names = [];
+    while (name != undefined) {
+      try {
+        name =
+          json[3].children[3].children[1].children[19].children[1].children[1]
+            .children[5].children[0].children[11].children[1].children[1]
+            .children[1].children[1].children[14].children[5].children[1]
+            .children[1].children[1].children[0].children[0].children[1]
+            .children[i].children[5].children[0].children[0].content;
+      } catch (e) {
+        console.log("reached class end");
+        break;
+      }
+      i += 2;
+
+      names.push(name);
+    }
+    JSON.stringify(names);
+    console.log("Class names:   " + names);
+    this.setState({ names: JSON.stringify(names) });
+    await AsyncStorage.setItem("classes", JSON.stringify(names)).catch(
+      console.log
+    );
+  }
+  async savePercents(json) {
+    //while ans != null
+    i = 5;
+    name = "";
+    prevName = "test";
+    names = [];
+    while (name != undefined) {
+      try {
+        name =
+          json[3].children[3].children[1].children[19].children[1].children[1]
+            .children[5].children[0].children[11].children[1].children[1]
+            .children[1].children[1].children[14].children[5].children[1]
+            .children[1].children[1].children[0].children[0].children[1]
+            .children[i].children[13].children[0].children[0].content;
+      } catch (e) {
+        console.log("reached class end");
+        break;
+      }
+      i += 2;
+
+      names.push(name);
+    }
+    JSON.stringify(names);
+    console.log("Class percents:   " + names);
+    this.setState({ names: JSON.stringify(names) });
+    await AsyncStorage.setItem("percents", JSON.stringify(names)).catch(
+      console.log
+    );
+  }
+
+  async saveLetterGrades(json) {
+    //while ans != null
+    i = 5;
+    name = "";
+    prevName = "test";
+    names = [];
+    while (name != undefined) {
+      try {
+        name =
+          json[3].children[3].children[1].children[19].children[1].children[1]
+            .children[5].children[0].children[11].children[1].children[1]
+            .children[1].children[1].children[14].children[5].children[1]
+            .children[1].children[1].children[0].children[0].children[1]
+            .children[i].children[17].children[0].children[0].content;
+      } catch (e) {
+        console.log("reached class end");
+        break;
+      }
+      i += 2;
+
+      names.push(name);
+    }
+    JSON.stringify(names);
+    console.log("Class letter grades:   " + names);
+    this.setState({ names: JSON.stringify(names) });
+    await AsyncStorage.setItem("letter", JSON.stringify(names)).catch(
+      console.log
+    );
+  }
   async getAuthedState() {
     if ((await AsyncStorage.getItem("authState")) !== null) {
       //console.log("getting AuthedState");
@@ -224,21 +336,59 @@ export class Grades extends React.Component {
       }
     }
   }
-  replaceAll = (str, find, replace) => {
-    return str.replace(new RegExp(find, "g"), replace);
-  };
-  async getSavedGrades() {
-    if ((await AsyncStorage.getItem("grades")) !== null) {
-      let grades = await AsyncStorage.getItem("grades");
-      this.replaceAll(grades, "\n", "");
-      this.replaceAll(grades, "\t", "");
-      this.replaceAll(grades, "\r", "");
-      //console.log("BEFORE:   "+grades)
+  async getAssignments() {
+    if ((await AsyncStorage.getItem("assignments")) !== null) {
+      //console.log("getting AuthedState");
+
+      i = await AsyncStorage.getItem("assignments");
       this.setState({
-        grades: grades
+        assignments: i
       });
-      //console.log("SAVED GRADES:   "+this.state.grades)
+
+      //console.log("authed State saved");
     }
+  }
+  async getPercents() {
+    if ((await AsyncStorage.getItem("percents")) !== null) {
+      //console.log("getting AuthedState");
+
+      i = await AsyncStorage.getItem("percents");
+      this.setState({
+        percents: JSON.parse(i)
+      });
+
+      console.log(this.state.percents);
+    }
+  }
+  async getLetterGrades() {
+    if ((await AsyncStorage.getItem("letter")) !== null) {
+      //console.log("getting AuthedState");
+
+      i = await AsyncStorage.getItem("letter");
+      this.setState({
+        letterGrades: JSON.parse(i)
+      });
+
+      console.log(this.state.letterGrades);
+    }
+  }
+  async getClasses() {
+    if ((await AsyncStorage.getItem("classes")) !== null) {
+      //console.log("getting AuthedState");
+
+      i = await AsyncStorage.getItem("classes");
+      this.setState({
+        classNames: JSON.parse(i)
+      });
+      console.log(this.state.classNames[0]);
+      console.log(this.state.classNames);
+    }
+  }
+  async getSaved() {
+    await this.getAssignments();
+    await this.getPercents();
+    await this.getLetterGrades();
+    await this.getClasses();
   }
   async needToUpdateChange(yesorno) {
     await AsyncStorage.setItem("needToUpdateGrades", yesorno).catch(
@@ -248,7 +398,7 @@ export class Grades extends React.Component {
 
   handleRefresh = () => {
     this.setState({ loading: true });
-    this.getSavedGrades();
+
     this.makeRemoteRequest();
   };
 
@@ -321,7 +471,7 @@ export class Grades extends React.Component {
           >
             <FlatList
               //style={{ width: width }}
-              data={this.state.data}
+              data={this.state.classNames}
               renderItem={({ item, index }) => (
                 <TouchableOpacity
                   onPress={() => this.props.navigation.navigate("classGrades")}
@@ -364,7 +514,7 @@ export class Grades extends React.Component {
                             fontSize: responsiveFontSize(3)
                           }}
                         >
-                          {item.name}
+                          {item}
                         </Text>
                       </View>
                       <View
@@ -384,7 +534,7 @@ export class Grades extends React.Component {
                             fontSize: responsiveFontSize(2.6)
                           }}
                         >
-                          {item.grade}%
+                          {this.state.percents[index]}%
                         </Text>
                         <Text
                           style={{
@@ -394,7 +544,7 @@ export class Grades extends React.Component {
                             fontSize: responsiveFontSize(2.6)
                           }}
                         >
-                          {item.letterGrade}
+                          {this.state.letterGrades[index]}
                         </Text>
                       </View>
                     </View>
