@@ -120,7 +120,6 @@ export class Grades extends React.Component {
       return true;
     });
     this.getSaved();
-    //this.combine()
   }
   async saveAssignments(json) {
     newjson = json[3].children[3].children[1].children[5].children[0].content;
@@ -138,11 +137,17 @@ export class Grades extends React.Component {
     data.append("checkTabletDevice", "false");
     data.append(
       "portalAccountPassword",
-      JSON.stringify(await AsyncStorage.getItem("password")).replace(/['"]+/g, "")
+      JSON.stringify(await AsyncStorage.getItem("password")).replace(
+        /['"]+/g,
+        ""
+      )
     );
     data.append(
       "portalAccountUsername",
-      JSON.stringify(await AsyncStorage.getItem("username")).replace(/['"]+/g, "")
+      JSON.stringify(await AsyncStorage.getItem("username")).replace(
+        /['"]+/g,
+        ""
+      )
     );
     data.append("portalAccountUsernameLabel", "");
     data.append("submit", "");
@@ -211,11 +216,6 @@ export class Grades extends React.Component {
       console.log("authed state saved");
     } else {
       console.log("you can't store a bool!");
-    }
-  }
-  async combine() {
-    for (let s of this.state.classNames) {
-      this.setState({ combined: combined.p });
     }
   }
   async saveAssignments(json) {
