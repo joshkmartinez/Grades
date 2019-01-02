@@ -18,7 +18,6 @@ import { withNavigation } from "react-navigation";
 import PTRView from "react-native-pull-to-refresh";
 import SettingsList from "react-native-settings-list";
 import { Text, Toast, Root } from "native-base";
-import html2json from "html2json";
 import ScrollableTabView, {
   DefaultTabBar
 } from "react-native-scrollable-tab-view";
