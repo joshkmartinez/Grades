@@ -44,7 +44,7 @@ let colors = ["#e53935", "#fb8c00", "#43a047", "#1e88e5", "#8e24aa", "#6d4c41"];
 var RCTNetworking = require("RCTNetworking");
 function clearCookies() {
   RCTNetworking.clearCookies(cleared => {
-    console.log("Cookies cleared, had cookies=" + cleared.toString());
+    console.log("Cookies cleared, had cookies = " + cleared.toString());
   });
 }
 export class Grades extends React.Component {
@@ -157,10 +157,10 @@ export class Grades extends React.Component {
     printDstuff = async response => {
       //console.log(response);
       await this.setState({ grades: response });
-      console.log(this.state.grades);
+      //console.log(this.state.grades);
       const html = this.state.grades;
       const json = parse(html);
-      console.log("JSON:   " + JSON.stringify(json));
+      //console.log("JSON:   " + JSON.stringify(json));
       await this.setState({ grades: json });
       try {
         if (
@@ -178,10 +178,12 @@ export class Grades extends React.Component {
           });
         }
       } catch (error) {
-        await this.saveAssignments(this.state.grades);
+        //await this.saveAssignments(this.state.grades);
+        //console.log(this.state.assignments);
         await this.saveClasses(this.state.grades);
         await this.savePercents(this.state.grades);
         await this.saveLetterGrades(this.state.grades);
+        await this.saveAll(this.state.grades);
         this.setState({ isAuthed: true, loading: false });
         this.saveAuthState("yes");
 
@@ -220,7 +222,10 @@ export class Grades extends React.Component {
   async saveAssignments(json) {
     newjson = json[3].children[3].children[1].children[5].children[0].content;
     console.log(newjson);
-    await AsyncStorage.setItem("assignments", newjson).catch(console.log);
+    await AsyncStorage.setItem(
+      "assignments",
+      JSON.stringify(parse(newjson))
+    ).catch(console.log);
   }
 
   async saveClasses(json) {
@@ -384,7 +389,7 @@ export class Grades extends React.Component {
     }
   }
   async getSaved() {
-    await this.getAssignments();
+    //await this.getAssignments();
     await this.getPercents();
     await this.getLetterGrades();
     await this.getClasses();
@@ -393,6 +398,10 @@ export class Grades extends React.Component {
     await AsyncStorage.setItem("needToUpdateGrades", yesorno).catch(
       console.log
     );
+  }
+  async saveAll(a) {
+    console.log("Saving all");
+    await AsyncStorage.setItem("all", JSON.stringify(a)).catch(console.log);
   }
 
   handleRefresh = () => {
@@ -473,7 +482,11 @@ export class Grades extends React.Component {
               data={this.state.classNames}
               renderItem={({ item, index }) => (
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate("classGrades")}
+                  onPress={() =>
+                    this.props.navigation.navigate("classGrades", {
+                      index: index
+                    })
+                  }
                 >
                   <Surface
                     style={{

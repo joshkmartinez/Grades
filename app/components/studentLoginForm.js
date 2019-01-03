@@ -62,9 +62,7 @@ class StudentLoginForm extends React.Component {
 
   async checkIfLinkExists() {
     if ((await AsyncStorage.getItem("link")) !== null) {
-      //console.log("LOGIN FILE: async LINK data exists");
       const link = JSON.stringify(await AsyncStorage.getItem("link"));
-      //console.log(link)
 
       this.setState({ schoolLink: link });
 
@@ -150,11 +148,16 @@ class StudentLoginForm extends React.Component {
   async saveAssignments(json) {
     newjson = json[3].children[3].children[1].children[5].children[0].content;
     console.log(newjson);
-    await AsyncStorage.setItem("assignments", newjson).catch(console.log);
+    await AsyncStorage.setItem(
+      "assignments",
+      JSON.stringify(parse(newjson))
+    ).catch(console.log);
   }
-
+  async saveAll(a) {
+    console.log("Saving all");
+    await AsyncStorage.setItem("all", JSON.stringify(a)).catch(console.log);
+  }
   async saveClasses(json) {
-    //while ans != null
     i = 5;
     name = "";
     prevName = "test";
@@ -183,7 +186,6 @@ class StudentLoginForm extends React.Component {
     );
   }
   async savePercents(json) {
-    //while ans != null
     i = 5;
     name = "";
     prevName = "test";
@@ -213,7 +215,6 @@ class StudentLoginForm extends React.Component {
   }
 
   async saveLetterGrades(json) {
-    //while ans != null
     i = 5;
     name = "";
     prevName = "test";
@@ -276,12 +277,12 @@ class StudentLoginForm extends React.Component {
     xhr.withCredentials = true;
 
     printDstuff = async response => {
-      //console.log(response);
+    console.log(response);
       await this.setState({ grades: response });
-      console.log(this.state.grades);
+      //console.log(this.state.grades);
       const html = this.state.grades;
       const json = parse(html);
-      console.log("JSON:   " + JSON.stringify(json));
+      //console.log("JSON:   " + JSON.stringify(json));
       await this.setState({ grades: json });
       try {
         if (
@@ -299,10 +300,12 @@ class StudentLoginForm extends React.Component {
           });
         }
       } catch (error) {
-        await this.saveAssignments(this.state.grades);
+        //await this.saveAssignments(this.state.grades);
+        //console.log(JSON.stringify(this.state.grades))
         await this.saveClasses(this.state.grades);
         await this.savePercents(this.state.grades);
         await this.saveLetterGrades(this.state.grades);
+        await this.saveAll(this.state.grades);
         this.setState({ isAuthed: true, loading: false });
         this.saveAuthState("yes");
 

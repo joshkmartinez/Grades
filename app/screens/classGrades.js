@@ -3,8 +3,8 @@ import {
   View,
   TouchableOpacity,
   Dimensions,
-  //AsyncStorage,
-  //ActivityIndicator,
+  AsyncStorage,
+  ActivityIndicator,
   SafeAreaView,
   FlatList,
   Alert
@@ -19,10 +19,6 @@ import {
   //List,
   Headline,
   Switch,
-  Divider,
-  Paragraph,
-  Dialog,
-  Portal,
   Appbar
 } from "react-native-paper";
 import { withNavigation } from "react-navigation";
@@ -61,6 +57,9 @@ export class classGrades extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      class: -1,
+      assignments: "",
+      all: "",
       data: [
         {
           name: "Vocabulary W/S",
@@ -140,7 +139,7 @@ export class classGrades extends React.Component {
   }
   componentDidMount() {
     {
-      /*make sure user has internet*/
+      this.getAssignments();
     }
   }
   refresh() {
@@ -148,6 +147,16 @@ export class classGrades extends React.Component {
     //refresh
 
     this.setState({ isAuthed: true });
+  }
+  async getAll() {
+    this.setState({
+      all: JSON.parse(await AsyncStorage.getItem("all"))
+    });
+  }
+  async getAssignments() {
+    this.getAll()
+    console.log(await AsyncStorage.getItem("all"))
+    console.log("THIS IS ALL:   "+this.state.all)
   }
 
   componentWillMount() {}
@@ -227,6 +236,9 @@ export class classGrades extends React.Component {
     );
   };
   render() {
+    const { navigation } = this.props;
+    const i = navigation.getParam("index", -1);
+    //this.setState({ class: i });
     return (
       <Root
         styles={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -302,41 +314,41 @@ export class classGrades extends React.Component {
                         {item.category}
                       </Text>
                     </View>
-                    
-                      <View
+
+                    <View
+                      style={{
+                        //backgroundColor: "red",
+                        alignItems: "flex-end",
+                        flexDirection: "column",
+                        justifyContent: "flex-end",
+                        width: width / 7
+                      }}
+                    >
+                      <Text
+                        numberOfLines={1}
                         style={{
-                          //backgroundColor: "red",
-                          alignItems: "flex-end",
-                          flexDirection: "column",
-                          justifyContent: "flex-end",
-                          width:width/7
+                          textAlign: "right",
+                          alignSelf: "stretch",
+
+                          color: "white",
+                          //fontWeight: "bold",
+                          fontSize: responsiveFontSize(1.5)
                         }}
                       >
-                        <Text numberOfLines={1}
-                          style={{
-                            textAlign: "right",
-                            alignSelf: "stretch",
-
-                            color: "white",
-                            //fontWeight: "bold",
-                            fontSize: responsiveFontSize(1.5)
-                          }}
-                        >
-                          {item.pointsEarned + "/" + item.pointsOutOf}
-                        </Text>
-                        <Text
-                          style={{
-                            textAlign: "right",
-                            alignSelf: "stretch",
-                            color: "white",
-                            //fontWeight: "bold",
-                            fontSize: responsiveFontSize(1.42)
-                          }}
-                        >
-                          {item.letterGrade}
-                        </Text>
-                      </View>
-                    
+                        {item.pointsEarned + "/" + item.pointsOutOf}
+                      </Text>
+                      <Text
+                        style={{
+                          textAlign: "right",
+                          alignSelf: "stretch",
+                          color: "white",
+                          //fontWeight: "bold",
+                          fontSize: responsiveFontSize(1.42)
+                        }}
+                      >
+                        {item.letterGrade}
+                      </Text>
+                    </View>
                   </View>
                 </Surface>
               )}
