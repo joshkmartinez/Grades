@@ -261,7 +261,6 @@ export class Grades extends React.Component {
     //while ans != null
     i = 5;
     name = "";
-    prevName = "test";
     names = [];
     while (name != undefined) {
       try {

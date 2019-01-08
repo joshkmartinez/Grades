@@ -5,41 +5,29 @@ import {
   Dimensions,
   AsyncStorage,
   ActivityIndicator,
-  Keyboard
+  Keyboard,
+  Alert
 } from "react-native";
 import { Text, Toast, Root, Spinner } from "native-base";
 import { _ } from "lodash";
 import { withNavigation, Header } from "react-navigation";
 import { ScrollView } from "react-native-gesture-handler";
 import { Surface, TextInput, Button } from "react-native-paper";
-//import "url-search-params-polyfill";
-
-import axios from "axios";
-//import CookieManager from 'react-native-cookies';
 import { parse } from "himalaya";
 const queryString = require("query-string");
 let width = Dimensions.get("window").width;
 let height = Dimensions.get("window").height;
-axios.interceptors.request.use(request => {
-  console.log("Sending Request:   ", request);
-  return request;
-});
-//axios.defaults.withCredentials = true;
-//axios.defaults.jar = true;
-axios.interceptors.response.use(response => {
-  console.log("Response from request:   ", response);
-  return response;
-});
+
 var RCTNetworking = require("RCTNetworking");
-function clearCookies() {
+clearCookies = () => {
   RCTNetworking.clearCookies(cleared => {
     console.log("Cookies cleared, had cookies = " + cleared.toString());
   });
-}
+};
+
 class StudentLoginForm extends React.Component {
   constructor(props) {
     super(props);
-    //this.saveGrades = this.saveGrades.bind(this);
 
     this.state = {
       isAuthed: false,
@@ -145,14 +133,119 @@ class StudentLoginForm extends React.Component {
   needToUpdateGrades = async yn => {
     await AsyncStorage.setItem("needToUpdateGrades", yn).catch(console.log);
   };
-  async saveAssignments(json) {
-    newjson = json[3].children[3].children[1].children[5].children[0].content;
-    console.log(newjson);
-    await AsyncStorage.setItem(
-      "assignments",
-      JSON.stringify(parse(newjson))
-    ).catch(console.log);
+  async saveAssignments() {
+    var data = "";
+    var test = new XMLHttpRequest();
+    test.withCredentials = true;
+
+    await test.addEventListener("readystatechange", function() {
+      if (this.readyState === this.DONE) {
+        getNumAss = async (gn, t) => {
+          console.log("WE IN");
+          var data = JSON.stringify({
+            gradebookNumber: gn,
+            term: t,
+            pageSize: 0,
+            requestedPage: 1
+          });
+
+          var xhr = new XMLHttpRequest();
+          xhr.withCredentials = true;
+          console.log("DATA" + data);
+          xhr.addEventListener("readystatechange", function() {
+            if (this.readyState === this.DONE) {
+              console.log("RESPONSE:   " + this.responseText);
+              to = JSON.parse(this.responseText);
+              //maybe promise data here
+              return to.d.total;
+            }
+          });
+
+          xhr.open(
+            "POST",
+            JSON.stringify(await AsyncStorage.getItem("link")).replace(
+              /['"]+/g,
+              ""
+            ) + "/m/api/MobileWebAPI.asmx/GetGradebookDetailsData"
+          );
+          xhr.setRequestHeader("content-type", "application/json");
+
+          await xhr.send(data);
+        };
+        let o = JSON.parse(this.responseText).d.results;
+        console.log(o);
+        gradebooks = [];
+        terms = [];
+        //assnums = [];
+        for (i = 0; i < _.size(o); i++) {
+          gradebooks.push(o[i].gradebookNumber);
+          terms.push(o[i].term);
+          //send to get # of assignments
+          console.log(JSON.stringify(o[i].gradebookNumber));
+          //need to await func value
+          //let v = async () => await getNumAss(o[i].gradebookNumber, o[i].term);
+          //console.log(v)
+          //assnums.push(v); //func is not even called when for loop ends, need to await
+          console.log(gradebooks);
+          console.log(terms);
+          //console.log(assnums);
+          //save these
+          if (_.size(o) - 1 === i) {
+            manageAssignments = async (g, t) => {
+              await AsyncStorage.setItem("terms", JSON.stringify(t)).catch(
+                console.log
+              );
+              await AsyncStorage.setItem("gradebook#", JSON.stringify(g)).catch(
+                console.log
+              );
+              console.log(JSON.parse(await AsyncStorage.getItem("terms")));
+              console.log(JSON.parse(await AsyncStorage.getItem("gradebook#")));
+            };
+            manageAssignments(gradebooks, terms);
+          }
+        }
+      }
+    });
+
+    await test.open(
+      "GET",
+      this.state.schoolLink.replace(/['"]+/g, "") +
+        "/m/api/MobileWebAPI.asmx/GetGradebookSummaryData",
+      true
+    );
+    await test.setRequestHeader("content-type", "application/json");
+    await test.send(data);
   }
+
+  async getNumAss(gn, t) {
+    console.log("WE IN");
+    var data = JSON.stringify({
+      gradebookNumber: gn,
+      term: t,
+      pageSize: 0,
+      requestedPage: 1
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function() {
+      if (this.readyState === this.DONE) {
+        console.log("RESPONSE:   " + this.responseText);
+        return JSON.parse(this.responseText).d.total;
+      }
+    });
+
+    xhr.open(
+      "POST",
+      JSON.stringify(AsyncStorage.getItem("link")).replace(/['"]+/g, "") +
+        "/m/api/MobileWebAPI.asmx/GetGradebookDetailsData"
+    );
+    xhr.setRequestHeader("content-type", "application/json");
+
+    xhr.send(data);
+  }
+
   async saveAll(a) {
     console.log("Saving all");
     await AsyncStorage.setItem("all", JSON.stringify(a)).catch(console.log);
@@ -171,15 +264,12 @@ class StudentLoginForm extends React.Component {
             .children[1].children[1].children[0].children[0].children[1]
             .children[i].children[5].children[0].children[0].content;
       } catch (e) {
-        console.log("reached class end");
         break;
       }
       i += 2;
 
       names.push(name);
     }
-    JSON.stringify(names);
-    console.log("Class names:   " + names);
     this.setState({ names: JSON.stringify(names) });
     await AsyncStorage.setItem("classes", JSON.stringify(names)).catch(
       console.log
@@ -199,15 +289,12 @@ class StudentLoginForm extends React.Component {
             .children[1].children[1].children[0].children[0].children[1]
             .children[i].children[13].children[0].children[0].content;
       } catch (e) {
-        console.log("reached class end");
         break;
       }
       i += 2;
 
       names.push(name);
     }
-    JSON.stringify(names);
-    console.log("Class percents:   " + names);
     this.setState({ names: JSON.stringify(names) });
     await AsyncStorage.setItem("percents", JSON.stringify(names)).catch(
       console.log
@@ -228,15 +315,12 @@ class StudentLoginForm extends React.Component {
             .children[1].children[1].children[0].children[0].children[1]
             .children[i].children[17].children[0].children[0].content;
       } catch (e) {
-        console.log("reached class end");
         break;
       }
       i += 2;
 
       names.push(name);
     }
-    JSON.stringify(names);
-    console.log("Class letter grades:   " + names);
     this.setState({ names: JSON.stringify(names) });
     await AsyncStorage.setItem("letter", JSON.stringify(names)).catch(
       console.log
@@ -277,9 +361,8 @@ class StudentLoginForm extends React.Component {
     xhr.withCredentials = true;
 
     printDstuff = async response => {
-    console.log(response);
+      //console.log(response);
       await this.setState({ grades: response });
-      //console.log(this.state.grades);
       const html = this.state.grades;
       const json = parse(html);
       //console.log("JSON:   " + JSON.stringify(json));
@@ -300,8 +383,7 @@ class StudentLoginForm extends React.Component {
           });
         }
       } catch (error) {
-        //await this.saveAssignments(this.state.grades);
-        //console.log(JSON.stringify(this.state.grades))
+        await this.saveAssignments();
         await this.saveClasses(this.state.grades);
         await this.savePercents(this.state.grades);
         await this.saveLetterGrades(this.state.grades);
@@ -325,8 +407,37 @@ class StudentLoginForm extends React.Component {
       this.state.schoolLink.replace(/['"]+/g, "") +
         "/LoginParent.aspx?page=GradebookSummary.aspx"
     );
+    /*
+    var data2 = JSON.stringify(false);
+
+    var te = new XMLHttpRequest();
+    te.withCredentials = true;
+
+    await te.addEventListener("readystatechange", function() {
+      if (this.readyState === this.DONE) {
+        //never goes in
+        console.log("IN")
+        Alert.alert(this.responseText);
+      }
+    });
+
+    await te.open(
+      "GET",
+      this.state.schoolLink.replace(/['"]+/g, "") +
+        "/m/api/MobileWebAPI.asmx/GetGradebookSummaryData"
+    );
+    //xhr.setRequestHeader("cookie", "ASP.NET_SessionId=om44v1porbctqzf40nwap0mo; AeriesNet=LastSC_0%3D91%26LastSN_0%3D1819%26LastID_0%3D860044");
+    await te.setRequestHeader("content-type", "application/json");
+    
+    
+    */
     clearCookies();
+    console.log("sending now");
     await xhr.send(data);
+
+    //await te.send(data2);
+
+    //console.log(te.statusText)
   };
 
   canLogin = () => {
