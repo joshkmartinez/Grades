@@ -1,0 +1,1416 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>
+	Gradebook Summary
+</title><meta id="ctl00_viewport" name="viewport" content="width=device-width, initial-scale=1" /><link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /><link rel="icon" href="favicon.ico" type="image/x-icon" /><link href="/ParentPortal/Content/AjaxControlToolkit/Styles/Bundle?v=nap9lZtcl5K2gETjyyPCBXbWNbj8GlEheXK38ePUqDw1" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="StyleSheets/aeries.common.min.css?v=20160413" /><link rel="stylesheet" type="text/css" href="StyleSheets/aeries.default.min.css?v=20160413" /><link rel="stylesheet" type="text/css" href="StyleSheets/aeries-responsive.css" /><link rel="stylesheet" type="text/css" href="StyleSheets/Sofia.css" /><link id="ctl00_BaseCSS" rel="stylesheet" type="text/css" href="StyleSheets/GeneralLight.css" /><link rel="stylesheet" type="text/css" href="StyleSheets/calendar-stylesheet.css" /><link rel="stylesheet" type="text/css" href="KendoUI/kendo.common.min.css?v=2017.1.118" /><link rel="stylesheet" type="text/css" href="KendoUI/kendo.rtl.min.css?v=2017.1.118" /><link rel="stylesheet" type="text/css" href="KendoUI/kendo.bootstrap.min.css?v=2017.1.118" /><link rel="stylesheet" type="text/css" href="StyleSheets/bootstrap/bootstrap.css?v=2017.1.118" /><link rel="stylesheet" type="text/css" href="StyleSheets/bootstrap/bootstrap-tour.min.css?v=20170522" /><link rel="stylesheet" type="text/css" href="KendoUI/kendo.dataviz.min.css?v=2017.1.118" /><link rel="stylesheet" type="text/css" href="KendoUI/kendo.dataviz.default.min.css?v=2017.1.118" /><link rel="stylesheet" type="text/css" href="StyleSheets/font-awesome/font-awesome.min.css" /><link rel="stylesheet" type="text/css" href="StyleSheets/aeries-kendo-win.min.css" /><link rel="stylesheet" type="text/css" href="StyleSheets/CheckBoxes.min.css?vsn=20150929" /><link rel="stylesheet" type="text/css" href="StyleSheets/aeries-master.min.css?vsn=20160301" />
+
+    <script type="text/javascript" src="ClientScripts/ControlPositions.js?vsn=20170822"></script>
+    <script type="text/javascript" src="ClientScripts/ExpandOut.js"></script>
+    <script type="text/javascript" src="ClientScripts/XMLCommunications.js"></script>
+    <script type="text/javascript" src="ClientScripts/xmldom.js"></script>
+	<script type="text/javascript" src="Scripts/require/TimeOut.js?vsn=20180509"></script>
+
+    <script type="text/javascript" src="ClientScripts/calendar.js?vsn20141202"></script>
+    
+	<script type="text/javascript" src="ClientScripts/EmailStuff.js?vsn=20160428"></script>
+	<script type="text/javascript" src="ClientScripts/jquery.min.js?v=1.12.3"></script>
+	<script type="text/javascript" src="ClientScripts/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="ClientScripts/jquery.validate.unobtrusive.min.js"></script>
+	<script type="text/javascript" src="ClientScripts/jquery.unobtrusive-ajax.min.js"></script>
+	<script type="text/javascript" src="KendoUI/kendo.all.min.js?v=2017.1.118"></script>
+	<script type="text/javascript" src="KendoUI/kendo.aspnetmvc.min.js?v=2017.1.118"></script>
+	<script type="text/javascript" src="Scripts/velocity.min.js"></script>
+    <script type="text/javascript" src="ClientScripts/General.js?vsn=20181214"></script>
+
+	<script type="text/javascript" src="ClientScripts/StudentBackpack.js?vsn=20161208"></script>
+
+    <script type="text/javascript">window.defaultStatus="Welcome to Aeries";</script>
+
+	<script type="text/javascript" src="ClientScripts/aeries-kendo-windows-1.0.4.js?vsn=20160401"></script>
+	<script type="text/javascript" src="ClientScripts/UserOptions.js?vsn=20160504"></script>
+	<script type="text/javascript" src="ClientScripts/aeries-pagination.js?vsn=20160309"></script>
+
+	
+	<script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
+	<script type="text/javascript" src="ClientScripts/jquery.slimscroll.min.js"></script>
+	<script type="text/javascript" src="Scripts/bootstrap-tour.min.js?v=20170522"></script>
+	<script type="text/javascript" src="ClientScripts/Tours.js?v=20180227"></script>
+
+	<script type='text/javascript' src='Tracking.vbhtml?636820860493554321'></script>
+	<script type='text/javascript' src='ClientScripts/demo-feedback_js.js'></script>
+	<link rel="stylesheet" type="text/css" href="ClientScripts/demo-feedback_css.css" />
+
+	<!-- PM - disable tracking for now.
+	<link rel='stylesheet' type='text/css' href='//aeriestools.tech/screenshot-feedback/feedback.css?636820860493554321' />
+<script type='text/javascript' src='//aeriestools.tech/tracking.js?636820860493554321'></script>
+
+	-->
+
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+
+			if (kendo.support.mobileOS) {
+
+				//GeneralFunctions.IsDemoServer(CheckForMobileVersion_IsDemoServer_Complete);
+			}
+
+			// Student Name Drop Down
+			$(document).on('click', '.student-full-name', function () {
+				if ($("#change-student-dd:hidden").length >= 1) {
+					$("#change-student").find(".icon-collapsed").removeClass('icon-collapsed').addClass('icon-expanded');
+					$("#change-student-dd").show();
+					// SlimScroll for student DD
+					$("#change-student-dd .namelist").slimScroll({
+						size: '8px',
+						color: '#C8C9C9',
+						opacity: "100%",
+						wheelStep: 10,
+						touchScrollStep: 75
+					});
+				} else {
+					$("#change-student").find(".icon-expanded").removeClass('icon-expanded').addClass('icon-collapsed');
+					$("#change-student-dd").hide();
+					$("#change-student-dd .namelist").slimScroll({ destroy: true });
+				}
+			});
+
+			// Close Student Name Drop Down if you click anywhere else
+			$(document).on('click', function (e) {
+				if ($(e.target).closest('#student-name-control').length <= 0 && $(e.target).closest('.slimScrollDiv').length <= 0) {
+					if ($("#change-student-dd").length > 0) {
+						$("#change-student").find(".icon-expanded").removeClass('icon-expanded').addClass('icon-collapsed');
+						$("#change-student-dd").hide();
+						$("#change-student-dd .namelist").slimScroll({ destroy: true });
+					}
+				}
+			});
+
+		});
+
+	</script>
+
+<style type="text/css">
+	.SSAstyle {
+		border-style:solid none solid none;
+	}
+
+	.smallmenu i.fa {
+		font-size:12pt;
+		padding-left:3px;
+	}
+
+	.smallmenu i.fa:hover {
+		color: gray;
+	}
+
+</style>
+
+    </head>
+
+<body id="ctl00_body" class="MainParent" leftmargin="8" topmargin="0" marginwidth="8" marginheight="0">
+  
+  <form method="post" action="./GradebookSummary.aspx" id="aspnetForm">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwULLTE5MzE3NDI2OTEPFgIeE1ZhbGlkYXRlUmVxdWVzdE1vZGUCARYCZg9kFgICAw9kFgJmD2QWDAIBD2QWAmYPZBYIZg9kFgICAQ8PFgIeBFRleHQFCTIwMTgtMjAxOWRkAgEPDxYEHwEFGExhZ3VuYSBIaWxscyBIaWdoIFNjaG9vbB4HVG9vbFRpcAUJU2Nob29sIDkxZGQCBg8PFgIfAQUdbWFydGluZXpqMDQ0QG15c2FkZGxlYmFjay5vcmdkZAIID2QWAmYPFgIeCWlubmVyaHRtbAWWHDx0YWJsZSB3aWR0aD0iMTAwJSIgYm9yZGVyPSIwIiBjZWxscGFkZGluZz0iMCIgY2VsbHNwYWNpbmc9IjAiPjx0cj48dGQgYWxpZ249ImxlZnQiIGNsYXNzPSJyYWlzZWQgIj48dGFibGUgY2xhc3M9Im1lbnV0YWJsZSIgYm9yZGVyPSIwIiBjZWxscGFkZGluZz0iMCIgY2VsbHNwYWNpbmc9IjAiPjx0ciB2YWxpZ249InRvcCI+PHRkPjxkaXYgaWQ9IlRvcF8xIiBjbGFzcz0iVG9wX1BhcmVudCI+PGEgY2xhc3M9InRvcGR5bmFtaWNtZW51IiBocmVmPSJEZWZhdWx0LmFzcHgiIG5hbWU9IkhvbWUiIGlkPSJIb21lIiB0YXJnZXQ9IiIgYXJpYS1oYXNwb3B1cD0idHJ1ZSIgb25DbGljaz0icmV0dXJuIHRydWUiPkhvbWU8L2E+PC9kaXY+PC90ZD48dGQ+PGRpdiBpZD0iVG9wXzIiIGNsYXNzPSJUb3BfUGFyZW50Ij48YSBjbGFzcz0idG9wZHluYW1pY21lbnUiIGhyZWY9ImphdmFzY3JpcHQ6dm9pZCgwKTsiIG5hbWU9IlN0dWRlbnQgSW5mbyIgaWQ9IlN0dWRlbnQgSW5mbyIgdGFyZ2V0PSIiIGFyaWEtaGFzcG9wdXA9InRydWUiIG9uQ2xpY2s9InJldHVybiB0cnVlIj5TdHVkZW50IEluZm88L2E+PGRpdiBpZD0iU3ViXzIiIGNsYXNzPSJTdWJUYWIiPjxhIGNsYXNzPSJ6ZWJyYSIgaHJlZj0iU3R1ZGVudFByb2ZpbGUuYXNweCIgbmFtZT0iUHJvZmlsZSIgaWQ9IlByb2ZpbGUiPlByb2ZpbGU8L2E+PGEgY2xhc3M9InplYnJhIiBocmVmPSJTdHVkZW50cy5hc3B4IiBuYW1lPSJEZW1vZ3JhcGhpY3MiIGlkPSJEZW1vZ3JhcGhpY3MiPkRlbW9ncmFwaGljczwvYT48YSBjbGFzcz0iemVicmEiIGhyZWY9IkVtZXJnZW5jeUNvbnRhY3RzLmFzcHgiIG5hbWU9IkNvbnRhY3RzIiBpZD0iQ29udGFjdHMiPkNvbnRhY3RzPC9hPjwvZGl2PjwvZGl2PjwvdGQ+PHRkPjxkaXYgaWQ9IlRvcF8zIiBjbGFzcz0iVG9wX1BhcmVudCI+PGEgY2xhc3M9InRvcGR5bmFtaWNtZW51IiBocmVmPSJqYXZhc2NyaXB0OnZvaWQoMCk7IiBuYW1lPSJBdHRlbmRhbmNlIiBpZD0iQXR0ZW5kYW5jZSIgdGFyZ2V0PSIiIGFyaWEtaGFzcG9wdXA9InRydWUiIG9uQ2xpY2s9InJldHVybiB0cnVlIj5BdHRlbmRhbmNlPC9hPjxkaXYgaWQ9IlN1Yl8zIiBjbGFzcz0iU3ViVGFiIj48YSBjbGFzcz0iemVicmEiIGhyZWY9IkF0dGVuZGFuY2UuYXNweCIgbmFtZT0iQXR0ZW5kYW5jZSIgaWQ9IkF0dGVuZGFuY2UiPkF0dGVuZGFuY2U8L2E+PC9kaXY+PC9kaXY+PC90ZD48dGQ+PGRpdiBpZD0iVG9wXzQiIGNsYXNzPSJUb3BfUGFyZW50Ij48YSBjbGFzcz0idmlzaXRlZHRvcG1lbnUiIGhyZWY9ImphdmFzY3JpcHQ6dm9pZCgwKTsiIG5hbWU9IkdyYWRlcyIgaWQ9IkdyYWRlcyIgdGFyZ2V0PSIiIGFyaWEtaGFzcG9wdXA9InRydWUiIG9uQ2xpY2s9InJldHVybiB0cnVlIj5HcmFkZXM8L2E+PGRpdiBpZD0iU3ViXzQiIGNsYXNzPSJTdWJUYWIiPjxhIGNsYXNzPSJ2aXNpdGVkc3VibWVudSIgaHJlZj0iR3JhZGVib29rU3VtbWFyeS5hc3B4IiBuYW1lPSJHcmFkZWJvb2siIGlkPSJHcmFkZWJvb2siPkdyYWRlYm9vazwvYT48YSBjbGFzcz0iemVicmEiIGhyZWY9IkdyYWRlYm9va0RldGFpbHMuYXNweCIgbmFtZT0iR3JhZGVib29rIERldGFpbHMiIGlkPSJHcmFkZWJvb2sgRGV0YWlscyI+R3JhZGVib29rIERldGFpbHM8L2E+PGEgY2xhc3M9InplYnJhIiBocmVmPSJTdHVkZW50UmVwb3J0Q2FyZEhpc3RvcnkuYXNweCIgbmFtZT0iUmVwb3J0IENhcmQgSGlzdG9yeSIgaWQ9IlJlcG9ydCBDYXJkIEhpc3RvcnkiPlJlcG9ydCBDYXJkIEhpc3Rvcnk8L2E+PGEgY2xhc3M9InplYnJhIiBocmVmPSJHcmFkZXMuYXNweCIgbmFtZT0iR3JhZGVzIiBpZD0iR3JhZGVzIj5HcmFkZXM8L2E+PGEgY2xhc3M9InplYnJhIiBocmVmPSJHcmFkdWF0aW9uUmVxdWlyZW1lbnRzLmFzcHgiIG5hbWU9IkdyYWR1YXRpb24gU3RhdHVzIiBpZD0iR3JhZHVhdGlvbiBTdGF0dXMiPkdyYWR1YXRpb24gU3RhdHVzPC9hPjxhIGNsYXNzPSJ6ZWJyYSIgaHJlZj0iVHJhbnNjcmlwdHMuYXNweCIgbmFtZT0iVHJhbnNjcmlwdHMgPHNwYW4gY2xhc3M9J21ldGFkYXRhJyBzdHlsZT0nZGlzcGxheTogbm9uZTsnPkhpc3Rvcnk8L3NwYW4+IiBpZD0iVHJhbnNjcmlwdHMgPHNwYW4gY2xhc3M9J21ldGFkYXRhJyBzdHlsZT0nZGlzcGxheTogbm9uZTsnPkhpc3Rvcnk8L3NwYW4+Ij5UcmFuc2NyaXB0cyA8c3BhbiBjbGFzcz0nbWV0YWRhdGEnIHN0eWxlPSdkaXNwbGF5OiBub25lOyc+SGlzdG9yeTwvc3Bhbj48L2E+PGEgY2xhc3M9InplYnJhIiBocmVmPSJTdHVkZW50U3RhbmRhcmRzQmFzZWRQcm9ncmVzcy5hc3B4IiBuYW1lPSJTdGFuZGFyZHMgQmFzZWQgUHJvZ3Jlc3MgRGFzaGJvYXJkIiBpZD0iU3RhbmRhcmRzIEJhc2VkIFByb2dyZXNzIERhc2hib2FyZCI+U3RhbmRhcmRzIEJhc2VkIFByb2dyZXNzIERhc2hib2FyZDwvYT48L2Rpdj48L2Rpdj48L3RkPjx0ZD48ZGl2IGlkPSJUb3BfNSIgY2xhc3M9IlRvcF9QYXJlbnQiPjxhIGNsYXNzPSJ0b3BkeW5hbWljbWVudSIgaHJlZj0iamF2YXNjcmlwdDp2b2lkKDApOyIgbmFtZT0iVGVzdCBTY29yZXMiIGlkPSJUZXN0IFNjb3JlcyIgdGFyZ2V0PSIiIGFyaWEtaGFzcG9wdXA9InRydWUiIG9uQ2xpY2s9InJldHVybiB0cnVlIj5UZXN0IFNjb3JlczwvYT48ZGl2IGlkPSJTdWJfNSIgY2xhc3M9IlN1YlRhYiI+PGEgY2xhc3M9InplYnJhIiBocmVmPSJUZXN0RGV0YWlscy5hc3B4IiBuYW1lPSJUZXN0IERldGFpbHMiIGlkPSJUZXN0IERldGFpbHMiPlRlc3QgRGV0YWlsczwvYT48YSBjbGFzcz0iemVicmEiIGhyZWY9IlRlc3RTY29yZXMuYXNweCIgbmFtZT0iVGVzdCBTY29yZXMiIGlkPSJUZXN0IFNjb3JlcyI+VGVzdCBTY29yZXM8L2E+PC9kaXY+PC9kaXY+PC90ZD48dGQ+PGRpdiBpZD0iVG9wXzYiIGNsYXNzPSJUb3BfUGFyZW50Ij48YSBjbGFzcz0idG9wZHluYW1pY21lbnUiIGhyZWY9ImphdmFzY3JpcHQ6dm9pZCgwKTsiIG5hbWU9IkNoYW5nZSBTdHVkZW50IiBpZD0iQ2hhbmdlIFN0dWRlbnQiIHRhcmdldD0iIiBhcmlhLWhhc3BvcHVwPSJ0cnVlIiBvbkNsaWNrPSJyZXR1cm4gdHJ1ZSI+Q2hhbmdlIFN0dWRlbnQ8L2E+PGRpdiBpZD0iU3ViXzYiIGNsYXNzPSJTdWJUYWIiPjxhIGNsYXNzPSJ6ZWJyYSIgaHJlZj0iQ2hhbmdlU3R1ZGVudC5hc3B4P2NhY2hlPTElMmYyJTJmMjAxOSs4JTNhMjAlM2E0OStQTSZTQz05MSZTTj0xODE5JlJldHVyblBhZ2U9R3JhZGVib29rU3VtbWFyeS5hc3B4Jm5hbWU9OTFfMTgxOSZpZD05MV8xODE5IiBuYW1lPSJNYXJ0aW5leiwgSm9zaHVhIEsgLSBHcmQgMTAgLSBMYWd1bmEgSGlsbHMgSFMiIGlkPSJNYXJ0aW5leiwgSm9zaHVhIEsgLSBHcmQgMTAgLSBMYWd1bmEgSGlsbHMgSFMiPk1hcnRpbmV6LCBKb3NodWEgSyAtIEdyZCAxMCAtIExhZ3Vu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cm5hdGVUZXh0BQRTQU1FHwIFbUZvcmVjYXN0ZWQgdmFsdWUgb2YgOTYuOTQlIGNvbXBhcmVkIHRvIHRoZSBhdmVyYWdlIG9mIHRoZSBsYXN0IGZvdXIgb3ZlcmFsbCBzY29yZXMgOTYuNzQlICAgQ2xpY2sgZm9yIERldGFpbHMeBF8hU0ICAhYCHgdPbkNsaWNrBR9jcmVhdGVTY2F0dGVyQ2hhcnRfMzg5MDgxMl9ZKCk7ZAICDxYCHgdvbmNsaWNrBS1jcmVhdGVTY2F0dGVyQ2hhcnRfMzg5MDgxMl9ZKCk7IHJldHVybiBmYWxzZTtkAgoPZBYCZg8PFgYfAQUBMB4JRm9yZUNvbG9yDB8ZAgRkZAILD2QWAmYPFQHNBDx0YWJsZSBib3JkZXI9IjAiIGNsYXNzPSJhYyIgc3R5bGU9ImJveC1zaXppbmc6IGNvbnRlbnQtYm94OyB3aWR0aDogMTAwcHg7Ij48dHI+PHRkIGNsYXNzPSJhYyIgdGl0bGU9IlRodXJzZGF5IC0gMTIvMjcvMjAxOCIgc3R5bGU9IndpZHRoOiAyMCU7IGJvcmRlcjogbm9uZTsgY29sb3I6I0YzRjNGMzsiPi08L3RkPjx0ZCBjbGFzcz0iYWMiIHRpdGxlPSJGcmlkYXkgLSAxMi8yOC8yMDE4IiBzdHlsZT0id2lkdGg6IDIwJTsgYm9yZGVyOiBub25lOyBjb2xvcjojRjNGM0YzOyI+LTwvdGQ+PHRkIGNsYXNzPSJhYyIgdGl0bGU9Ik1vbmRheSAtIDEyLzMxLzIwMTgiIHN0eWxlPSJ3aWR0aDogMjAlOyBib3JkZXI6IG5vbmU7IGNvbG9yOiNGM0YzRjM7Ij4tPC90ZD48dGQgY2xhc3M9ImFjIiB0aXRsZT0iVHVlc2RheSAtIDAxLzAxLzIwMTkiIHN0eWxlPSJ3aWR0aDogMjAlOyBib3JkZXI6IG5vbmU7IGNvbG9yOiNGM0YzRjM7Ij4tPC90ZD48dGQgY2xhc3M9ImFjIiB0aXRsZT0iV2VkbmVzZGF5IC0gMDEvMDIvMjAxOSIgc3R5bGU9IndpZHRoOiAyMCU7IGJvcmRlcjogbm9uZTsgY29sb3I6I0YzRjNGMzsiPi08L3RkPjwvdHI+PC90YWJsZT5kAgwPZBYCZg8VAgoxMi8yMC8yMDE4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ZQU4Ny4yOWQCCA9kFgJmDxUBAUJkAgkPZBYEZg8PFggfFwUeQ2xpY2thYmxlIGdyYWRlYm9vay10cmVuZC1zYW1lHxgFBFNBTUUfAgVsRm9yZWNhc3RlZCB2YWx1ZSBvZiA4Ni41OCUgY29tcGFyZWQgdG8gdGhlIGF2ZXJhZ2Ugb2YgdGhlIGxhc3QgZm91ciBvdmVyYWxsIHNjb3JlcyA4Ny4xJSAgIENsaWNrIGZvciBEZXRhaWxzHxkCAhYCHxoFH2NyZWF0ZVNjYXR0ZXJDaGFydF80OTY3ODgyX0YoKTtkAgIPFgIfGwUtY3JlYXRlU2NhdHRlckNoYXJ0XzQ5Njc4ODJfRigpOyByZXR1cm4gZmFsc2U7ZAIKD2QWAmYPDxYGHwEFATAfHAwfGQIEZGQCCw9kFgJmDxUBzQQ8dGFibGUgYm9yZGVyPSIwIiBjbGFzcz0iYWMiIHN0eWxlPSJib3gtc2l6aW5nOiBjb250ZW50LWJveDsgd2lkdGg6IDEwMHB4OyI+PHRyPjx0ZCBjbGFzcz0iYWMiIHRpdGxlPSJUaHVyc2RheSAtIDEyLzI3LzIwMTgiIHN0eWxlPSJ3aWR0aDogMjAlOyBib3JkZXI6IG5vbmU7IGNvbG9yOiNGM0YzRjM7Ij4tPC90ZD48dGQgY2xhc3M9ImFjIiB0aXRsZT0iRnJpZGF5IC0gMTIvMjgvMjAxOCIgc3R5bGU9IndpZHRoOiAyMCU7IGJvcmRlcjogbm9uZTsgY29sb3I6I0YzRjNGMzsiPi08L3RkPjx0ZCBjbGFzcz0iYWMiIHRpdGxlPSJNb25kYXkgLSAxMi8zMS8yMDE4IiBzdHlsZT0id2lkdGg6IDIwJTsgYm9yZGVyOiBub25lOyBjb2xvcjojRjNGM0YzOyI+LTwvdGQ+PHRkIGNsYXNzPSJhYyIgdGl0bGU9IlR1ZXNkYXkgLSAwMS8wMS8yMDE5IiBzdHlsZT0id2lkdGg6IDIwJTsgYm9yZGVyOiBub25lOyBjb2xvcjojRjNGM0YzOyI+LTwvdGQ+PHRkIGNsYXNzPSJhYyIgdGl0bGU9IldlZG5lc2RheSAtIDAxLzAyLzIwMTkiIHN0eWxlPSJ3aWR0aDogMjAlOyBib3JkZXI6IG5vbmU7IGNvbG9yOiNGM0YzRjM7Ij4tPC90ZD48L3Ry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" />
+
+<script language='javascript'>var isSafari = false;function isIE(){return false;}</script>
+<script type="text/javascript">
+//<![CDATA[
+var assignData_3890812_Y = [  { "assignDate":"08/27/2018", "assignValue": 100.00, "assignment": "#1 Name Card" }, { "assignDate":"08/28/2018", "assignValue": 100.00, "assignment": "#2 Cross-Cultural Communication" }, { "assignDate":"08/29/2018", "assignValue": 100.00, "assignment": "#3 Textbook Preview" }, { "assignDate":"08/30/2018", "assignValue": 100.00, "assignment": "#4 Backwards Bicycle" }, { "assignDate":"08/31/2018", "assignValue": 100.00, "assignment": "#5 KWL Posters" }, { "assignDate":"09/04/2018", "assignValue": 100.00, "assignment": "#6 Create a Web Page" }, { "assignDate":"09/05/2018", "assignValue": 100.00, "assignment": "#7 KWL Chart - personal" }, { "assignDate":"09/06/2018", "assignValue": 100.00, "assignment": "#8 Avancemos Textbook p. 36-37" }, { "assignDate":"09/07/2018", "assignValue": 100.00, "assignment": "#9 Sin Miedo Activity" }, { "assignDate":"09/10/2018", "assignValue": 100.00, "assignment": "#11 Fin de Semana" }, { "assignDate":"09/11/2018", "assignValue": 100.00, "assignment": "#12 P. 1" }, { "assignDate":"09/12/2018", "assignValue": 100.00, "assignment": "#13 Texto P40-41, Act. P2" }, { "assignDate":"09/13/2018", "assignValue": 100.00, "assignment": "#14 T: P42-43. Act: P5" }, { "assignDate":"09/14/2018", "assignValue": 100.00, "assignment": "#10 Vocabulary Slide Show" }, { "assignDate":"09/17/2018", "assignValue": 100.00, "assignment": "#17 El Finde" }, { "assignDate":"09/18/2018", "assignValue": 100.00, "assignment": "#18 Texto P62, Act. P24" }, { "assignDate":"09/20/2018", "assignValue": 100.00, "assignment": "#19 Texto P. 63-65, Act. P5-6" }, { "assignDate":"09/21/2018", "assignValue": 150.00, "assignment": "#20 Name That Movie" }, { "assignDate":"09/21/2018", "assignValue": 75.00, "assignment": "#21 Vocabulario Final" }, { "assignDate":"09/24/2018", "assignValue": 150.00, "assignment": "#22 Actividad - Rap vs racismo" }, { "assignDate":"09/25/2018", "assignValue": 100.00, "assignment": "#24 Texto P. 44-47, Act. P. 6" }, { "assignDate":"09/26/2018", "assignValue": 100.00, "assignment": "#28 Texto P.55-57, Act, P. 7-9" }, { "assignDate":"09/27/2018", "assignValue": 76.00, "assignment": "#25 Unit 1 Test" }, { "assignDate":"09/28/2018", "assignValue": 100.00, "assignment": "#26 KWL Final" }, { "assignDate":"10/01/2018", "assignValue": 100.00, "assignment": "#27 La Proyección" }, { "assignDate":"10/01/2018", "assignValue": 100.00, "assignment": "#29 Create a Google Site" }, { "assignDate":"10/02/2018", "assignValue": 100.00, "assignment": "#30 Texto P. 64-65, Act. P. 27" }, { "assignDate":"10/03/2018", "assignValue": 100.00, "assignment": "#31 Past Tense verbs" }, { "assignDate":"10/04/2018", "assignValue": 100.00, "assignment": "#32 Take the Map Quiz" }, { "assignDate":"10/04/2018", "assignValue": 100.00, "assignment": "#33 Control - Mapa de América Central y el Caribe" }, { "assignDate":"10/08/2018", "assignValue": 100.00, "assignment": "#34 Home Page" }, { "assignDate":"10/08/2018", "assignValue": 100.00, "assignment": "#36 Conversación usando el pretérito" }, { "assignDate":"10/09/2018", "assignValue": 100.00, "assignment": "#37 Texto P69, Act. P28" }, { "assignDate":"10/11/2018", "assignValue": 85.00, "assignment": "#35 Preterit verbs Quiz" }, { "assignDate":"10/12/2018", "assignValue": 100.00, "assignment": "#38 Coco - Día Dos" }, { "assignDate":"10/15/2018", "assignValue": 100.00, "assignment": "#39 Encuesta" }, { "assignDate":"10/16/2018", "assignValue": 100.00, "assignment": "#40 Texto P.70-71, Act. P.30" }, { "assignDate":"10/17/2018", "assignValue": 100.00, "assignment": "#41 Texto P. 73, Act. P. 35" }, { "assignDate":"10/18/2018", "assignValue": 100.00, "assignment": "#42 Texto P. 76-77" }, { "assignDate":"10/19/2018", "assignValue": 100.00, "assignment": "#43 Coco - Día Tres" }, { "assignDate":"10/19/2018", "assignValue": 80.00, "assignment": "#44 Proyecto Semana 2" }, { "assignDate":"10/22/2018", "assignValue": 100.00, "assignment": "#46 Conversación" }, { "assignDate":"10/23/2018", "assignValue": 100.00, "assignment": "#47 Repaso" }, { "assignDate":"10/24/2018", "assignValue": 100.00, "assignment": "#48 Kahoot!" }, { "assignDate":"10/24/2018", "assignValue": 100.00, "assignment": "#50 Proyecto - Comparaciones" }, { "assignDate":"10/25/2018", "assignValue": 96.00, "assignment": "#45 unit 1 Exam" }, { "assignDate":"10/26/2018", "assignValue": 100.00, "assignment": "#49 Coco - Personajes" }, { "assignDate":"10/30/2018", "assignValue": 100.00, "assignment": "#51 Análasis - Unidad 1" }, { "assignDate":"10/31/2018", "assignValue": 100.00, "assignment": "#52 Repaso y Análisis" }, { "assignDate":"10/31/2018", "assignValue": 100.00, "assignment": "#54 Proyecto Octubre" }, { "assignDate":"11/01/2018", "assignValue": 100.00, "assignment": "#55 Maestría - Unidad 1" }, { "assignDate":"11/02/2018", "assignValue": 0.00, "assignment": "#53 Repesca - Unidad 1" }, { "assignDate":"11/05/2018", "assignValue": 100.00, "assignment": "#56 Conversación" }, { "assignDate":"11/05/2018", "assignValue": 100.00, "assignment": "#59 Reflexión de octubre" }, { "assignDate":"11/06/2018", "assignValue": 100.00, "assignment": "#57 Sustituta" }, { "assignDate":"11/06/2018", "assignValue": 100.00, "assignment": "#60 La Proyección - Noviembre" }, { "assignDate":"11/08/2018", "assignValue": 100.00, "assignment": "#58 Texto P.91-93, Act. P.51" }, { "assignDate":"11/08/2018", "assignValue": 100.00, "assignment": "#61 Texto P. 92-94, Act. P. 52" }, { "assignDate":"11/13/2018", "assignValue": 100.00, "assignment": "#63 Texto P. 94, Act. P. 54 & 64" }, { "assignDate":"11/14/2018", "assignValue": 100.00, "assignment": "#64 Text P. 96-97, Act. P. 59" }, { "assignDate":"11/15/2018", "assignValue": 100.00, "assignment": "#65 Kahoot! Repaso Unidad 2 Lección 1" }, { "assignDate":"11/15/2018", "assignValue": 90.00, "assignment": "#66 Pop Quiz - Verbos en el Pretérito Simple" }, { "assignDate":"11/16/2018", "assignValue": 100.00, "assignment": "#62 Vocabulario Unidad 2 - Comienzo" }, { "assignDate":"11/16/2018", "assignValue": 100.00, "assignment": "#67 Proyecto Noviembre - Semana dos y Calendario" }, { "assignDate":"11/26/2018", "assignValue": 100.00, "assignment": "#68 Conversión - El pretérito simple" }, { "assignDate":"11/26/2018", "assignValue": 100.00, "assignment": "#77 Proyecto - Noviembre Comparaciones" }, { "assignDate":"11/27/2018", "assignValue": 100.00, "assignment": "#69 Texto P. 98-99, Act. P. 65" }, { "assignDate":"11/28/2018", "assignValue": 100.00, "assignment": "#70 Texto P. 100-101, Act. P. 56-57" }, { "assignDate":"11/29/2018", "assignValue": 100.00, "assignment": "#71 Texto P. 106-107" }, { "assignDate":"11/30/2018", "assignValue": 100.00, "assignment": "#72 Fun Friday - Rosalía" }, { "assignDate":"11/30/2018", "assignValue": 100.00, "assignment": "#74 Proyecto Noviembre Final" }, { "assignDate":"11/30/2018", "assignValue": 100.00, "assignment": "#75 Noviembre - Reflección" }, { "assignDate":"12/03/2018", "assignValue": 100.00, "assignment": "#73 Mapas" }, { "assignDate":"12/06/2018", "assignValue": 96.00, "assignment": "#76 Examen - Unidad 2, Lección 1" }, { "assignDate":"12/10/2018", "assignValue": 100.00, "assignment": "#78 Mapas" }, { "assignDate":"12/10/2018", "assignValue": 100.00, "assignment": "#84 Proyecto - Idea para Diciembre" }, { "assignDate":"12/11/2018", "assignValue": 100.00, "assignment": "#80 Texto pp. 114-117, Act. p. 73" }, { "assignDate":"12/12/2018", "assignValue": 150.00, "assignment": "#79 Texto pp. 118-120, Act. pp. 76-77" }, { "assignDate":"12/13/2018", "assignValue": 100.00, "assignment": "#81 Texto pp. 121-124, Act. p. 79" }, { "assignDate":"12/14/2018", "assignValue": 100.00, "assignment": "#82 Fun Friday - Rosalía videos y letra" }, { "assignDate":"12/17/2018", "assignValue": 100.00, "assignment": "#83 Vocabulario Unidad 2, Lección 2" }, { "assignDate":"12/17/2018", "assignValue": 100.00, "assignment": "#86 Mapas" }, { "assignDate":"12/18/2018", "assignValue": 100.00, "assignment": "#87 Mapas" }, { "assignDate":"12/19/2018", "assignValue": 100.00, "assignment": "#88 Mapas" }, { "assignDate":"12/21/2018", "assignValue": 100.00, "assignment": "#85 Mapa - en grupos" } ]; var assignDataSource_3890812_Y = new kendo.data.DataSource({ data: assignData_3890812_Y, schema: { model: { fields: { "assignDate": { type: "date" } } } } });var overallData_3890812_Y = [  { "overallDate":"08/27/2018", "overallValue": 100.00 }, { "overallDate":"08/28/2018", "overallValue": 100.00 }, { "overallDate":"08/29/2018", "overallValue": 100.00 }, { "overallDate":"08/30/2018", "overallValue": 100.00 }, { "overallDate":"08/31/2018", "overallValue": 100.00 }, { "overallDate":"09/04/2018", "overallValue": 100.00 }, { "overallDate":"09/05/2018", "overallValue": 100.00 }, { "overallDate":"09/06/2018", "overallValue": 100.00 }, { "overallDate":"09/07/2018", "overallValue": 100.00 }, { "overallDate":"09/10/2018", "overallValue": 100.00 }, { "overallDate":"09/11/2018", "overallValue": 100.00 }, { "overallDate":"09/12/2018", "overallValue": 100.00 }, { "overallDate":"09/13/2018", "overallValue": 100.00 }, { "overallDate":"09/14/2018", "overallValue": 100.00 }, { "overallDate":"09/17/2018", "overallValue": 100.00 }, { "overallDate":"09/18/2018", "overallValue": 100.00 }, { "overallDate":"09/20/2018", "overallValue": 100.00 }, { "overallDate":"09/21/2018", "overallValue": 94.44 }, { "overallDate":"09/24/2018", "overallValue": 95.94 }, { "overallDate":"09/25/2018", "overallValue": 96.05 }, { "overallDate":"09/26/2018", "overallValue": 96.15 }, { "overallDate":"09/27/2018", "overallValue": 91.26 }, { "overallDate":"09/28/2018", "overallValue": 92.03 }, { "overallDate":"10/01/2018", "overallValue": 92.80 }, { "overallDate":"10/02/2018", "overallValue": 92.91 }, { "overallDate":"10/03/2018", "overallValue": 93.02 }, { "overallDate":"10/04/2018", "overallValue": 93.61 }, { "overallDate":"10/08/2018", "overallValue": 94.23 }, { "overallDate":"10/09/2018", "overallValue": 94.40 }, { "overallDate":"10/11/2018", "overallValue": 93.37 }, { "overallDate":"10/12/2018", "overallValue": 93.44 }, { "overallDate":"10/15/2018", "overallValue": 93.51 }, { "overallDate":"10/16/2018", "overallValue": 93.58 }, { "overallDate":"10/17/2018", "overallValue": 93.65 }, { "overallDate":"10/18/2018", "overallValue": 93.71 }, { "overallDate":"10/19/2018", "overallValue": 93.10 }, { "overallDate":"10/22/2018", "overallValue": 93.17 }, { "overallDate":"10/23/2018", "overallValue": 93.23 }, { "overallDate":"10/24/2018", "overallValue": 93.60 }, { "overallDate":"10/25/2018", "overallValue": 94.05 }, { "overallDate":"10/26/2018", "overallValue": 94.09 }, { "overallDate":"10/30/2018", "overallValue": 94.13 }, { "overallDate":"10/31/2018", "overallValue": 94.80 }, { "overallDate":"11/01/2018", "overallValue": 94.83 }, { "overallDate":"11/02/2018", "overallValue": 95.16 }, { "overallDate":"11/05/2018", "overallValue": 95.34 }, { "overallDate":"11/06/2018", "overallValue": 95.54 }, { "overallDate":"11/08/2018", "overallValue": 95.60 }, { "overallDate":"11/13/2018", "overallValue": 95.62 }, { "overallDate":"11/14/2018", "overallValue": 95.65 }, { "overallDate":"11/15/2018", "overallValue": 95.51 }, { "overallDate":"11/16/2018", "overallValue": 95.75 }, { "overallDate":"11/26/2018", "overallValue": 95.88 }, { "overallDate":"11/27/2018", "overallValue": 95.90 }, { "overallDate":"11/28/2018", "overallValue": 95.92 }, { "overallDate":"11/29/2018", "overallValue": 95.94 }, { "overallDate":"11/30/2018", "overallValue": 96.25 }, { "overallDate":"12/03/2018", "overallValue": 96.27 }, { "overallDate":"12/06/2018", "overallValue": 96.25 }, { "overallDate":"12/10/2018", "overallValue": 96.35 }, { "overallDate":"12/11/2018", "overallValue": 96.36 }, { "overallDate":"12/12/2018", "overallValue": 96.59 }, { "overallDate":"12/13/2018", "overallValue": 96.61 }, { "overallDate":"12/14/2018", "overallValue": 96.62 }, { "overallDate":"12/17/2018", "overallValue": 96.70 }, { "overallDate":"12/18/2018", "overallValue": 96.72 }, { "overallDate":"12/19/2018", "overallValue": 96.73 }, { "overallDate":"12/21/2018", "overallValue": 96.80 } ]; var overallDataSource_3890812_Y = new kendo.data.DataSource({ data: overallData_3890812_Y, schema: { model: { fields: { "overallDate": { type: "date" } } } } }); function createScatterChart_3890812_Y() {$("#lblTrendGraphTitle").text("Spanish 2");$find("ShowTrendGraph").show();var chartSeries = [];if (!(typeof assignDataSource_3890812_Y === 'undefined')) {assignDataSource_3890812_Y.read();chartSeries.push( {  name: "Assignments",  type: "scatter",  color: "#FFB800",  data: assignData_3890812_Y,  xField: "assignDate",  yField: "assignValue",  tooltip: { visible: true, template: "#= kendo.format('{0:N}%',value.y) # - #= kendo.toString(value.x, 'MM/dd/yyyy')# <br> ${dataItem.assignment}" } });}if (!(typeof overallDataSource_3890812_Y === 'undefined')) {overallDataSource_3890812_Y.read();chartSeries.push( {  name: "Overall Score",  type: "scatterLine",  color: "#7BD2F6",  data: overallData_3890812_Y,  xField: "overallDate",  yField: "overallValue",  tooltip: { visible: true, format: "{1}% - {0:d}" } });}$("#trendChart").kendoChart({ transition: false, seriesDefaults: { markers: { size: 6 } }, series: chartSeries, yAxis: { labels: { format: "{0}%" }, title: { text: "% Correct", rotation: -90 } }});}var assignData_4140873_F = [  { "assignDate":"08/27/2018", "assignValue": 100.00, "assignment": "#1 Q#1 Participation" }, { "assignDate":"08/28/2018", "assignValue": 100.00, "assignment": "#2 Syllabus" }, { "assignDate":"08/29/2018", "assignValue": 100.00, "assignment": "#7 Summer Review Packet" }, { "assignDate":"08/31/2018", "assignValue": 100.00, "assignment": "#3 Remind" }, { "assignDate":"08/31/2018", "assignValue": 100.00, "assignment": "#4 Google Classroom" }, { "assignDate":"08/31/2018", "assignValue": 89.00, "assignment": "#8 Summer Review Assessment" }, { "assignDate":"09/04/2018", "assignValue": 100.00, "assignment": "#5 Textbook Login" }, { "assignDate":"09/04/2018", "assignValue": 100.00, "assignment": "#6 Graphing Calculator Tutorial" }, { "assignDate":"09/18/2018", "assignValue": 83.00, "assignment": "#9 1.0 & 1.3 Mini Checkpoint" }, { "assignDate":"10/03/2018", "assignValue": 86.00, "assignment": "#10 Linear & Absolute Value Checkpoint - Calc" }, { "assignDate":"10/04/2018", "assignValue": 86.00, "assignment": "#11 Linear & Absolute Value Checkpoint - No Calc" }, { "assignDate":"10/05/2018", "assignValue": 100.00, "assignment": "#12 Linear & Abs Value HW - Accuracy" }, { "assignDate":"10/05/2018", "assignValue": 100.00, "assignment": "#13 Linear & Abs Value HW - Completion" }, { "assignDate":"10/12/2018", "assignValue": 84.00, "assignment": "#14 2.1 & 2.2 Mini Checkpoint" }, { "assignDate":"10/19/2018", "assignValue": 85.00, "assignment": "#17 Quadratics Functions Full Checkpoint" }, { "assignDate":"10/22/2018", "assignValue": 98.00, "assignment": "#15 Quadratic Functions HW Accuracy" }, { "assignDate":"10/22/2018", "assignValue": 90.00, "assignment": "#16 Quadratics Functions HW Completion" }, { "assignDate":"10/31/2018", "assignValue": 73.00, "assignment": "#18 3.1 & 3.2 Mini Checkpoint" }, { "assignDate":"11/01/2018", "assignValue": 100.00, "assignment": "#20 3.4 Edpuzzle Activity" }, { "assignDate":"11/05/2018", "assignValue": 60.00, "assignment": "#19 3.3 Mini Checkpoint" }, { "assignDate":"11/09/2018", "assignValue": 84.00, "assignment": "#22 Quadratic Equations & Complex Numbers Chapter Full Checkpoint" }, { "assignDate":"11/12/2018", "assignValue": 99.00, "assignment": "#21 Chapter #3A HW Packet - Accuracy" }, { "assignDate":"11/12/2018", "assignValue": 100.00, "assignment": "#23 Chapter #3A Completion" }, { "assignDate":"11/16/2018", "assignValue": 100.00, "assignment": "#24 Chapter #3B Completion" }, { "assignDate":"11/16/2018", "assignValue": 100.00, "assignment": "#25 Chapter #3B HW Packet - Accuracy" }, { "assignDate":"11/16/2018", "assignValue": 72.00, "assignment": "#26 3.5 & 3.6 Mini Checkpoint" }, { "assignDate":"11/30/2018", "assignValue": 100.00, "assignment": "#27 4.4 Factoring Completely GoFormative" }, { "assignDate":"12/04/2018", "assignValue": 80.00, "assignment": "#28 4.2 & 4.4 Mini Checkpoint" }, { "assignDate":"12/10/2018", "assignValue": 0.00, "assignment": "#30 Chapter 4 Review" }, { "assignDate":"12/12/2018", "assignValue": 76.00, "assignment": "#31 Polynomial Chapter Checkpoint" } ]; var assignDataSource_4140873_F = new kendo.data.DataSource({ data: assignData_4140873_F, schema: { model: { fields: { "assignDate": { type: "date" } } } } });var overallData_4140873_F = [  { "overallDate":"08/27/2018", "overallValue": 100.00 }, { "overallDate":"08/28/2018", "overallValue": 100.00 }, { "overallDate":"08/29/2018", "overallValue": 100.00 }, { "overallDate":"08/31/2018", "overallValue": 95.60 }, { "overallDate":"09/04/2018", "overallValue": 95.60 }, { "overallDate":"09/18/2018", "overallValue": 94.40 }, { "overallDate":"10/03/2018", "overallValue": 90.66 }, { "overallDate":"10/04/2018", "overallValue": 90.66 }, { "overallDate":"10/05/2018", "overallValue": 90.66 }, { "overallDate":"10/12/2018", "overallValue": 90.51 }, { "overallDate":"10/19/2018", "overallValue": 90.37 }, { "overallDate":"10/22/2018", "overallValue": 89.75 }, { "overallDate":"10/31/2018", "overallValue": 89.06 }, { "overallDate":"11/01/2018", "overallValue": 89.07 }, { "overallDate":"11/05/2018", "overallValue": 88.09 }, { "overallDate":"11/09/2018", "overallValue": 87.90 }, { "overallDate":"11/12/2018", "overallValue": 88.05 }, { "overallDate":"11/16/2018", "overallValue": 87.90 }, { "overallDate":"11/30/2018", "overallValue": 87.91 }, { "overallDate":"12/04/2018", "overallValue": 88.01 }, { "overallDate":"12/10/2018", "overallValue": 88.01 }, { "overallDate":"12/12/2018", "overallValue": 87.18 } ]; var overallDataSource_4140873_F = new kendo.data.DataSource({ data: overallData_4140873_F, schema: { model: { fields: { "overallDate": { type: "date" } } } } }); function createScatterChart_4140873_F() {$("#lblTrendGraphTitle").text("Alg 2 Honors/IB");$find("ShowTrendGraph").show();var chartSeries = [];if (!(typeof assignDataSource_4140873_F === 'undefined')) {assignDataSource_4140873_F.read();chartSeries.push( {  name: "Assignments",  type: "scatter",  color: "#FFB800",  data: assignData_4140873_F,  xField: "assignDate",  yField: "assignValue",  tooltip: { visible: true, template: "#= kendo.format('{0:N}%',value.y) # - #= kendo.toString(value.x, 'MM/dd/yyyy')# <br> ${dataItem.assignment}" } });}if (!(typeof overallDataSource_4140873_F === 'undefined')) {overallDataSource_4140873_F.read();chartSeries.push( {  name: "Overall Score",  type: "scatterLine",  color: "#7BD2F6",  data: overallData_4140873_F,  xField: "overallDate",  yField: "overallValue",  tooltip: { visible: true, format: "{1}% - {0:d}" } });}$("#trendChart").kendoChart({ transition: false, seriesDefaults: { markers: { size: 6 } }, series: chartSeries, yAxis: { labels: { format: "{0}%" }, title: { text: "% Correct", rotation: -90 } }});}var assignData_4967882_F = [  { "assignDate":"08/28/2018", "assignValue": 100.00, "assignment": "#1 Parent-Signed Honors Contracts" }, { "assignDate":"09/05/2018", "assignValue": 100.00, "assignment": "#2 Parent-Student-Signed Ethics Contracts" }, { "assignDate":"09/05/2018", "assignValue": 90.00, "assignment": "#3 2 White Annotated Passages& 3 Column Chart" }, { "assignDate":"09/05/2018", "assignValue": 100.00, "assignment": "#4 Essay pgs. 1-2" }, { "assignDate":"09/28/2018", "assignValue": 92.00, "assignment": "#5 Sept On-Demand Essay: White's Purpose in Passage A \/B w\/ annotated text & 3-column chart" }, { "assignDate":"09/28/2018", "assignValue": 71.73, "assignment": "#6 Summer Reading Objective Test Book II" }, { "assignDate":"10/02/2018", "assignValue": 102.77, "assignment": "#7 White's Book 3 DEBATE: Debate Cards;  Opening \/ Closing Speeches;  Judges' Speeches" }, { "assignDate":"10/03/2018", "assignValue": 100.00, "assignment": "#8 SAT Voc Lesson 1 WS hw" }, { "assignDate":"10/08/2018", "assignValue": 100.00, "assignment": "#9 QUIZ SAT Voc Lesson 1" }, { "assignDate":"10/09/2018", "assignValue": 84.48, "assignment": "#10 Honors Summer Readng Book I Open Book Test" }, { "assignDate":"10/10/2018", "assignValue": 100.00, "assignment": "#11 hw Voc Lesson 2 worksheet" }, { "assignDate":"10/11/2018", "assignValue": 90.27, "assignment": "#12 Book III 12 Lancelot Quotes (Speaker, Listener, CONTEXT!!)" }, { "assignDate":"10/15/2018", "assignValue": 100.00, "assignment": "#13 SAT Voc Leson 2 QUIZ (Review Lesson 1)" }, { "assignDate":"10/16/2018", "assignValue": 100.00, "assignment": "#14 Sept \"Letter to Self\" to be opened June 2019" }, { "assignDate":"10/17/2018", "assignValue": 100.00, "assignment": "#15 hw SAT Voc Lesson 3 WS" }, { "assignDate":"10/22/2018", "assignValue": 87.50, "assignment": "#16 QUIZ SAT Voc Lesson 3 w\/ Review Words" }, { "assignDate":"10/31/2018", "assignValue": 98.00, "assignment": "#17 Journey of a Hero Group Power Points" }, { "assignDate":"11/01/2018", "assignValue": 96.00, "assignment": "#18 SAT Voc Lesson 4 SQ hw" }, { "assignDate":"11/01/2018", "assignValue": 68.00, "assignment": "#19 Once & Future King Book 4 TEST w\/ Vogler's Journey of a Hero Steps" }, { "assignDate":"11/08/2018", "assignValue": 96.00, "assignment": "#20 SAT Voc Lesson 5 hw sq" }, { "assignDate":"11/08/2018", "assignValue": 80.58, "assignment": "#21 Book IV Review for Test: 5 Goals Chart, 3 Paragraphs" }, { "assignDate":"11/14/2018", "assignValue": 100.00, "assignment": "#22 SAT Voc Lesson 5 QUIZ w\/ Review Words" }, { "assignDate":"11/16/2018", "assignValue": 80.00, "assignment": "#23 SAT Voc Quiz Lesson 4 w\/ Review Words" }, { "assignDate":"11/16/2018", "assignValue": 82.50, "assignment": "#24 Creative Writing Emulation of Macbeth's Witches' Poem" }, { "assignDate":"11/28/2018", "assignValue": 71.00, "assignment": "#25 Macbeth Act I SQ" }, { "assignDate":"11/30/2018", "assignValue": 71.05, "assignment": "#26 Shakespeare Bio Quiz" }, { "assignDate":"12/04/2018", "assignValue": 100.00, "assignment": "#27 Macbeth Flow Chart" }, { "assignDate":"12/14/2018", "assignValue": 100.00, "assignment": "#28 Macbeth Act IV SQ" }, { "assignDate":"12/17/2018", "assignValue": 92.00, "assignment": "#29 Macbeth Act II SQ" }, { "assignDate":"12/19/2018", "assignValue": 94.28, "assignment": "#30 Macbeth Act III Quiz" }, { "assignDate":"12/19/2018", "assignValue": 35.29, "assignment": "#31 Annotated Macbeth Book Passages" }, { "assignDate":"12/20/2018", "assignValue": 83.95, "assignment": "#32 Macbeth  TEST" }, { "assignDate":"01/01/2019", "assignValue": 94.40, "assignment": "#33 Macbeth Mini IB Commentary Essay: 1 of 2 Soliloquy Choices" }, { "assignDate":"01/01/2019", "assignValue": 102.77, "assignment": "#34 Macbeth Act V SQ (EC for Themes)" } ]; var assignDataSource_4967882_F = new kendo.data.DataSource({ data: assignData_4967882_F, schema: { model: { fields: { "assignDate": { type: "date" } } } } });var overallData_4967882_F = [  { "overallDate":"08/28/2018", "overallValue": 100.00 }, { "overallDate":"09/05/2018", "overallValue": 95.71 }, { "overallDate":"09/28/2018", "overallValue": 87.56 }, { "overallDate":"10/02/2018", "overallValue": 90.09 }, { "overallDate":"10/03/2018", "overallValue": 90.63 }, { "overallDate":"10/08/2018", "overallValue": 91.02 }, { "overallDate":"10/09/2018", "overallValue": 89.74 }, { "overallDate":"10/10/2018", "overallValue": 90.16 }, { "overallDate":"10/11/2018", "overallValue": 90.17 }, { "overallDate":"10/15/2018", "overallValue": 90.60 }, { "overallDate":"10/16/2018", "overallValue": 90.86 }, { "overallDate":"10/17/2018", "overallValue": 91.15 }, { "overallDate":"10/22/2018", "overallValue": 91.01 }, { "overallDate":"10/31/2018", "overallValue": 91.78 }, { "overallDate":"11/01/2018", "overallValue": 89.57 }, { "overallDate":"11/08/2018", "overallValue": 88.45 }, { "overallDate":"11/14/2018", "overallValue": 88.78 }, { "overallDate":"11/16/2018", "overallValue": 88.33 }, { "overallDate":"11/28/2018", "overallValue": 87.82 }, { "overallDate":"11/30/2018", "overallValue": 86.95 }, { "overallDate":"12/04/2018", "overallValue": 87.36 }, { "overallDate":"12/14/2018", "overallValue": 87.56 }, { "overallDate":"12/17/2018", "overallValue": 87.65 }, { "overallDate":"12/19/2018", "overallValue": 86.85 }, { "overallDate":"12/20/2018", "overallValue": 86.60 }, { "overallDate":"01/01/2019", "overallValue": 87.29 } ]; var overallDataSource_4967882_F = new kendo.data.DataSource({ data: overallData_4967882_F, schema: { model: { fields: { "overallDate": { type: "date" } } } } }); function createScatterChart_4967882_F() {$("#lblTrendGraphTitle").text("Period 4 Honors II Fal Semester");$find("ShowTrendGraph").show();var chartSeries = [];if (!(typeof assignDataSource_4967882_F === 'undefined')) {assignDataSource_4967882_F.read();chartSeries.push( {  name: "Assignments",  type: "scatter",  color: "#FFB800",  data: assignData_4967882_F,  xField: "assignDate",  yField: "assignValue",  tooltip: { visible: true, template: "#= kendo.format('{0:N}%',value.y) # - #= kendo.toString(value.x, 'MM/dd/yyyy')# <br> ${dataItem.assignment}" } });}if (!(typeof overallDataSource_4967882_F === 'undefined')) {overallDataSource_4967882_F.read();chartSeries.push( {  name: "Overall Score",  type: "scatterLine",  color: "#7BD2F6",  data: overallData_4967882_F,  xField: "overallDate",  yField: "overallValue",  tooltip: { visible: true, format: "{1}% - {0:d}" } });}$("#trendChart").kendoChart({ transition: false, seriesDefaults: { markers: { size: 6 } }, series: chartSeries, yAxis: { labels: { format: "{0}%" }, title: { text: "% Correct", rotation: -90 } }});}var assignData_9030561_F = [  { "assignDate":"08/31/2018", "assignValue": 80.00, "assignment": "#1 SPICE & World Regions Map" }, { "assignDate":"09/04/2018", "assignValue": 100.00, "assignment": "#2 Summer work-Ch 1&2 Notes\/Crash Course \/Regions" }, { "assignDate":"09/05/2018", "assignValue": 100.00, "assignment": "#3 Questions-worst mistake agriculture" }, { "assignDate":"09/05/2018", "assignValue": 93.54, "assignment": "#4 Period 1 Vocabulary test #1-31" }, { "assignDate":"09/10/2018", "assignValue": 72.00, "assignment": "#5 Ch 1 test" }, { "assignDate":"09/12/2018", "assignValue": 60.00, "assignment": "#6 Period 1 Vocabulary quiz # 32-61" }, { "assignDate":"09/12/2018", "assignValue": 25.00, "assignment": "#7 Easter island quiz" }, { "assignDate":"09/17/2018", "assignValue": 100.00, "assignment": "#8 ch 2 notes\/questions" }, { "assignDate":"09/17/2018", "assignValue": 84.00, "assignment": "#9 ch 2 test" }, { "assignDate":"09/20/2018", "assignValue": 73.33, "assignment": "#10 Period 2 Vocabulary Test 1-60" }, { "assignDate":"09/26/2018", "assignValue": 100.00, "assignment": "#11 Summary History of the World Ep.2" }, { "assignDate":"10/02/2018", "assignValue": 94.91, "assignment": "#12 Vocabulary quiz Period 2 # 61-120" }, { "assignDate":"10/03/2018", "assignValue": 95.00, "assignment": "#13 Ch 3 Notes" }, { "assignDate":"10/03/2018", "assignValue": 100.00, "assignment": "#14 Ch 4 quiz" }, { "assignDate":"10/09/2018", "assignValue": 80.00, "assignment": "#15 LEQ Comparison Rome-Han China" }, { "assignDate":"10/09/2018", "assignValue": 100.00, "assignment": "#16 Lessons for Women Ban Zhao article" }, { "assignDate":"10/12/2018", "assignValue": 89.47, "assignment": "#17 Quiz Zoroastrianism to Greek Way" }, { "assignDate":"10/18/2018", "assignValue": 100.00, "assignment": "#18 Ch 4 notes" }, { "assignDate":"10/19/2018", "assignValue": 70.83, "assignment": "#19 Ch 4 Test" }, { "assignDate":"10/22/2018", "assignValue": 100.00, "assignment": "#20 Ch 5 Quiz" }, { "assignDate":"10/23/2018", "assignValue": 0.00, "assignment": "#21 Extra credit" }, { "assignDate":"10/24/2018", "assignValue": 90.00, "assignment": "#22 Religion project" }, { "assignDate":"10/24/2018", "assignValue": 96.15, "assignment": "#23 Period 2 Vocabulary Test # 121-146" }, { "assignDate":"10/24/2018", "assignValue": 92.50, "assignment": "#24 Ch 5 Notes" }, { "assignDate":"10/25/2018", "assignValue": 100.00, "assignment": "#25 ch 6 Quiz" }, { "assignDate":"10/29/2018", "assignValue": 100.00, "assignment": "#26 ch 6 quiz Bantu" }, { "assignDate":"10/30/2018", "assignValue": 80.00, "assignment": "#27 DBQ - Spread of Buddhism" }, { "assignDate":"11/01/2018", "assignValue": 100.00, "assignment": "#28 ch 6 notes" }, { "assignDate":"11/01/2018", "assignValue": 100.00, "assignment": "#29 Period 2 Review Packet" }, { "assignDate":"11/01/2018", "assignValue": 75.36, "assignment": "#30 Period 2 Test" }, { "assignDate":"11/07/2018", "assignValue": 100.00, "assignment": "#31 Ch. 7 Commerce and Culture Map" }, { "assignDate":"11/07/2018", "assignValue": 93.10, "assignment": "#32 Period 2 # 147-175 Vocabulary Quiz" }, { "assignDate":"11/07/2018", "assignValue": 93.33, "assignment": "#33 Silk Roads Quiz" }, { "assignDate":"11/12/2018", "assignValue": 100.00, "assignment": "#34 Sea Roads Quiz" }, { "assignDate":"11/15/2018", "assignValue": 92.85, "assignment": "#35 Sand Roads quiz" }, { "assignDate":"11/15/2018", "assignValue": 100.00, "assignment": "#36 Polo\/Battuta Article" }, { "assignDate":"11/21/2018", "assignValue": 80.00, "assignment": "#37 LEQ- Comparison Trade Routes" }, { "assignDate":"11/21/2018", "assignValue": 0.00, "assignment": "#38 Food Drive Extra Credit" }, { "assignDate":"11/29/2018", "assignValue": 80.00, "assignment": "#39 Ch 8 quiz" }, { "assignDate":"12/03/2018", "assignValue": 100.00, "assignment": "#40 Ch 7 notes" }, { "assignDate":"12/04/2018", "assignValue": 100.00, "assignment": "#41 Ch 8 Notes" }, { "assignDate":"12/04/2018", "assignValue": 95.23, "assignment": "#42 Ch 8 Test" }, { "assignDate":"12/06/2018", "assignValue": 0.00, "assignment": "#43 Chinese Cinderella Ex. Credit" }, { "assignDate":"12/10/2018", "assignValue": 90.00, "assignment": "#44 Ch 9 Notes" }, { "assignDate":"12/12/2018", "assignValue": 100.00, "assignment": "#45 Islam Videos" }, { "assignDate":"12/17/2018", "assignValue": 100.00, "assignment": "#46 Ch 10 slide presentations" }, { "assignDate":"12/18/2018", "assignValue": 80.00, "assignment": "#47 DBQ # 2 Culture and Empires" }, { "assignDate":"12/19/2018", "assignValue": 60.00, "assignment": "#48 Ch 10 Test" }, { "assignDate":"12/19/2018", "assignValue": 86.84, "assignment": "#49 Period 3 vocabulary" }, { "assignDate":"12/21/2018", "assignValue": 70.00, "assignment": "#50 Ch 11 Quiz" }, { "assignDate":"12/21/2018", "assignValue": 0.00, "assignment": "#51 Extra credit  ch 11 quiz" }, { "assignDate":"12/24/2018", "assignValue": 100.00, "assignment": "#52 ch 10 notes" } ]; var assignDataSource_9030561_F = new kendo.data.DataSource({ data: assignData_9030561_F, schema: { model: { fields: { "assignDate": { type: "date" } } } } });var overallData_9030561_F = [  { "overallDate":"08/31/2018", "overallValue": 80.00 }, { "overallDate":"09/04/2018", "overallValue": 86.00 }, { "overallDate":"09/05/2018", "overallValue": 89.86 }, { "overallDate":"09/10/2018", "overallValue": 87.52 }, { "overallDate":"09/12/2018", "overallValue": 82.88 }, { "overallDate":"09/17/2018", "overallValue": 83.81 }, { "overallDate":"09/20/2018", "overallValue": 83.13 }, { "overallDate":"09/26/2018", "overallValue": 83.13 }, { "overallDate":"10/02/2018", "overallValue": 85.94 }, { "overallDate":"10/03/2018", "overallValue": 86.00 }, { "overallDate":"10/09/2018", "overallValue": 85.37 }, { "overallDate":"10/12/2018", "overallValue": 85.75 }, { "overallDate":"10/18/2018", "overallValue": 85.96 }, { "overallDate":"10/19/2018", "overallValue": 84.98 }, { "overallDate":"10/22/2018", "overallValue": 85.37 }, { "overallDate":"10/23/2018", "overallValue": 86.51 }, { "overallDate":"10/24/2018", "overallValue": 86.40 }, { "overallDate":"10/25/2018", "overallValue": 86.81 }, { "overallDate":"10/29/2018", "overallValue": 86.98 }, { "overallDate":"10/30/2018", "overallValue": 86.75 }, { "overallDate":"11/01/2018", "overallValue": 86.20 }, { "overallDate":"11/07/2018", "overallValue": 86.90 }, { "overallDate":"11/12/2018", "overallValue": 87.18 }, { "overallDate":"11/15/2018", "overallValue": 87.37 }, { "overallDate":"11/21/2018", "overallValue": 89.72 }, { "overallDate":"11/29/2018", "overallValue": 89.58 }, { "overallDate":"12/03/2018", "overallValue": 89.70 }, { "overallDate":"12/04/2018", "overallValue": 90.17 }, { "overallDate":"12/06/2018", "overallValue": 90.44 }, { "overallDate":"12/10/2018", "overallValue": 90.34 }, { "overallDate":"12/12/2018", "overallValue": 90.37 }, { "overallDate":"12/17/2018", "overallValue": 90.50 }, { "overallDate":"12/18/2018", "overallValue": 90.34 }, { "overallDate":"12/19/2018", "overallValue": 89.47 }, { "overallDate":"12/21/2018", "overallValue": 89.99 }, { "overallDate":"12/24/2018", "overallValue": 90.06 } ]; var overallDataSource_9030561_F = new kendo.data.DataSource({ data: overallData_9030561_F, schema: { model: { fields: { "overallDate": { type: "date" } } } } }); function createScatterChart_9030561_F() {$("#lblTrendGraphTitle").text("World Hist AP");$find("ShowTrendGraph").show();var chartSeries = [];if (!(typeof assignDataSource_9030561_F === 'undefined')) {assignDataSource_9030561_F.read();chartSeries.push( {  name: "Assignments",  type: "scatter",  color: "#FFB800",  data: assignData_9030561_F,  xField: "assignDate",  yField: "assignValue",  tooltip: { visible: true, template: "#= kendo.format('{0:N}%',value.y) # - #= kendo.toString(value.x, 'MM/dd/yyyy')# <br> ${dataItem.assignment}" } });}if (!(typeof overallDataSource_9030561_F === 'undefined')) {overallDataSource_9030561_F.read();chartSeries.push( {  name: "Overall Score",  type: "scatterLine",  color: "#7BD2F6",  data: overallData_9030561_F,  xField: "overallDate",  yField: "overallValue",  tooltip: { visible: true, format: "{1}% - {0:d}" } });}$("#trendChart").kendoChart({ transition: false, seriesDefaults: { markers: { size: 6 } }, series: chartSeries, yAxis: { labels: { format: "{0}%" }, title: { text: "% Correct", rotation: -90 } }});}var assignData_5271802_F = [  { "assignDate":"08/28/2018", "assignValue": 100.00, "assignment": "#1 Syllabus signature" }, { "assignDate":"09/10/2018", "assignValue": 95.83, "assignment": "#2 Metric Prefix Quiz" }, { "assignDate":"09/10/2018", "assignValue": 40.00, "assignment": "#3 Metric Conversion \"Pop\" Quiz" }, { "assignDate":"09/19/2018", "assignValue": 100.00, "assignment": "#4 Safety First Pogil" }, { "assignDate":"09/25/2018", "assignValue": 100.00, "assignment": "#5 Significant Digits and Measurement" }, { "assignDate":"09/26/2018", "assignValue": 100.00, "assignment": "#6 Ancient Artifact Activity" }, { "assignDate":"10/03/2018", "assignValue": 88.23, "assignment": "#7 History of the Atom Group Quiz" }, { "assignDate":"10/17/2018", "assignValue": 100.00, "assignment": "#8 History of the Atom Jigsaw" }, { "assignDate":"10/18/2018", "assignValue": 95.00, "assignment": "#11 Flame Test Lab" }, { "assignDate":"10/24/2018", "assignValue": 97.87, "assignment": "#12 Atoms Unit Exam Pt1 (M\/C Portion)" }, { "assignDate":"10/29/2018", "assignValue": 100.00, "assignment": "#13 Coulombic Attraction" }, { "assignDate":"11/02/2018", "assignValue": 86.20, "assignment": "#14 Periodic Trends Quest" }, { "assignDate":"11/16/2018", "assignValue": 94.44, "assignment": "#15 Lewis Dot Quiz" }, { "assignDate":"12/06/2018", "assignValue": 100.00, "assignment": "#16 Lewis Dot Lab" }, { "assignDate":"12/06/2018", "assignValue": 83.33, "assignment": "#17 Lewis Dot Exam" }, { "assignDate":"12/11/2018", "assignValue": 100.00, "assignment": "#18 Dehydration of Sugar" }, { "assignDate":"12/17/2018", "assignValue": 100.00, "assignment": "#19 Ionic Nomenclature Quiz" }, { "assignDate":"12/21/2018", "assignValue": 66.66, "assignment": "#20 Mixed Nomenclature Quiz" } ]; var assignDataSource_5271802_F = new kendo.data.DataSource({ data: assignData_5271802_F, schema: { model: { fields: { "assignDate": { type: "date" } } } } });var overallData_5271802_F = [  { "overallDate":"08/28/2018", "overallValue": 100.00 }, { "overallDate":"09/10/2018", "overallValue": 73.46 }, { "overallDate":"09/19/2018", "overallValue": 78.77 }, { "overallDate":"09/25/2018", "overallValue": 78.77 }, { "overallDate":"09/26/2018", "overallValue": 78.77 }, { "overallDate":"10/03/2018", "overallValue": 81.81 }, { "overallDate":"10/17/2018", "overallValue": 81.81 }, { "overallDate":"10/18/2018", "overallValue": 86.21 }, { "overallDate":"10/24/2018", "overallValue": 90.78 }, { "overallDate":"10/29/2018", "overallValue": 90.78 }, { "overallDate":"11/02/2018", "overallValue": 90.82 }, { "overallDate":"11/16/2018", "overallValue": 91.33 }, { "overallDate":"12/06/2018", "overallValue": 92.00 }, { "overallDate":"12/11/2018", "overallValue": 92.08 }, { "overallDate":"12/17/2018", "overallValue": 92.49 }, { "overallDate":"12/21/2018", "overallValue": 91.80 } ]; var overallDataSource_5271802_F = new kendo.data.DataSource({ data: overallData_5271802_F, schema: { model: { fields: { "overallDate": { type: "date" } } } } }); function createScatterChart_5271802_F() {$("#lblTrendGraphTitle").text("Chemistry Honors Per 6 F");$find("ShowTrendGraph").show();var chartSeries = [];if (!(typeof assignDataSource_5271802_F === 'undefined')) {assignDataSource_5271802_F.read();chartSeries.push( {  name: "Assignments",  type: "scatter",  color: "#FFB800",  data: assignData_5271802_F,  xField: "assignDate",  yField: "assignValue",  tooltip: { visible: true, template: "#= kendo.format('{0:N}%',value.y) # - #= kendo.toString(value.x, 'MM/dd/yyyy')# <br> ${dataItem.assignment}" } });}if (!(typeof overallDataSource_5271802_F === 'undefined')) {overallDataSource_5271802_F.read();chartSeries.push( {  name: "Overall Score",  type: "scatterLine",  color: "#7BD2F6",  data: overallData_5271802_F,  xField: "overallDate",  yField: "overallValue",  tooltip: { visible: true, format: "{1}% - {0:d}" } });}$("#trendChart").kendoChart({ transition: false, seriesDefaults: { markers: { size: 6 } }, series: chartSeries, yAxis: { labels: { format: "{0}%" }, title: { text: "% Correct", rotation: -90 } }});}var assignData_7883553_F = [  { "assignDate":"09/07/2018", "assignValue": 100.00, "assignment": "#1 Syllabus" }, { "assignDate":"09/07/2018", "assignValue": 100.00, "assignment": "#2 Lesson 1 - Review Questions, Activities 1-3" }, { "assignDate":"09/07/2018", "assignValue": 100.00, "assignment": "#3 Lesson 2 - Fast Start, Review Questions, Activities 1-3" }, { "assignDate":"09/07/2018", "assignValue": 100.00, "assignment": "#4 Lesson 3 - Fast Start, Review Questions, Activities 1-3" }, { "assignDate":"09/07/2018", "assignValue": 100.00, "assignment": "#5 Mandatorial Kahoot" }, { "assignDate":"09/14/2018", "assignValue": 100.00, "assignment": "#6 Lesson 4 - Fast Start, Review Questions, Activities 1-2" }, { "assignDate":"09/14/2018", "assignValue": 100.00, "assignment": "#10 Mandatorial Paper Drill" }, { "assignDate":"09/17/2018", "assignValue": 100.00, "assignment": "#7 Lesson 5 - Fast Start, Review Questions, Activities 1-4" }, { "assignDate":"09/17/2018", "assignValue": 100.00, "assignment": "#8 Lesson 6 - Fast Start, Review Questions, Activities 1-3" }, { "assignDate":"09/17/2018", "assignValue": 100.00, "assignment": "#9 Assignment 1 - Movie Ratings" }, { "assignDate":"09/21/2018", "assignValue": 100.00, "assignment": "#11 Lesson 7 - Fast Start, Review Questions, Activities 1-2" }, { "assignDate":"09/21/2018", "assignValue": 100.00, "assignment": "#12 Lesson 8 - Fast Start, Review Questions" }, { "assignDate":"09/21/2018", "assignValue": 100.00, "assignment": "#13 Lesson 9 - Fast Start, Review Questions, Activities 1-3" }, { "assignDate":"09/21/2018", "assignValue": 70.00, "assignment": "#14 QUIZ 1 - Multiple Choice" }, { "assignDate":"09/21/2018", "assignValue": 80.00, "assignment": "#15 QUIZ 1 - Free Response" }, { "assignDate":"09/28/2018", "assignValue": 100.00, "assignment": "#16 Lesson 10 - Fast Start, Review Questions, Activity" }, { "assignDate":"09/28/2018", "assignValue": 100.00, "assignment": "#17 Assignment 2 - Time Converter" }, { "assignDate":"09/28/2018", "assignValue": 95.00, "assignment": "#18 EXAM 1" }, { "assignDate":"10/05/2018", "assignValue": 100.00, "assignment": "#19 Lesson 11 - Fast Start, Review Questions, Activities 1-4" }, { "assignDate":"10/05/2018", "assignValue": 100.00, "assignment": "#20 Lesson 12 - Fast Start, Review Questions, Activities 1-4" }, { "assignDate":"10/05/2018", "assignValue": 100.00, "assignment": "#21 Lesson 13 - Fast Start, Review Questions, Activities 1-6" }, { "assignDate":"10/12/2018", "assignValue": 100.00, "assignment": "#22 Lesson 14 - Fast Start, Review Questions, Activities 1-3" }, { "assignDate":"10/12/2018", "assignValue": 100.00, "assignment": "#23 Lesson 15 - Fast Start, Review Questions" }, { "assignDate":"10/12/2018", "assignValue": 100.00, "assignment": "#24 Lesson 16 - Fast Start, Review Questions" }, { "assignDate":"10/12/2018", "assignValue": 100.00, "assignment": "#25 QUIZ 2 - Multiple Choice" }, { "assignDate":"10/12/2018", "assignValue": 100.00, "assignment": "#26 QUIZ 2 - Free Response" }, { "assignDate":"10/19/2018", "assignValue": 100.00, "assignment": "#27 Lesson 17 - Fast Start, Review Questions, Activities 1-2" }, { "assignDate":"10/19/2018", "assignValue": 100.00, "assignment": "#28 Lesson 18 - Fast Start, Review Questions" }, { "assignDate":"10/19/2018", "assignValue": 100.00, "assignment": "#29 Lesson 19 - Fast Start, Review Questions" }, { "assignDate":"10/19/2018", "assignValue": 100.00, "assignment": "#30 Lesson 20 - Fast Start, Review Questions, Activity" }, { "assignDate":"10/19/2018", "assignValue": 100.00, "assignment": "#31 Assignment 3: Crack the Code!" }, { "assignDate":"10/19/2018", "assignValue": 95.00, "assignment": "#32 EXAM 2" }, { "assignDate":"10/26/2018", "assignValue": 100.00, "assignment": "#33 Lesson 21 - Fast Start, Review Questions" }, { "assignDate":"10/26/2018", "assignValue": 100.00, "assignment": "#34 Lesson 22 - Fast Start, Review Questions, Activities 1-2" }, { "assignDate":"10/26/2018", "assignValue": 90.00, "assignment": "#35 Assignment 4: Alien Message Board" }, { "assignDate":"11/02/2018", "assignValue": 100.00, "assignment": "#36 Lesson 23 - Fast Start, Review Questions" }, { "assignDate":"11/02/2018", "assignValue": 100.00, "assignment": "#37 Lesson 24 - Fast Start, Review Questions, Activities 1-3" }, { "assignDate":"11/09/2018", "assignValue": 100.00, "assignment": "#38 Lesson 25 - Fast Start & Review Questions" }, { "assignDate":"11/09/2018", "assignValue": 100.00, "assignment": "#39 Lesson 26 - Fast Start & Review Questions" }, { "assignDate":"11/09/2018", "assignValue": 100.00, "assignment": "#40 Lesson 27 - Fast Start & Review Questions" }, { "assignDate":"11/09/2018", "assignValue": 100.00, "assignment": "#41 Assignment 5 - Pivot Strings" }, { "assignDate":"11/09/2018", "assignValue": 80.00, "assignment": "#42 QUIZ 3 -- Multiple Choice" }, { "assignDate":"11/09/2018", "assignValue": 40.00, "assignment": "#43 QUIZ 3 -- Free Response" }, { "assignDate":"11/16/2018", "assignValue": 100.00, "assignment": "#44 Lesson 28 - Fast Start, Review Questions" }, { "assignDate":"11/16/2018", "assignValue": 100.00, "assignment": "#45 Lesson 29 - Fast Start, Review Questions, Coding Activities 1-2" }, { "assignDate":"11/16/2018", "assignValue": 100.00, "assignment": "#46 Lesson 30 - Fast Start, Review Questions, Coding Activity" }, { "assignDate":"11/30/2018", "assignValue": 100.00, "assignment": "#47 Lesson 30.5 - Fast Start, Review Questions, Coding Activity" }, { "assignDate":"11/30/2018", "assignValue": 90.00, "assignment": "#48 Assignment 6 - Names Merge" }, { "assignDate":"11/30/2018", "assignValue": 100.00, "assignment": "#49 EXAM 3" }, { "assignDate":"12/07/2018", "assignValue": 100.00, "assignment": "#50 Lesson 31 - Fast Start, Review Questions" }, { "assignDate":"12/07/2018", "assignValue": 100.00, "assignment": "#51 Lesson 32 - Fast Start, Review Questions, & Coding Activities 1-4" }, { "assignDate":"12/13/2018", "assignValue": 100.00, "assignment": "#54 QUIZ 4 -- Multiple Choice" }, { "assignDate":"12/13/2018", "assignValue": 100.00, "assignment": "#55 QUIZ 4 -- Free Response" }, { "assignDate":"12/14/2018", "assignValue": 100.00, "assignment": "#56 Lesson 33 - Fast Start, Review Questions, Coding Activities 1-5" }, { "assignDate":"12/14/2018", "assignValue": 100.00, "assignment": "#57 Lesson 34 - Fast Start, Review Questions, Coding Activities 1-6" }, { "assignDate":"12/14/2018", "assignValue": 100.00, "assignment": "#58 Assignment 7: Methods Sampler" } ]; var assignDataSource_7883553_F = new kendo.data.DataSource({ data: assignData_7883553_F, schema: { model: { fields: { "assignDate": { type: "date" } } } } });var overallData_7883553_F = [  { "overallDate":"09/07/2018", "overallValue": 100.00 }, { "overallDate":"09/14/2018", "overallValue": 100.00 }, { "overallDate":"09/17/2018", "overallValue": 100.00 }, { "overallDate":"09/21/2018", "overallValue": 84.00 }, { "overallDate":"09/28/2018", "overallValue": 91.42 }, { "overallDate":"10/05/2018", "overallValue": 91.42 }, { "overallDate":"10/12/2018", "overallValue": 94.00 }, { "overallDate":"10/19/2018", "overallValue": 94.85 }, { "overallDate":"10/26/2018", "overallValue": 94.10 }, { "overallDate":"11/02/2018", "overallValue": 94.10 }, { "overallDate":"11/09/2018", "overallValue": 91.63 }, { "overallDate":"11/16/2018", "overallValue": 91.63 }, { "overallDate":"11/30/2018", "overallValue": 92.71 }, { "overallDate":"12/07/2018", "overallValue": 92.71 }, { "overallDate":"12/13/2018", "overallValue": 93.50 }, { "overallDate":"12/14/2018", "overallValue": 93.64 } ]; var overallDataSource_7883553_F = new kendo.data.DataSource({ data: overallData_7883553_F, schema: { model: { fields: { "overallDate": { type: "date" } } } } }); function createScatterChart_7883553_F() {$("#lblTrendGraphTitle").text("AP CS A");$find("ShowTrendGraph").show();var chartSeries = [];if (!(typeof assignDataSource_7883553_F === 'undefined')) {assignDataSource_7883553_F.read();chartSeries.push( {  name: "Assignments",  type: "scatter",  color: "#FFB800",  data: assignData_7883553_F,  xField: "assignDate",  yField: "assignValue",  tooltip: { visible: true, template: "#= kendo.format('{0:N}%',value.y) # - #= kendo.toString(value.x, 'MM/dd/yyyy')# <br> ${dataItem.assignment}" } });}if (!(typeof overallDataSource_7883553_F === 'undefined')) {overallDataSource_7883553_F.read();chartSeries.push( {  name: "Overall Score",  type: "scatterLine",  color: "#7BD2F6",  data: overallData_7883553_F,  xField: "overallDate",  yField: "overallValue",  tooltip: { visible: true, format: "{1}% - {0:d}" } });}$("#trendChart").kendoChart({ transition: false, seriesDefaults: { markers: { size: 6 } }, series: chartSeries, yAxis: { labels: { format: "{0}%" }, title: { text: "% Correct", rotation: -90 } }});}//]]>
+</script>
+
+<script src="/ParentPortal/ScriptResource.axd?d=hNxNhokz1Ip6QT1FohV3PQDHfARbgUJCkAC2p0M8-ajLqP7Il9OMMfZIzdZBliVugDS63PaZ_1XXorM-xKY94-5t1GaoGSU6--8_fvEEpX85jKibQO6dwUdJxlAnnrnn2DY6a60wI-rUpFjaD1h7PkSZhFSoaOZ9900ZDDZEO_Q1&amp;t=ffffffffb0622999" type="text/javascript"></script>
+<script src="/ParentPortal/Scripts/AjaxControlToolkit/Bundle?v=Q8zwOlD68e_y2f0ZSls6DONz6PXxv7xmJgluhsnbLu01" type="text/javascript"></script>
+<script src="SetClientOptions.asmx/js" type="text/javascript"></script>
+<script src="GeneralFunctions.asmx/js" type="text/javascript"></script>
+<script src="SecurityFunctions.asmx/js" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="868F4997" />
+	
+
+	<div style="height: 100%" class="view" data-root-url="https://familyportal.svusd.org/ParentPortal/" data-school-code="91">
+		<table class="full NoPadding a-expand">
+			<tr id="ctl00_trTop">
+	<td class="ac" valign="top">
+				<nav class="navbar navbar-l" id="navparent">
+				<div class="container-fluid" id="nav-container">
+					<div class="navbar-header" style="float:left;">
+						<div class="pull-left">
+							<div class="sidebar-logo-a">
+								<a href="Default.aspx" title="Aeries Home">
+									<img alt="Aeries" title="Aeries Student Information System" src="images/aeries-logo-a.svg" onerror="this.src='images/aeries-logo-a.png'; this.onerror=null;"/>
+								</a>
+							</div>
+						</div>
+
+						<ul class="nav navbar-nav navbar-left" id="nav-school-settings">
+							<li id="ctl00_schoolYearNav" class="school-year-nav dropdown-submenu aeries-background-green-light">							
+								<span id="ctl00_lblSchoolYear" class="school-year-nolink-nav-text NoWrap">2018-2019</span>
+							</li>
+							<li class="dropdown-submenu" id="school-dropdown-wrapper">
+								<span id="ctl00_lblSchoolName" title="School 91" class="school-name-nolink-nav-text NoWrap">Laguna Hills High School</span>
+							</li>
+							<li>
+								<input name="ctl00$SC" type="hidden" id="ctl00_SC" class="MasterSC" value="91" />
+										<input name="ctl00$SN" type="hidden" id="ctl00_SN" class="MasterSN" value="1819" />
+										<input name="ctl00$PID" type="hidden" id="ctl00_PID" class="MasterPID" value="860044" />
+										
+							</li>							
+						</ul>						
+					</div>
+						<ul class="nav navbar-nav navbar-right" id="nav-settings">
+							<li class="dropdown-submenu nav-buttons">
+								<a href="#" class="dropdown-toggle expandable" data-toggle="dropdown" id="nav-account-dropdown-icon" title="Settings">
+									<span class="normalmode">
+										<span id="ctl00_lblWelcomeName">martinezj044@mysaddleback.org</span>
+										<span class="icon-collapsed"></span>
+									</span>
+									<span class="tinymode">
+										<span id="collapsed-settings-icon" class="k-icon k-i-custom"></span>
+									</span>									
+								</a>
+								<ul class="dropdown-menu SubTab forceRight" id="nav-account-dropdown" style="margin-top:0; padding-top:0;">		
+									<li id="mobileTestdrive" class="zebra">
+										<a id="goToMobile" href="LoginParent.aspx?RedirectToApp=True">Mobile Portal</a>
+									</li>						
+									<li id="ctl00_liParentNotification" class="zebra" css="ContextMenuItem">
+										<a id="aParentNotification" href="/ParentPortal/ParentNotificationPreferences.aspx">Parent Notification Preferences</a>										
+									</li>
+									
+									<li class="zebra">
+										<a id="aChangePWD" css="ContextMenuItem" href="/ParentPortal/ChangePassword.aspx">Change Password</a>
+									</li>
+									
+									<li class="zebra">
+										<a id="aChangeEM" css="ContextMenuItem" href="/ParentPortal/ChangeEmail.aspx">Change Email</a>
+									</li>																		
+									
+									<li class="zebra">
+										<a id="aAddSTU" css="ContextMenuItem" href="/ParentPortal/AddNewStudentToParent.aspx">Add New Student To Your Account</a>										
+									</li>
+									<li class="zebra">
+										<a id="aLogOut" css="ContextMenuItem" href="/ParentPortal/LogOut.aspx">Log Out</a>
+									</li>									
+								</ul>
+							</li>
+						</ul>
+						
+				</div>
+				</nav>
+				<div id="ctl00_ParNav_ParNav"><table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="left" class="raised "><table class="menutable" border="0" cellpadding="0" cellspacing="0"><tr valign="top"><td><div id="Top_1" class="Top_Parent"><a class="topdynamicmenu" href="Default.aspx" name="Home" id="Home" target="" aria-haspopup="true" onClick="return true">Home</a></div></td><td><div id="Top_2" class="Top_Parent"><a class="topdynamicmenu" href="javascript:void(0);" name="Student Info" id="Student Info" target="" aria-haspopup="true" onClick="return true">Student Info</a><div id="Sub_2" class="SubTab"><a class="zebra" href="StudentProfile.aspx" name="Profile" id="Profile">Profile</a><a class="zebra" href="Students.aspx" name="Demographics" id="Demographics">Demographics</a><a class="zebra" href="EmergencyContacts.aspx" name="Contacts" id="Contacts">Contacts</a></div></div></td><td><div id="Top_3" class="Top_Parent"><a class="topdynamicmenu" href="javascript:void(0);" name="Attendance" id="Attendance" target="" aria-haspopup="true" onClick="return true">Attendance</a><div id="Sub_3" class="SubTab"><a class="zebra" href="Attendance.aspx" name="Attendance" id="Attendance">Attendance</a></div></div></td><td><div id="Top_4" class="Top_Parent"><a class="visitedtopmenu" href="javascript:void(0);" name="Grades" id="Grades" target="" aria-haspopup="true" onClick="return true">Grades</a><div id="Sub_4" class="SubTab"><a class="visitedsubmenu" href="GradebookSummary.aspx" name="Gradebook" id="Gradebook">Gradebook</a><a class="zebra" href="GradebookDetails.aspx" name="Gradebook Details" id="Gradebook Details">Gradebook Details</a><a class="zebra" href="StudentReportCardHistory.aspx" name="Report Card History" id="Report Card History">Report Card History</a><a class="zebra" href="Grades.aspx" name="Grades" id="Grades">Grades</a><a class="zebra" href="GraduationRequirements.aspx" name="Graduation Status" id="Graduation Status">Graduation Status</a><a class="zebra" href="Transcripts.aspx" name="Transcripts <span class='metadata' style='display: none;'>History</span>" id="Transcripts <span class='metadata' style='display: none;'>History</span>">Transcripts <span class='metadata' style='display: none;'>History</span></a><a class="zebra" href="StudentStandardsBasedProgress.aspx" name="Standards Based Progress Dashboard" id="Standards Based Progress Dashboard">Standards Based Progress Dashboard</a></div></div></td><td><div id="Top_5" class="Top_Parent"><a class="topdynamicmenu" href="javascript:void(0);" name="Test Scores" id="Test Scores" target="" aria-haspopup="true" onClick="return true">Test Scores</a><div id="Sub_5" class="SubTab"><a class="zebra" href="TestDetails.aspx" name="Test Details" id="Test Details">Test Details</a><a class="zebra" href="TestScores.aspx" name="Test Scores" id="Test Scores">Test Scores</a></div></div></td><td><div id="Top_6" class="Top_Parent"><a class="topdynamicmenu" href="javascript:void(0);" name="Change Student" id="Change Student" target="" aria-haspopup="true" onClick="return true">Change Student</a><div id="Sub_6" class="SubTab"><a class="zebra" href="ChangeStudent.aspx?cache=1%2f2%2f2019+8%3a20%3a49+PM&SC=91&SN=1819&ReturnPage=GradebookSummary.aspx&name=91_1819&id=91_1819" name="Martinez, Joshua K - Grd 10 - Laguna Hills HS" id="Martinez, Joshua K - Grd 10 - Laguna Hills HS">Martinez, Joshua K - Grd 10 - Laguna Hills HS</a><a class="zebra" href="AddNewStudentToParent.aspx" name="Add New Student To Your Account" id="Add New Student To Your Account">Add New Student To Your Account</a></div></div></td></td></tr></table></td></tr></table></div>
+			</td>
+</tr>
+
+			<tr style="background-color:#F5F5F5; height: 525px; min-height:525px;"><td class="al" valign="top" style="padding: 5px 5px 5px 5px; min-height:525px;">
+				<div style="width:100%;"><span id="ctl00_lblAlert" class="RedText"></span></div>
+
+				
+				
+
+				
+	
+<div class="page-head">
+	<div class="page-title">
+		<span id="ctl00_MainContent_subPageHead_lblPageTitle" class="lblPageTitle">Gradebook Summary</span>	
+	</div>
+	
+	<div class="page-options">
+
+		
+                
+		
+		<span  class="fa fa-print fa-2x page-option-default" id="print-submit" title="Print"></span>
+		
+		<div class="hide">
+		
+		<span id="favorite-submit" title="Favorite This Page"><span id="ctl00_MainContent_subPageHead_FavoriteIcon" class="favorite-icon fa fa-star-o fa-2x page-option-default"></span></span>
+		
+		</div>
+		
+	</div>
+
+    
+    
+</div>
+<input type="hidden" name="ctl00$MainContent$subPageHead$RedFlagValue" id="ctl00_MainContent_subPageHead_RedFlagValue" />
+
+<div id="StartTourWelcome" style="display: none;">
+	<div style="padding: 5px 0 20px 0;">
+		Would you like to take a tour of this page and its features?
+	</div>
+
+	<a href="#" id="StartTourWelcomeNo" class="k-button">No</a>
+	<div style="float:right">
+		<a href="#" id="StartTourWelcomeYes" class="k-button-primary">Yes</a>
+	</div>
+</div>
+
+<script>
+
+	function CallPrintFromTitle(jQuerySelectQuery) {
+		if (typeof jQuerySelectQuery !== 'undefined') {
+			try {
+				if ($(jQuerySelectQuery).is(":visible")) {
+					if ($(jQuerySelectQuery).is("a")) {
+						if ($(jQuerySelectQuery).prop("href").startsWith("javascript")) {
+							eval($(jQuerySelectQuery).prop("href"));
+						}
+						else {
+                            $(jQuerySelectQuery).click();
+							if (typeof $(jQuerySelectQuery).prop("target") !== 'undefined') {
+                                 window.open($(jQuerySelectQuery).prop("href"), $(jQuerySelectQuery).prop("target"));
+							} else {
+								$(jQuerySelectQuery).click();
+							}							
+						}
+					}
+					else {
+						$(jQuerySelectQuery).click();
+					}
+				}
+			} catch (err) {
+				log(3, "Could not Print. " + err);
+			}
+		} else {
+			// if we find the existing print button, use it's functionality, otherwise fall back to default print page or give error / hide button.
+			if ($("#PrintTestResults").length >= 1) {
+				$("#PrintTestResults").click();
+			} else {
+				if ($("input[value='Print']:visible").length >= 1) {
+					$("input[value='Print']:visible").first().click();
+				} else if ($("input[id*='btnRunReport']:visible").length >= 1) {
+					$("input[id*='btnRunReport']:visible").first().click();
+				} else {
+					if ($("input[id*='btnPrint']").length >= 1) {
+						if ($("input[id*='btnPrint']:visible").length >= 1) {
+							$("input[id*='btnPrint']:visible").first().click();
+						} else {
+							$("input[id*='btnPrint']").first().click();
+						}
+					} else {
+						window.print();
+					}
+				}
+			}
+		}
+	}
+
+	(function () {
+
+		
+		$(window).load(function () {
+			setTimeout(function () {
+				if ($(".mainprint").is(":visible")) {
+					// Found print button.
+					$("#print-submit").show();
+				} else {
+					$("#print-submit").hide();
+				}
+			}, 800);
+
+			
+		});
+		
+		
+		$("#print-submit").click(function () {
+			
+			CallPrintFromTitle(".mainprint");
+			
+		});
+
+		$("#page-tour").click(function () {
+			
+		});
+
+		$("#StartTourWelcomeYes").click(function () {
+
+			var dialogStartTour = $("#StartTourWelcome").data("kendoWindow");
+			setTimeout(function () {
+				dialogStartTour.close();
+			}, 1);
+
+			// Start Tour
+			setTimeout(function () {
+				$("#page-tour").click();
+			}, 10);
+		});
+
+		$("#StartTourWelcomeNo").click(function () {
+			var dialogStartTour = $("#StartTourWelcome").data("kendoWindow");
+			setTimeout(function () {
+				dialogStartTour.close();
+			}, 1);
+
+
+			setTimeout(function () {
+				var replayTour = new Tour({
+					name: "tour_PlayTour",
+					backdrop: true,
+					storage: false,
+					template: '<div class="popover" role="tooltip"> <div class="arrow"></div> <h3 class="popover-title"></h3> <div class="popover-content"></div> <div class="popover-navigation"> <div class="btn-group" style="display:none;"> <button class="btn btn-sm btn-default" data-role="prev" style="font-size: 14px;">&laquo; Prev</button> <button class="btn btn-sm btn-default" data-role="next" style="font-size: 14px;">Next &raquo;</button> <button class="btn btn-sm btn-default" data-role="pause-resume" data-pause-text="Pause" data-resume-text="Resume" style="font-size: 14px;">Pause</button> </div> <button class="btn btn-sm btn-default" data-role="end" style="font-size: 14px; width:100%;">OK</button> </div> </div>',
+					onStart: function (tour) {
+						$(".page-options-dropdown").addClass('AlwaysShow');
+					},
+					steps: [					
+						{
+							element: ".page-options-dropdown",
+							title: "Play Tour",
+							placement: "bottom",
+							content: 'Play this tour any time by clicking<br><i class="fa fa-ellipsis-v" aria-hidden="true"></i> then <i class="fa fa-play-circle" aria-hidden="true"></i> Page Tour.'
+						},
+						{
+							element: ".page-options-dropdown",
+							title: "Play Tour",
+							placement: "bottom",
+							content: 'Play this tour any time by clicking <br><i class="fa fa-play-circle" aria-hidden="true"></i> Page Tour.'
+						}
+					],
+					onEnd: function (tour) {
+						setTimeout(function () {
+							if ($(".page-options-dropdown").hasClass('AlwaysShow')) {
+								$(".page-options-dropdown").removeClass('AlwaysShow');
+							}
+						}, 10);
+					}
+				});
+
+				StartTour(replayTour);
+			}, 100);
+		});
+
+
+		
+
+		var hasFlag = $(".page-flag").hasClass("flagged");
+		if (hasFlag == true) {
+			$(".page-option-default.fa-flag-o").removeClass("fa-flag-o").addClass("fa-flag");
+			$(".page-option-readonly.fa-flag-o").removeClass("fa-flag-o").addClass("fa-flag");
+		}
+
+		
+	})();
+</script>
+
+	
+
+<div id="sub-stu-top-all-wrapper" class="sub-stu-top-all-wrapper">
+
+<div>
+	<table cellspacing="0" cellpadding="0" id="ctl00_MainContent_subStuTopAll_DataDetails" width="100%" style="border-style:none; border-width:0px;">
+		<tr>
+			<td colspan="2">
+				<div id="sub-stu-top-all" class="widget-wrapper">
+					<div class="CatHeader widget-head">
+						<div class="widget-options">
+							<ul class="nav nav-tabs">
+								<li id="ctl00_MainContent_subStuTopAll_DataDetails_tabGeneralLabel" class="active tabGeneralLabel tabLabel">
+										<a href=".basic-info" class="active tab-label" data-toggle="tab" aria-expanded="true" rel="General">General</a>
+									</li>
+									<li id="ctl00_MainContent_subStuTopAll_DataDetails_tabContactLabel" class="tabContactLabel tabLabel">
+										<a href=".contact" data-toggle="tab" aria-expanded="false" class="tab-label" rel="Contact">Contact</a>
+									</li>
+									<li id="ctl00_MainContent_subStuTopAll_DataDetails_tabAddtlLabel" class="tabAddtlLabel tabLabel">
+										<a href=".other" data-toggle="tab" aria-expanded="false" class="tab-label" rel="Addtl">Addt'l Info</a>
+									</li>
+								
+								<li id="ctl00_MainContent_subStuTopAll_DataDetails_tabProgramslLabel" class="tabProgramsLabel tabLabel">
+									<a href=".current-programs" data-toggle="tab" aria-expanded="false" class="tab-label" rel="Programs" >Programs <span id="ctl00_MainContent_subStuTopAll_DataDetails_ProgramsCount" class="aeries-badge aeries-lightest-grey">0</span></a>
+								</li>
+								<li id="ctl00_MainContent_subStuTopAll_DataDetails_tabUserCodesLabel" class="tabUserCodesLabel tabLabel">
+									<a href=".user-codes" data-toggle="tab" aria-expanded="false" class="tab-label" rel="UserCodes">User Codes</a>
+								</li>								
+								
+								<li class="widget-collapse-wrapper">
+									<span class="icon-expanded widget-collapse" id="stu-top-all-collapse" title="Click to Collapse"></span>
+								</li>
+							</ul>
+						</div>
+						<div class="widget-title">
+							<div id="student-name-control">
+								<a class="fa fa-arrow-circle-left student-next-prev" title="Previous Student" id="prev-student" href="javascript:PreviousStudent();"></a>
+								
+								<div id="change-student-control">																	
+									<div id="change-student-dd" class="student-name-list">										
+									
+										<h5>Change Student</h5>
+										<div class="namelist">
+										
+									<a href="ChangeStudent.aspx?cache=1%2f2%2f2019+8%3a20%3a49+PM&SC=91&SN=1819&ReturnPage=GradebookSummary.aspx&name=91_1819&id=91_1819" aria-haspopup="true" title="Change To Martinez, Joshua K - Grd 10 - Laguna Hills HS" class="zebra active-student">Martinez, Joshua K - Grd 10 - Laguna Hills HS</a>
+									
+											<div class="clear">&nbsp;</div>		
+										</div>
+									
+									</div>
+									
+
+												
+									<a title="Change Student" id="change-student" class="expandable" href="#">
+										<span class="student-full-name" title="Joshua Martinez - Click to change.">
+										Joshua 
+										Martinez								
+											<span class="icon-collapsed student-dd" title="Click to Expand" ></span>
+										</span>									
+									</a>
+																	
+								</div>								
+								<a class="fa fa-arrow-circle-right student-next-prev" title="Next Student" id="next-student" href="javascript:NextStudent();"></a>
+							</div>
+							
+							
+							<!-- Experimental Student Dropdown Search (Not fully functional... yet) -->
+							
+								
+							
+							
+						</div>
+					</div>
+					<div class="widget-body" id="stu-top-all-body" style="display:none;">
+						<div class="tab-content">
+							<div class="tab-pane active basic-info" id="basic-info">
+								
+								<div class="student-photo-wrapper">
+									<a href="./StudentPhoto.aspx" target="_blank"><img class="student-photo" src="StuPic.ashx?ID=860044&BM=860044&SC=91&SZ=XL" alt="Student Photo" title="Student Photo"/></a>
+								</div>
+								<div class="col-sm-10" style="width:calc(100% - 85px);padding-left:0;padding-right: 0;">
+									<div class="media-body col-xs-12" >
+										<ul class="list-unstyled list-info col-sm-4 col-xs-6">
+											
+											<li>
+												<label>Permanent ID</label>
+												<span class="list-data">860044</span>
+											</li>
+											<li>
+												<label>State Student ID</label>
+												<span class="list-data">8425537301</span>
+											</li>
+											<li>
+												<label>Status Tag</label>
+												<span class="list-data">N/A</span>
+											</li>
+											
+											
+											
+											
+											<li>
+												<label>Student Number</label>
+												<span class="list-data">1819</span>
+											</li> 
+											
+										</ul>
+										<ul class="list-unstyled every-other list-info col-sm-4 col-xs-6">
+											<li>
+												<label>Grade</label>
+												<span class="list-data">10</span>
+											</li>
+											<li>
+												<label>Age</label>
+												<span class="list-data"><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblAge" title="Age in Months: 185">15</span></span>
+											</li>
+											<li>
+												<label>Sex</label>
+												<span class="list-data">M</span>
+											</li>
+											<li>
+												<label>Birthdate</label>
+												<span class="list-data">8/6/2003</span>
+											</li>
+											
+										</ul>
+										<ul class="list-unstyled list-info col-sm-4 col-xs-12">
+											<li id="ctl00_MainContent_subStuTopAll_DataDetails_counselerWrapper">
+												<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblCounselor">Counselor</span></label>
+												<span class="list-data">
+													McClure, Julie
+												</span>
+											</li>
+											<li>
+												<label>Language Fluency</label>
+												<span class="list-data">English Only
+													
+												</span>
+											</li>
+											<li>												
+												<label><strong title='Correspondence Language'>CorrLng</strong> / <strong title='Reporting Language'>RptgLng</strong></label><span class="list-data"><span title='Correspondence Language: English'>English</span> / <span title='Reporting Language: English'>English</span></span>
+											</li>		
+											<li>
+												<label>Interdistrict Status </label>
+												<span class="list-data" title='N/A'>N/A</span>
+											</li>							
+											
+										</ul>
+									</div>
+								</div>
+										
+							</div>
+							<div id="ctl00_MainContent_subStuTopAll_DataDetails_contact" class="tab-pane contact">
+								
+								<ul class="list-unstyled list-info col-sm-4 col-xs-12">
+									<li>
+										<label>Student's Mobile</label>
+										<span class="list-data">(949) 338-2018</span>
+									</li>
+									<li>
+										<label>Student's Email</label>
+										<span class="list-data">
+											<a href='mailto:joshkmartinez@gmail.com' title='Click to email'>joshkmartinez@gmail.com</a>
+										</span>
+									</li>
+									<li>
+										<label>Notification Preference</label>
+										<span id="ctl00_MainContent_subStuTopAll_DataDetails_tdNP_View" class="list-data"><span id="ctl00_MainContent_subStuTopAll_DataDetails_txtNP_View">&nbsp;</span></span>
+									</li>
+									<li id="ctl00_MainContent_subStuTopAll_DataDetails_showQuickCON" style="text-align: center;padding:12px 0;">
+										<span id="ctl00_MainContent_subStuTopAll_DataDetails_btnFullContactList" class="btn aeries-light-blue btn-xs btn-circle" onClick="$(&#39;input[id*=_btnShowQuickCON]&#39;).click(); return false;">Full Contact List</span>
+										</li>
+								</ul>
+								<ul class="list-unstyled every-other list-info col-sm-4 col-xs-12">
+									<li>
+										<label>Parent/Guardian</label>
+										<span class="list-data">Christine Kurlawalla</span>
+									</li>
+									
+									<li>
+										<label>Parent Email</label>
+										<a href='mailto:ckurlawalla@cox.net' title='Click to email'>ckurlawalla@cox.net</a>
+									</li>
+									
+									
+									<li>
+										<label>Primary Phone</label>
+										<span class="list-data">(949) 643-2460</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblFW">Mother Mbl - Christi</span></label>
+										<span class="list-data">(949) 636-2851</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblMW">Father Mbl - Israel </span></label>
+										<span class="list-data">(323) 333-8990</span>
+									</li>
+								</ul>
+								<ul class="list-unstyled list-info col-sm-4 col-xs-12">
+									<li>
+										<label>Residence</label>
+										<span class="list-data">
+											<span class="stuRAD">26341 Sorrell Pl</span>
+										<br />
+										<span class="stuRCY">N/A</span>,&nbsp;<span class="stuRST">N/A</span>&nbsp;<span class="stuRZC">N/A</span><span class="stuRZX"></span>
+										</span>
+									</li>
+									<li id="ctl00_MainContent_subStuTopAll_DataDetails_MailingAddr">
+										<label>Mailing</label>
+										<span class="list-data">
+											<span>26341 Sorrell Pl</span>
+										<br />
+										<span>Laguna Hills,&nbsp;CA&nbsp;92653</span>
+										</span>
+									</li>
+								</ul>
+								</div>
+							<div id="ctl00_MainContent_subStuTopAll_DataDetails_other" class="tab-pane other">
+								
+								<ul class="list-unstyled list-info col-sm-4 col-xs-12">
+									<li>
+										<label>First Name Alias </label>
+										<span class="list-data">&nbsp;</span>	
+									</li>
+									<li>
+										<label>Middle Name Alias </label>
+										<span class="list-data">&nbsp;</span>	
+									</li>
+									<li>
+										<label>Last Name Alias </label>
+										<span class="list-data">&nbsp;</span>	
+									</li>
+									<li>
+										<label>Race</label>
+										<span class="list-data">Asian Indian<br />Filipino</span>
+									</li>
+									<li style=''>
+										<label>Ethnicity</label>
+										<span class="list-data">
+											<span style=''>
+												<span>Yes, Hispanic or Latino</span>
+											</span>
+										</span>
+									</li>
+								</ul>
+								<ul class="list-unstyled list-info every-other col-sm-4 col-xs-12">
+									<li>
+										<label>Birth Date Verification</label>
+										<span class="list-data">N/A</span>	
+									</li>
+									<li>
+										<label>Birth City </label>
+										<span class="list-data">Santa Monica</span>	
+									</li>
+									<li>
+										<label>Birth State </label>
+										<span class="list-data">CA</span>	
+									</li>
+									<li>
+										<label>Birth Country </label>
+										<span class="list-data">US</span>	
+									</li>
+									<li>
+										<label>Last School </label>
+										<span class="list-data">Laguna Hills High School</span>	
+									</li>
+								</ul>
+								<ul class="list-unstyled list-info col-sm-4 col-xs-12">
+									
+									
+									<li>
+										<label>Track Code</label>
+										<span class="list-data">N/A</span>
+									</li>
+									<li>
+										
+										<label>
+											Program Code
+											
+										</label>
+
+										<span class="list-data">&nbsp;</span>
+									</li>
+									<li>
+										<label>Attendance Program 1</label>
+										<span class="list-data">N/A</span>
+									</li>
+									<li>
+										<label>Attendance Program 2</label>
+										<span class="list-data">N/A</span>
+									</li>
+									<li>
+										<label>Health Problems</label>
+										
+										<span id="ctl00_MainContent_subStuTopAll_DataDetails_tdHP_ReadOnly" class="list-data">N/A</span>	
+									</li>
+									
+								</ul>
+								</div>
+							<div class="tab-pane student-flags" id="student-flags">								
+								
+								
+																
+							</div>
+							<div class="tab-pane current-programs" id="current-programs">
+								<table id="ctl00_MainContent_subStuTopAll_DataDetails_dlStuPrograms" class="NoPadding a-expand" cellspacing="0">
+				<tr>
+					<td>
+										<tr class="SubHeaderRow">
+											<td class="HCell al vat"  style="font-size:1.1em; vertical-align: top;padding-left:12px;">Program</td>
+											<td class="HCell ac vat"  style="font-size:1.1em; vertical-align: top;">Entered</td>
+										</tr>
+									</td>
+				</tr>
+			</table>
+							</div>
+							<div id="ctl00_MainContent_subStuTopAll_DataDetails_usercodes" class="tab-pane user-codes">
+								
+								<ul class="list-unstyled list-info col-sm-4 col-xs-12">
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU1ReadOnly">Media</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label1">N/A</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU2ReadOnly">I-Net</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label2">Internet access approved</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU3ReadOnly">GATE</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label3">N/A</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU4ReadOnly">SPED</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label4">N/A</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU5ReadOnly">504</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label5">&nbsp;</span>
+										</span>
+									</li>
+								</ul>
+								<ul class="list-unstyled every-other list-info col-sm-4 col-xs-12">
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU6ReadOnly">Waiver</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label6">N/A</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU7ReadOnly">Health</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label7">N/A</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU8ReadOnly">reserv</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label8">N/A</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU9ReadOnly">TA</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label9">N/A</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU10ReadOnly">ADED</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label10">N/A</span>
+										</span>
+									</li>
+								</ul>
+								<ul class="list-unstyled list-info col-sm-4 col-xs-12">
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU11ReadOnly">reserv</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label11">N/A</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU12ReadOnly">reserv</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label12">N/A</span>
+										</span>
+									</li>
+									<li>
+										<label><span id="ctl00_MainContent_subStuTopAll_DataDetails_lblU13ReadOnly">reserv</span></label>
+										<span class="list-data">
+											<span id="ctl00_MainContent_subStuTopAll_DataDetails_Label13">N/A</span>
+										</span>
+									</li>
+								</ul>
+								</div>
+						</div>
+					</div>
+					
+					<div class="text-center" id="stu-top-all-loader">
+						<br />
+						<span class=" fa fa-spinner fa-2x fa-spin" style="padding: 45px;"></span>
+					</div>
+					
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+</div>
+
+<input type="submit" name="ctl00$MainContent$subStuTopAll$btnShowQuickCON" value="Show Quick CON" id="ctl00_MainContent_subStuTopAll_btnShowQuickCON" style="display:none;" />
+	 
+<div id="ctl00_MainContent_subStuTopAll_pnlQuickCON" style="display: none; width: 990px;">
+	
+		<div class="widget-wrapper">
+			<div class="CatHeader widget-head">
+				<div class="widget-options">
+					<ul class="nav nav-tabs">
+						<li>
+							<span class='fa fa-close Clickable' onClick="$find('QuickCONBehavior').hide(); return false;"></span>
+						</li>
+					</ul>
+				</div>
+				<div class="widget-title">
+					Full Contact List
+				</div>
+			</div>
+			<div class="widget-body" id="stu-top-all-body">
+				<div id="ctl00_MainContent_subStuTopAll_subQuickCON_subQuickCON_UpdatePanel">
+		
+	
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<tr style="display:none;">
+			<td class="HCellL al vam">
+				<span id="ctl00_MainContent_subStuTopAll_subQuickCON_lblName" class="lblName">Martinez, Joshua Kurlawalla</span>
+				<select name="ctl00$MainContent$subStuTopAll$subQuickCON$ddlSort" id="ctl00_MainContent_subStuTopAll_subQuickCON_ddlSort">
+			<option selected="selected" value="ContactOrder">Order by Contact Order</option>
+			<option value="ContactName">Order by Contact Name</option>
+
+		</select>
+			</td>
+		</tr>
+		
+		<tr>
+			<td class="Data">
+				
+
+				
+						<table cellpadding="0" cellspacing="0" border="0" width="100%">
+							<thead>
+								<tr class="SubHeaderRow">
+									<td class='HCellL ac vab'><b>Red Flag</b></td>
+									<td class="HCellL ac vab"><b>Contact Name</b></td>
+									<td class="HCellL ac vab"><b>Phone</b></td>
+									<td class="HCellL ac vab"><b>Work</b></td>
+									<td class="HCellL ac vab"><b>Mobile</b></td>
+									<td class="HCellL ac vab"><b>Relation</b></td>
+									<td class="HCellR ac vab"><b>Lives With</b></td>
+									<td class="HCellR ac vab"><b>Ed Rights Holder</b></td>
+								</tr>
+							</thead>							
+					
+						
+						<tr class="zebratr">
+							<td class="Data ac aeries-dark-red"><b>&nbsp;</b></td>
+							<td class="Data NoWrap">
+							
+								<a href="EmergencyContacts.aspx?SQ=1#SQ1CDS30736350000000" title="Go to Contact">Christine Kurlawalla</a>							
+							
+							</td>
+							<td class="Data NoWrap">(949) 643-2460</td>
+							<td class="Data NoWrap">(949) 636-2851</td>
+							<td class="Data NoWrap">(949) 636-2851</td>
+							<td class="Data NoWrap">
+								Mother
+								
+							</td>
+							<td class="Data NoWrap ac">Y</td>
+							<td class="Data NoWrap ac"></td>
+						</tr>
+					
+						
+						<tr class="zebratr">
+							<td class="Data ac aeries-dark-red"><b>&nbsp;</b></td>
+							<td class="Data NoWrap">
+							
+								<a href="EmergencyContacts.aspx?SQ=4#SQ4CDS30736350000000" title="Go to Contact">Israel Martinez</a>							
+							
+							</td>
+							<td class="Data NoWrap">(949) 643-2460</td>
+							<td class="Data NoWrap">(323) 333-8990</td>
+							<td class="Data NoWrap">(323) 333-8990</td>
+							<td class="Data NoWrap">
+								Father
+								
+							</td>
+							<td class="Data NoWrap ac">Y</td>
+							<td class="Data NoWrap ac"></td>
+						</tr>
+					
+						
+						<tr class="zebratr">
+							<td class="Data ac aeries-dark-red"><b>&nbsp;</b></td>
+							<td class="Data NoWrap">
+							
+								<a href="EmergencyContacts.aspx?SQ=6#SQ6CDS30736350000000" title="Go to Contact">Steve & Michelle Anderson</a>							
+							
+							</td>
+							<td class="Data NoWrap">(909) 790-8611</td>
+							<td class="Data NoWrap">(949) 735-1190</td>
+							<td class="Data NoWrap">(909) 800-4140</td>
+							<td class="Data NoWrap">
+								Uncle
+								
+							</td>
+							<td class="Data NoWrap ac">N</td>
+							<td class="Data NoWrap ac"></td>
+						</tr>
+					
+						
+						<tr class="zebratr">
+							<td class="Data ac aeries-dark-red"><b>&nbsp;</b></td>
+							<td class="Data NoWrap">
+							
+								<a href="EmergencyContacts.aspx?SQ=5#SQ5CDS30736350000000" title="Go to Contact">Arlene & Enrique Martinez</a>							
+							
+							</td>
+							<td class="Data NoWrap">(818) 831-7045</td>
+							<td class="Data NoWrap">(818) 383-9641</td>
+							<td class="Data NoWrap">(818) 970-7915</td>
+							<td class="Data NoWrap">
+								Aunt
+								
+							</td>
+							<td class="Data NoWrap ac">N</td>
+							<td class="Data NoWrap ac"></td>
+						</tr>
+					
+						
+						<tr class="zebratr">
+							<td class="Data ac aeries-dark-red"><b>&nbsp;</b></td>
+							<td class="Data NoWrap">
+							
+								<a href="EmergencyContacts.aspx?SQ=7#SQ7CDS30736350000000" title="Go to Contact">Ron & Sophi Kurlawalla</a>							
+							
+							</td>
+							<td class="Data NoWrap">(808) 633-4203</td>
+							<td class="Data NoWrap">(808) 280-4030</td>
+							<td class="Data NoWrap">(808) 280-4034</td>
+							<td class="Data NoWrap">
+								Grandfather
+								
+							</td>
+							<td class="Data NoWrap ac">N</td>
+							<td class="Data NoWrap ac"></td>
+						</tr>
+					</table>
+
+			</td>
+		</tr>
+	</table>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$("div[id$='_pnlQuickCON'] .widget-title").html($("div[id$='_pnlQuickCON'] .widget-title").html() + " For " + $(".lblName").text());
+		});
+	</script>
+
+	</div>
+			</div>
+		</div>
+
+</div>
+
+
+
+<script type="text/javascript">
+	function PreviousStudent() {
+		try {
+			var $toClick = $('.active-student').prev("a").length > 0 ? $('.active-student').prev("a") : $('.namelist a').last();
+			window.location = $toClick.attr('href');
+		} catch (Err) {
+		}
+	}
+	function NextStudent() {
+		try {
+			var $toClick = $('.active-student').next("a").length > 0 ? $('.active-student').next("a") : $('.namelist a').first();
+			window.location = $toClick.attr('href');
+		} catch (Err) {
+		}
+	}
+
+	var localStorageprefix = 'SubStuTopAll';
+	
+	$(document).ready(function () {
+				
+		var bodyIsCollapsed = localStorage.getItem(localStorageprefix + "IsCollapsed");
+		
+			$("#stu-top-all-loader").hide();
+		
+		
+		if (bodyIsCollapsed == 'true') {
+			if ($("#stu-top-all-collapse").hasClass('icon-expanded')) {
+				setTimeout(function () {
+					$("#stu-top-all-collapse").click();
+				}, 0);
+			}
+		} else {			
+			var tabSelection = localStorage.getItem(localStorageprefix + "TabSelection");
+			if (tabSelection) {
+				$(".tab" + tabSelection + "Label > a").click();
+			}			
+			$("#stu-top-all-body").velocity("fadeIn", { duration: 150 });
+		}
+
+		toggleTabBottomBorder(bodyIsCollapsed);
+
+		$("img.student-flag-image").show();
+		$("img.student-flag-image").closest("table").addClass("aeries-background-red-light");
+		
+	});
+
+	// Remember tab selection
+	$(".tab-label").on("click", function () {
+		localStorage.setItem(localStorageprefix + "TabSelection", $(this).attr("rel"));
+		var bodyIsCollapsed = localStorage.getItem(localStorageprefix + "IsCollapsed");
+
+		if (bodyIsCollapsed == 'true' || $("#stu-top-all-collapse").hasClass("icon-collapsed")) {			
+			$("#stu-top-all-body").velocity("slideDown", { duration: 150, complete: function () { EasyRePaint(); } });
+			$("#stu-top-all-collapse").removeClass('icon-collapsed').addClass('icon-expanded');
+			$("#stu-top-all-collapse").attr('title', 'Click to Collapse');
+			localStorage.setItem(localStorageprefix + "IsCollapsed", false);
+		}
+		setTimeout(function () {
+			EasyRePaint();
+		},10);
+	}, 10);
+
+	$("#stu-top-all-collapse").on("click", function () {
+		var isCollapsed = $(this).hasClass('icon-expanded');
+		localStorage.setItem(localStorageprefix + "IsCollapsed", isCollapsed);
+		toggleTabBottomBorder(isCollapsed.toString());
+	});
+
+	function toggleTabBottomBorder(bodyIsCollapsed) {
+
+		var activeTab = $(".widget-options ul.nav-tabs li.active");
+
+		if (bodyIsCollapsed == 'true') {
+			activeTab.removeClass('active');
+		} else {
+			var tabSelection = localStorage.getItem(localStorageprefix + "TabSelection");
+			if (tabSelection) {
+				if ($(".tab" + tabSelection + "Label").length > 0) {
+					$(".tab" + tabSelection + "Label > a").click();
+					$(".tab" + tabSelection + "Label").addClass("active");
+				} else {
+					$("#sub-stu-top-all li a:visible").first().click();
+				}
+			}
+		}
+	}
+
+
+</script>
+	
+	<table style="border-collapse:collapse; border-spacing:0; padding:0; height: 8px;"><tr><td></td></tr></table>
+	
+	<div id="ctl00_MainContent_subGBS_divBackDrop" class="BackDrop a-obj">
+	<input type="submit" name="ctl00$MainContent$subGBS$btnShowTrendPopup" value="Pop up" onclick="return false;" id="ctl00_MainContent_subGBS_btnShowTrendPopup" style="display: none;" />
+	
+	<div id="ctl00_MainContent_subGBS_pnlTrendGraph" style="position: absolute; display: none;  height:450px; width:550px; overflow:hidden; border-style:outset; border-width:thin; background-color:#D0DDEE; ">
+	
+		<table class="NoPadding a-expand">
+			<tr><th class="PlainDataClear ac"><label id="lblTrendGraphTitle" style="font-weight:bold"></label></th><th class="ar" style="width:17px"><img src="images/CloseButton_Big.gif" id="ctl00_MainContent_subGBS_imgCloseTrendGraph" alt="Close Graph" class="Clickable" /></th></tr>
+			<tr><td colspan="2"><div class="ar PlainDataClear" style="padding-right:4px;"><a href="https://support.aeries.com/support/solutions/articles/14000078294-gradebook-score-trend-graph" id="ctl00_MainContent_subGBS_ScoreTrendHelpLink1" style="color:#446A9B;" target="_blank">Help Me Understand this Graph</a></div><div id="trendChart"></div></td></tr>
+		</table>
+	
+</div>
+
+	<table id="ctl00_MainContent_subGBS_tblEverything" class="NoPadding a-expand">
+	<tr>
+		<td class="vat al">
+	
+		
+	
+		
+				<table class="NoPadding a-expand"><tr><td class="vat al">
+				<table class="NoPadding a-expand">
+
+				
+			
+				
+				
+				<tr id="ctl00_MainContent_subGBS_DataDetails_ctl01_trSchool">
+			<td colspan="15"><div id="ctl00_MainContent_subGBS_DataDetails_ctl01_lblSchool" class="SectionHeader">Laguna Hills High School</div></td>
+		</tr>
+		
+
+				<tr id="ctl00_MainContent_subGBS_DataDetails_ctl01_trHeader" class="SubHeaderRow" valign="bottom">
+			<td class="NewTL"></td>
+			<td class="HCell">&nbsp;&nbsp;</td>
+			<td class="HCell al">Name</td>
+			<td class="HCell ac">Term</td>
+			<td class="HCell ac" style="width:25px;">Per</td>
+			<td class="HCell al">Teacher</td>
+			<td class="HCell ac">&#37;</td>
+			<td class="HCell ac">Avg</td>
+			<td class="HCell ac" style="width: 50px;">Current Mark</td>
+			<td class="HCell ac" style="width: 70px;">Trend</td>
+			<td class="HCell ac" style="width: 85px;">Missing Assignment</td>
+			<td class="HCell ac" style="width: 100px; padding-left:0px;"><a href="Attendance.aspx" title="Open Attendance Summary">Past 5 Days</a><br />
+							<table border="0" style="border-collapse: collapse; border-style: none; width: 100px;">
+								<tr>
+									<td class="ac" style="width:20%; border:none;"><span id="ctl00_MainContent_subGBS_DataDetails_ctl01_lblWeekAttDY5"><font face="Fixedsys,Courier New,Courier,sans-serif"></font></span></td>
+									<td class="ac" style="width:20%; border:none;"><span id="ctl00_MainContent_subGBS_DataDetails_ctl01_lblWeekAttDY4"><font face="Fixedsys,Courier New,Courier,sans-serif"></font></span></td>
+									<td class="ac" style="width:20%; border:none;"><span id="ctl00_MainContent_subGBS_DataDetails_ctl01_lblWeekAttDY3"><font face="Fixedsys,Courier New,Courier,sans-serif"></font></span></td>
+									<td class="ac" style="width:20%; border:none;"><span id="ctl00_MainContent_subGBS_DataDetails_ctl01_lblWeekAttDY2"><font face="Fixedsys,Courier New,Courier,sans-serif"></font></span></td>
+									<td class="ac" style="width:20%; border:none;"><span id="ctl00_MainContent_subGBS_DataDetails_ctl01_lblWeekAttDY1"><font face="Fixedsys,Courier New,Courier,sans-serif"></font></span></td>
+								</tr>
+							</table>
+					</td>
+			<td class="HCell ac">Last Updated</td>
+			<td class="HCell ac">Status</td>
+			<td class="NewTR"></td>
+		</tr>
+		
+		
+				
+
+				
+		
+				
+			
+				<tr id="ctl00_MainContent_subGBS_DataDetails_ctl01_trGBKItem">
+			<td class="DataLE"></td>
+			<td class="Data ac">
+						<input type="submit" name="ctl00$MainContent$subGBS$DataDetails$ctl01$btnGradeDetails" value="Details" id="ctl00_MainContent_subGBS_DataDetails_ctl01_btnGradeDetails" class="k-button" />
+					</td>
+			<td class="Data al"><a id="ctl00_MainContent_subGBS_DataDetails_ctl01_lbtnCourseTitle" class="link-gradebook-details" href="javascript:__doPostBack(&#39;ctl00$MainContent$subGBS$DataDetails$ctl01$lbtnCourseTitle&#39;,&#39;&#39;)">Spanish 2</a></td>
+			<td class="Data ac">Year</td>
+			<td class="Data ac">2</td>
+			<td class="Data al">Vargo, Karen</td>
+			<td class="Data ac"><span title='96.80' style='display:block;'>96.80</span></td>
+			<td class="Data ac"><span title='96.80' style='display:none;'>96.80</span></td>
+			<td class="Data al"><span style="margin-left:48%">A</span></td>
+			<td class="Data ac" style="padding-top:3px"><img id="ctl00_MainContent_subGBS_DataDetails_ctl01_imgTrend" title="Forecasted value of 96.94% compared to the average of the last four overall scores 96.74%   Click for Details" class="Clickable gradebook-trend-same" OnClick="createScatterChart_3890812_Y();" src="images/blank.gif" alt="SAME" /><br /><a href="SubForms/#" id="ctl00_MainContent_subGBS_DataDetails_ctl01_gradebookTrendDetail" class="gradebook-trend-click-hint" onclick="createScatterChart_3890812_Y(); return false;">Details</a></td>
+			<td class="Data ac"><span id="ctl00_MainContent_subGBS_DataDetails_ctl01_lblNumMissing">0</span></td>
+			<td class="FixedData ac"><table border="0" class="ac" style="box-sizing: content-box; width: 100px;"><tr><td class="ac" title="Thursday - 12/27/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Friday - 12/28/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Monday - 12/31/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Tuesday - 01/01/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Wednesday - 01/02/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td></tr></table></td>
+			<td class="Data ac"><span title='12/20/2018'>Dec 20</span></td>
+			<td class="Data al"></td>
+			<td class="DataLER"></td>
+		</tr>
+		
+			
+				
+				
+				
+
+				
+		
+				
+
+				
+		
+				
+			
+				<tr id="ctl00_MainContent_subGBS_DataDetails_ctl02_trGBKItem">
+			<td class="DataLE"></td>
+			<td class="Data ac">
+						<input type="submit" name="ctl00$MainContent$subGBS$DataDetails$ctl02$btnGradeDetails" value="Details" id="ctl00_MainContent_subGBS_DataDetails_ctl02_btnGradeDetails" class="k-button" />
+					</td>
+			<td class="Data al"><a id="ctl00_MainContent_subGBS_DataDetails_ctl02_lbtnCourseTitle" class="link-gradebook-details" href="javascript:__doPostBack(&#39;ctl00$MainContent$subGBS$DataDetails$ctl02$lbtnCourseTitle&#39;,&#39;&#39;)">Alg 2 Honors/IB</a></td>
+			<td class="Data ac">Fall</td>
+			<td class="Data ac">3</td>
+			<td class="Data al">Simpson, Ashley</td>
+			<td class="Data ac"><span title='87.18' style='display:block;'>87.18</span></td>
+			<td class="Data ac"><span title='87.18' style='display:none;'>87.18</span></td>
+			<td class="Data al"><span style="margin-left:48%">B</span></td>
+			<td class="Data ac" style="padding-top:3px"><img id="ctl00_MainContent_subGBS_DataDetails_ctl02_imgTrend" title="Forecasted value of 87.29% compared to the average of the last four overall scores 87.78%   Click for Details" class="Clickable gradebook-trend-same" OnClick="createScatterChart_4140873_F();" src="images/blank.gif" alt="SAME" /><br /><a href="SubForms/#" id="ctl00_MainContent_subGBS_DataDetails_ctl02_gradebookTrendDetail" class="gradebook-trend-click-hint" onclick="createScatterChart_4140873_F(); return false;">Details</a></td>
+			<td class="Data ac"><span id="ctl00_MainContent_subGBS_DataDetails_ctl02_lblNumMissing">0</span></td>
+			<td class="FixedData ac"><table border="0" class="ac" style="box-sizing: content-box; width: 100px;"><tr><td class="ac" title="Thursday - 12/27/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Friday - 12/28/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Monday - 12/31/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Tuesday - 01/01/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Wednesday - 01/02/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td></tr></table></td>
+			<td class="Data ac"><span title='12/18/2018'>Dec 18</span></td>
+			<td class="Data al"></td>
+			<td class="DataLER"></td>
+		</tr>
+		
+			
+				
+				
+				
+
+				
+		
+				
+
+				
+		
+				
+			
+				<tr id="ctl00_MainContent_subGBS_DataDetails_ctl03_trGBKItem">
+			<td class="DataLE"></td>
+			<td class="Data ac">
+						<input type="submit" name="ctl00$MainContent$subGBS$DataDetails$ctl03$btnGradeDetails" value="Details" id="ctl00_MainContent_subGBS_DataDetails_ctl03_btnGradeDetails" class="k-button" />
+					</td>
+			<td class="Data al"><a id="ctl00_MainContent_subGBS_DataDetails_ctl03_lbtnCourseTitle" class="link-gradebook-details" href="javascript:__doPostBack(&#39;ctl00$MainContent$subGBS$DataDetails$ctl03$lbtnCourseTitle&#39;,&#39;&#39;)">Period 4 Honors II Fal Semester</a></td>
+			<td class="Data ac">Fall</td>
+			<td class="Data ac">4</td>
+			<td class="Data al">Dougherty, Garnet</td>
+			<td class="Data ac"><span title='87.29' style='display:block;'>87.29</span></td>
+			<td class="Data ac"><span title='87.29' style='display:none;'>87.29</span></td>
+			<td class="Data al"><span style="margin-left:48%">B</span></td>
+			<td class="Data ac" style="padding-top:3px"><img id="ctl00_MainContent_subGBS_DataDetails_ctl03_imgTrend" title="Forecasted value of 86.58% compared to the average of the last four overall scores 87.1%   Click for Details" class="Clickable gradebook-trend-same" OnClick="createScatterChart_4967882_F();" src="images/blank.gif" alt="SAME" /><br /><a href="SubForms/#" id="ctl00_MainContent_subGBS_DataDetails_ctl03_gradebookTrendDetail" class="gradebook-trend-click-hint" onclick="createScatterChart_4967882_F(); return false;">Details</a></td>
+			<td class="Data ac"><span id="ctl00_MainContent_subGBS_DataDetails_ctl03_lblNumMissing">0</span></td>
+			<td class="FixedData ac"><table border="0" class="ac" style="box-sizing: content-box; width: 100px;"><tr><td class="ac" title="Thursday - 12/27/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Friday - 12/28/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Monday - 12/31/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Tuesday - 01/01/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Wednesday - 01/02/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td></tr></table></td>
+			<td class="Data ac"><span title='12/29/2018'>Dec 29</span></td>
+			<td class="Data al"></td>
+			<td class="DataLER"></td>
+		</tr>
+		
+			
+				
+				
+				
+
+				
+		
+				
+
+				
+		
+				
+			
+				<tr id="ctl00_MainContent_subGBS_DataDetails_ctl04_trGBKItem">
+			<td class="DataLE"></td>
+			<td class="Data ac">
+						<input type="submit" name="ctl00$MainContent$subGBS$DataDetails$ctl04$btnGradeDetails" value="Details" id="ctl00_MainContent_subGBS_DataDetails_ctl04_btnGradeDetails" class="k-button" />
+					</td>
+			<td class="Data al"><a id="ctl00_MainContent_subGBS_DataDetails_ctl04_lbtnCourseTitle" class="link-gradebook-details" href="javascript:__doPostBack(&#39;ctl00$MainContent$subGBS$DataDetails$ctl04$lbtnCourseTitle&#39;,&#39;&#39;)">World Hist AP</a></td>
+			<td class="Data ac">Fall</td>
+			<td class="Data ac">5</td>
+			<td class="Data al">Avila, Yoleisy</td>
+			<td class="Data ac"><span title='90.06' style='display:block;'>90.06</span></td>
+			<td class="Data ac"><span title='90.06' style='display:none;'>90.06</span></td>
+			<td class="Data al"><span style="margin-left:48%">A-</span></td>
+			<td class="Data ac" style="padding-top:3px"><img id="ctl00_MainContent_subGBS_DataDetails_ctl04_imgTrend" title="Forecasted value of 90.05% compared to the average of the last four overall scores 89.97%   Click for Details" class="Clickable gradebook-trend-same" OnClick="createScatterChart_9030561_F();" src="images/blank.gif" alt="SAME" /><br /><a href="SubForms/#" id="ctl00_MainContent_subGBS_DataDetails_ctl04_gradebookTrendDetail" class="gradebook-trend-click-hint" onclick="createScatterChart_9030561_F(); return false;">Details</a></td>
+			<td class="Data ac"><span id="ctl00_MainContent_subGBS_DataDetails_ctl04_lblNumMissing">0</span></td>
+			<td class="FixedData ac"><table border="0" class="ac" style="box-sizing: content-box; width: 100px;"><tr><td class="ac" title="Thursday - 12/27/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Friday - 12/28/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Monday - 12/31/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Tuesday - 01/01/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Wednesday - 01/02/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td></tr></table></td>
+			<td class="Data ac"><span title='12/21/2018'>Dec 21</span></td>
+			<td class="Data al"></td>
+			<td class="DataLER"></td>
+		</tr>
+		
+			
+				
+				
+				
+
+				
+		
+				
+
+				
+		
+				
+			
+				<tr id="ctl00_MainContent_subGBS_DataDetails_ctl05_trGBKItem">
+			<td class="DataLE"></td>
+			<td class="Data ac">
+						<input type="submit" name="ctl00$MainContent$subGBS$DataDetails$ctl05$btnGradeDetails" value="Details" id="ctl00_MainContent_subGBS_DataDetails_ctl05_btnGradeDetails" class="k-button" />
+					</td>
+			<td class="Data al"><a id="ctl00_MainContent_subGBS_DataDetails_ctl05_lbtnCourseTitle" class="link-gradebook-details" href="javascript:__doPostBack(&#39;ctl00$MainContent$subGBS$DataDetails$ctl05$lbtnCourseTitle&#39;,&#39;&#39;)">Chemistry Honors Per 6 F</a></td>
+			<td class="Data ac">Fall</td>
+			<td class="Data ac">6</td>
+			<td class="Data al">Martin, Tihua</td>
+			<td class="Data ac"><span title='91.80' style='display:block;'>91.80</span></td>
+			<td class="Data ac"><span title='91.80' style='display:none;'>91.80</span></td>
+			<td class="Data al"><span style="margin-left:48%">A-</span></td>
+			<td class="Data ac" style="padding-top:3px"><img id="ctl00_MainContent_subGBS_DataDetails_ctl05_imgTrend" title="Forecasted value of 94.83% compared to the average of the last four overall scores 92.09%   Click for Details" class="Clickable gradebook-trend-up" OnClick="createScatterChart_5271802_F();" src="images/blank.gif" alt="UP" /><br /><a href="SubForms/#" id="ctl00_MainContent_subGBS_DataDetails_ctl05_gradebookTrendDetail" class="gradebook-trend-click-hint" onclick="createScatterChart_5271802_F(); return false;">Details</a></td>
+			<td class="Data ac"><span id="ctl00_MainContent_subGBS_DataDetails_ctl05_lblNumMissing">0</span></td>
+			<td class="FixedData ac"><table border="0" class="ac" style="box-sizing: content-box; width: 100px;"><tr><td class="ac" title="Thursday - 12/27/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Friday - 12/28/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Monday - 12/31/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Tuesday - 01/01/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Wednesday - 01/02/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td></tr></table></td>
+			<td class="Data ac"><span title='12/20/2018'>Dec 20</span></td>
+			<td class="Data al"></td>
+			<td class="DataLER"></td>
+		</tr>
+		
+			
+				
+				
+				
+
+				
+		
+				
+
+				
+		
+				
+			
+				<tr id="ctl00_MainContent_subGBS_DataDetails_ctl06_trGBKItem">
+			<td class="DataLE"></td>
+			<td class="Data ac">
+						<input type="submit" name="ctl00$MainContent$subGBS$DataDetails$ctl06$btnGradeDetails" value="Details" id="ctl00_MainContent_subGBS_DataDetails_ctl06_btnGradeDetails" class="k-button" />
+					</td>
+			<td class="Data al"><a id="ctl00_MainContent_subGBS_DataDetails_ctl06_lbtnCourseTitle" class="link-gradebook-details" href="javascript:__doPostBack(&#39;ctl00$MainContent$subGBS$DataDetails$ctl06$lbtnCourseTitle&#39;,&#39;&#39;)">AP CS A</a></td>
+			<td class="Data ac">Fall</td>
+			<td class="Data ac">9</td>
+			<td class="Data al">Quinanola, Elizabeth</td>
+			<td class="Data ac"><span title='93.64' style='display:block;'>93.64</span></td>
+			<td class="Data ac"><span title='93.64' style='display:none;'>93.64</span></td>
+			<td class="Data al"><span style="margin-left:48%">A</span></td>
+			<td class="Data ac" style="padding-top:3px"><img id="ctl00_MainContent_subGBS_DataDetails_ctl06_imgTrend" title="Forecasted value of 92.49% compared to the average of the last four overall scores 93.14%   Click for Details" class="Clickable gradebook-trend-same" OnClick="createScatterChart_7883553_F();" src="images/blank.gif" alt="SAME" /><br /><a href="SubForms/#" id="ctl00_MainContent_subGBS_DataDetails_ctl06_gradebookTrendDetail" class="gradebook-trend-click-hint" onclick="createScatterChart_7883553_F(); return false;">Details</a></td>
+			<td class="Data ac"><span id="ctl00_MainContent_subGBS_DataDetails_ctl06_lblNumMissing">0</span></td>
+			<td class="FixedData ac"><table border="0" class="ac" style="box-sizing: content-box; width: 100px;"><tr><td class="ac" title="Thursday - 12/27/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Friday - 12/28/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Monday - 12/31/2018" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Tuesday - 01/01/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td><td class="ac" title="Wednesday - 01/02/2019" style="width: 20%; border: none; color:#F3F3F3;">-</td></tr></table></td>
+			<td class="Data ac"><span title='12/14/2018'>Dec 14</span></td>
+			<td class="Data al"></td>
+			<td class="DataLER"></td>
+		</tr>
+		
+			
+					<tr style="height:2px;">
+						<td class="NewBL" style="height:2px; width:2px;"></td>
+						<td class="DataBottom ac" colspan='13'style="height:2px;"></td>
+						<td class="NewBR" style="height:2px; width:2px;"></td>
+					</tr>
+				</table></td></tr>
+				<tr>
+					<td>                    
+						<table id="ctl00_MainContent_subGBS_DataDetails_ctl07_tblTrendLegend" class="NoPadding a-expand">
+			<tr style="font-size:80%; color:#555555">
+				<td class="ar"><img id="imgTrendEqual" alt="Equal" src="images/BlueLineGraph.png" width="24" /></td>
+				<td><span>-&nbsp;Nominal change</span></td>
+				<td class="ar"><img id="imgTrendUp" alt="Equal" src="images/GreenLineGraph.png" width="24" /></td>
+				<td><span>-&nbsp;Predicted increase of 1% or more</span></td>
+				<td class="ar"><img id="imgTrendDown" alt="Equal" src="images/RedLineGraph.png" width="24" /></td>
+				<td><span>-&nbsp;Predicted decrease of 1% or more</span></td>
+			</tr>
+		</table>
+		
+						<div id="ctl00_MainContent_subGBS_DataDetails_ctl07_divTrendHelp" class="ar PlainDataClear" style="padding-right:4px; position: relative; top: -7px;"><a href="https://support.aeries.com/support/solutions/articles/14000078294-gradebook-score-trend-graph" id="ctl00_MainContent_subGBS_DataDetails_ctl07_ScoreTrendHelpLink2" style="color:#446A9B;" target="_blank">Help Me Understand the Trend</a></div>
+				</td></tr></table>
+			
+	
+		<div id="ctl00_MainContent_subGBS_divHelpers">
+			<br />
+			<div id="ctl00_MainContent_subGBS_upPrint">
+			
+					<input type="submit" name="ctl00$MainContent$subGBS$btnPrint" value="Print" id="ctl00_MainContent_subGBS_btnPrint" class="k-button mainprint" />
+				
+		</div>
+	
+			<br />
+			<span id="ctl00_MainContent_subGBS_lblInfo"></span>
+		</div>
+	</td>
+	</tr>
+</table>
+
+</div>
+
+
+			</td></tr>
+			<tr><td>
+				<table border="0" cellspacing="0" cellpadding="0" width="100%"><tr>
+					<td style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #000000;" class="al">Aeries&nbsp;Version&nbsp;<span id="ctl00_lblVersion">8.18.12.14</span></td>
+					<td style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #000000;" class="ar"><span id="ctl00_lblCopyright">Copyright &copy; 1995-2019 Aeries Software. All Rights Reserved.</span></td>
+				</tr></table>
+			</td></tr>
+		</table>
+	</div>
+	<a id="ctl00_btnPrevious" class="hide" href="javascript:__doPostBack(&#39;ctl00$btnPrevious&#39;,&#39;&#39;)"></a> 
+	<a id="ctl00_btnNext" class="hide" href="javascript:__doPostBack(&#39;ctl00$btnNext&#39;,&#39;&#39;)"></a>
+
+<script language='javascript'> var timeoutIsParent = true; var global_SessionTimer; var global_WarningTimer; var global_SessionTimeout = 3600000;  var global_WarningTimeout = 2700000;  initSessionTimer(3600000,2700000);</script>
+<script type="text/javascript">
+//<![CDATA[
+function PrintReport(){__doPostBack('ctl00$MainContent$subGBS$btnPrint','');}Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"backgroundCssClass":"modalBackground","dropShadow":true,"dynamicServicePath":"/ParentPortal/GradebookSummary.aspx","id":"QuickCONBehavior","popupControlID":"ctl00_MainContent_subStuTopAll_pnlQuickCON"}, null, null, $get("ctl00_MainContent_subStuTopAll_btnShowQuickCON"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"backgroundCssClass":"modalBackground","cancelControlID":"ctl00_MainContent_subGBS_imgCloseTrendGraph","dynamicServicePath":"/ParentPortal/GradebookSummary.aspx","id":"ShowTrendGraph","popupControlID":"ctl00_MainContent_subGBS_pnlTrendGraph"}, null, null, $get("ctl00_MainContent_subGBS_btnShowTrendPopup"));
+});
+//]]>
+</script>
+</form>
+	
+    <script type="text/javascript">
+        // remove the mobile portal link on desktop browsers
+    	if (!kendo.support.mobileOS) {
+    		$('#mobileTestdrive').hide();
+        	if ($get("mobileTestdrive")) { $get("mobileTestdrive").innerHTML = ""; }
+        } else {
+            $('#mobileTestdrive').show();
+    	}
+    	window.masterSC = $('.MasterSC').val();
+    	window.masterSN = $('.MasterSN').val();
+    	window.masterID = $('.MasterPID').val();
+    </script>
+
+    <script type="text/javascript">
+	$(document).ready(function() {
+
+		window.masterSC = $('.MasterSC').val();
+		window.masterSN = $('.MasterSN').val();
+		window.masterID = $('.MasterPID').val();
+
+		
+	});
+    </script>
+
+
+</body>
+</html>

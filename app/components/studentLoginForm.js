@@ -140,38 +140,7 @@ class StudentLoginForm extends React.Component {
 
     await test.addEventListener("readystatechange", function() {
       if (this.readyState === this.DONE) {
-        getNumAss = async (gn, t) => {
-          console.log("WE IN");
-          var data = JSON.stringify({
-            gradebookNumber: gn,
-            term: t,
-            pageSize: 0,
-            requestedPage: 1
-          });
-
-          var xhr = new XMLHttpRequest();
-          xhr.withCredentials = true;
-          console.log("DATA" + data);
-          xhr.addEventListener("readystatechange", function() {
-            if (this.readyState === this.DONE) {
-              console.log("RESPONSE:   " + this.responseText);
-              to = JSON.parse(this.responseText);
-              //maybe promise data here
-              return to.d.total;
-            }
-          });
-
-          xhr.open(
-            "POST",
-            JSON.stringify(await AsyncStorage.getItem("link")).replace(
-              /['"]+/g,
-              ""
-            ) + "/m/api/MobileWebAPI.asmx/GetGradebookDetailsData"
-          );
-          xhr.setRequestHeader("content-type", "application/json");
-
-          await xhr.send(data);
-        };
+        
         let o = JSON.parse(this.responseText).d.results;
         console.log(o);
         gradebooks = [];
@@ -183,13 +152,10 @@ class StudentLoginForm extends React.Component {
           //send to get # of assignments
           console.log(JSON.stringify(o[i].gradebookNumber));
           //need to await func value
-          //let v = async () => await getNumAss(o[i].gradebookNumber, o[i].term);
-          //console.log(v)
-          //assnums.push(v); //func is not even called when for loop ends, need to await
+         
           console.log(gradebooks);
           console.log(terms);
-          //console.log(assnums);
-          //save these
+         
           if (_.size(o) - 1 === i) {
             manageAssignments = async (g, t) => {
               await AsyncStorage.setItem("terms", JSON.stringify(t)).catch(
@@ -217,34 +183,7 @@ class StudentLoginForm extends React.Component {
     await test.send(data);
   }
 
-  async getNumAss(gn, t) {
-    console.log("WE IN");
-    var data = JSON.stringify({
-      gradebookNumber: gn,
-      term: t,
-      pageSize: 0,
-      requestedPage: 1
-    });
-
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-
-    xhr.addEventListener("readystatechange", function() {
-      if (this.readyState === this.DONE) {
-        console.log("RESPONSE:   " + this.responseText);
-        return JSON.parse(this.responseText).d.total;
-      }
-    });
-
-    xhr.open(
-      "POST",
-      JSON.stringify(AsyncStorage.getItem("link")).replace(/['"]+/g, "") +
-        "/m/api/MobileWebAPI.asmx/GetGradebookDetailsData"
-    );
-    xhr.setRequestHeader("content-type", "application/json");
-
-    xhr.send(data);
-  }
+  
 
   async saveAll(a) {
     console.log("Saving all");

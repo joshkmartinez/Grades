@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <font name="roboto">res/font/roboto.xml</font>
+    <font name="roboto_thin">res/font/roboto_thin.xml</font>
+</resources>

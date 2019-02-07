@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:layout_width="match_parent" app:layout_height="match_parent">
+    <SurfaceView app:id="@+id/camera_view" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="UNKNOWN_DATA_0x1" app:layout_marginTop="0dp" app:layout_marginBottom="0dp" app:layout_marginStart="0dp" app:layout_marginEnd="0dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" />
+    <ImageView app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="UNKNOWN_DATA_0x1" app:layout_marginTop="8dp" app:layout_marginBottom="8dp" app:alpha="0.5" app:layout_marginStart="8dp" app:layout_marginEnd="8dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="@+id/camera_view" app:layout_constraintStart_toStartOf="@+id/camera_view" app:layout_constraintTop_toTopOf="@+id/camera_view" />
+</android.support.constraint.ConstraintLayout>

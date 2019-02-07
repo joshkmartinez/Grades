@@ -479,11 +479,18 @@ export class Grades extends React.Component {
             <FlatList
               //style={{ width: width }}
               data={this.state.classNames}
+              ItemSeparatorComponent={this.renderSeparator}
+              ListHeaderComponent={this.renderHeader}
+              ListFooterComponent={this.renderFooter}
+              keyExtractor={item => item}
+              onRefresh={this.handleRefresh}
+              refreshing={this.state.loading}
               renderItem={({ item, index }) => (
+                
                 <TouchableOpacity
                   onPress={() =>
                     this.props.navigation.navigate("classGrades", {
-                      index: index
+                      class: index //nothing passed?
                     })
                   }
                 >
@@ -562,12 +569,7 @@ export class Grades extends React.Component {
                   </Surface>
                 </TouchableOpacity>
               )}
-              ItemSeparatorComponent={this.renderSeparator}
-              ListHeaderComponent={this.renderHeader}
-              ListFooterComponent={this.renderFooter}
-              keyExtractor={item => item.name}
-              onRefresh={this.handleRefresh}
-              refreshing={this.state.loading}
+              
             />
           </List>
           <Appbar

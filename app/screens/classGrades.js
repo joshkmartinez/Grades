@@ -59,6 +59,8 @@ export class classGrades extends React.Component {
     this.state = {
       class: -1,
       assignments: "",
+      ran: false,
+      nums: "",
       all: "",
       data: [
         {
@@ -142,58 +144,32 @@ export class classGrades extends React.Component {
       this.getAssignments();
     }
   }
-  refresh() {
-    //get grades and repopulate tabs
-    //refresh
 
-    this.setState({ isAuthed: true });
-  }
   async getAll() {
     this.setState({
       all: JSON.parse(await AsyncStorage.getItem("all"))
     });
   }
   async getAssignments() {
-    this.getAll()
-    console.log(await AsyncStorage.getItem("all"))
-    console.log("THIS IS ALL:   "+this.state.all)
+    this.getAll();
+    console.log(await AsyncStorage.getItem("all"));
+    console.log("THIS IS ALL:   " + this.state.all);
   }
 
   componentWillMount() {}
-  makeRemoteRequest = () => {
-    /*
-    const { page, seed } = this.state;
-    const url = `https://randomuser.me/api/?seed=${seed}&page=${page}&results=20`;
-    this.setState({ loading: true });
-  
-    fetch(url)
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          data: page === 1 ? res.results : [...this.state.data, ...res.results],
-          error: res.error || null,
-          loading: false,
-          refreshing: false
-        });
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });*/
-    //do request stuff
-
-    this.setState({ loading: true });
-
-    fetch("https://randomuser.me/api/?seed=33&page=3&results=666")
-      .then(res => res.json())
-      .then(res => {
-        this.setState({
-          loading: false
-        });
-      })
-      .catch(error => {
-        this.setState({ error, loading: false });
-      });
-  };
+  async makeRemoteRequest(i) {
+    await this.getNumAss(
+      (await AsyncStorage.getItem("gradebook#"))
+        .substr(1)
+        .slice(0, -1)
+        .split(","),
+      (await AsyncStorage.getItem("terms"))
+        .substr(1)
+        .slice(0, -1)
+        .split(","),
+      i
+    );
+  }
 
   handleRefresh = () => {
     this.setState({ loading: true });
@@ -214,13 +190,53 @@ export class classGrades extends React.Component {
       </View>
     );
   };
+  async getNumAss(gn, t, i) {
+    console.log("getting # of assignments");
+    console.log(gn);
+    console.log(i);
+    console.log(gn[i]);
+    console.log(this.state.class);
+    var data = JSON.stringify({
+      gradebookNumber: gn[i],
+      term: t[i],
+      pageSize: 0,
+      requestedPage: 1
+    });
 
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    handleRespsonse = async r => {
+      console.log("RESPONSE:   " + r);
+      this.setState({ nums: r });
+      console.log(this.state.nums);
+    };
+    xhr.addEventListener("readystatechange", function() {
+      if (this.readyState === this.DONE) {
+        handleRespsonse(this.responseText);
+      }
+    });
+
+    xhr.open(
+      "POST",
+      JSON.stringify(await AsyncStorage.getItem("link")).replace(/['"]+/g, "") +
+        "/m/api/MobileWebAPI.asmx/GetGradebookDetailsData"
+    );
+    xhr.setRequestHeader("content-type", "application/json");
+
+    xhr.send(data);
+  }
   renderHeader = () => {
     return <View />;
   };
-  classSelected = className => {
-    //open a page with the grades showing
-  };
+
+  classSelected = _.debounce(i => {
+    if (!this.state.ran) {
+      //run get i only once
+      //i passed to the request is undefined
+      this.setState({ class: i });
+      this.setState({ ran: true });
+    }
+  }, 0);
   renderFooter = () => {
     if (!this.state.loading) return null;
 
@@ -237,8 +253,10 @@ export class classGrades extends React.Component {
   };
   render() {
     const { navigation } = this.props;
-    const i = navigation.getParam("index", -1);
-    //this.setState({ class: i });
+    const i = navigation.getParam("class", -1);
+    this.classSelected(i);
+
+    console.log("HERE IS I:   " + i + this.state.class);
     return (
       <Root
         styles={{ flex: 1, alignItems: "center", justifyContent: "center" }}

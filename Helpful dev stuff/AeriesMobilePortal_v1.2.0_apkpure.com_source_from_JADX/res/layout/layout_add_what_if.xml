@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:background="@drawable/bg_dashed_contour" app:layout_width="match_parent" app:layout_height="wrap_content">
+    <LinearLayout app:orientation="horizontal" app:padding="3dp" app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x4601" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0">
+        <android.support.constraint.ConstraintLayout app:orientation="vertical" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="match_parent" app:layout_weight="3.0" app:layout_constraintBottom_toBottomOf="@+id/assignment_score" app:layout_constraintEnd_toStartOf="@+id/assignment_score" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0">
+            <TextView app:textSize="16sp" app:id="@+id/assignment_description" app:layout_width="wrap_content" app:layout_height="wrap_content" app:text="@string/add_what_if_assignment" app:lines="1" app:layout_marginStart="24dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintHorizontal_bias="0.0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" app:layout_constraintVertical_chainStyle="2" />
+        </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout app:background="@color/gray0" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="match_parent" app:layout_weight="1.0">
+            <ImageView app:layout_width="wrap_content" app:layout_height="UNKNOWN_DATA_0x1" app:layout_marginTop="24dp" app:layout_marginBottom="24dp" app:layout_marginStart="8dp" app:layout_marginEnd="8dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" app:srcCompat="@drawable/minus_big_symbol" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

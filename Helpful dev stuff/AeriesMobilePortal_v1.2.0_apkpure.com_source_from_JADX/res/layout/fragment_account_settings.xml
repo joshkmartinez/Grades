@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:background="0x106000b" app:layout_width="match_parent" app:layout_height="match_parent">
+    <ImageView app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginBottom="0dp" app:src="@drawable/group_1624" app:adjustViewBounds="true" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" />
+    <android.support.v7.widget.RecyclerView app:id="@+id/settings" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="UNKNOWN_DATA_0x1" app:layout_constraintBottom_toTopOf="@+id/close_icon" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" />
+    <ImageView app:id="@+id/close_icon" app:padding="16dp" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginBottom="8dp" app:src="@drawable/expand_button" app:rotation="180.0" app:layout_marginStart="8dp" app:layout_marginEnd="8dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" />
+</android.support.constraint.ConstraintLayout>

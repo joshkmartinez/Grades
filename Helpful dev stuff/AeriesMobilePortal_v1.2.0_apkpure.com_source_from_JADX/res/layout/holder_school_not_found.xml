@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView android:textSize="18sp" android:textStyle="bold" android:paddingTop="24dp" android:paddingBottom="24dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/cant_find_your_school" android:layout_weight="1.0" android:textAlignment="center" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/no_result_school" android:layout_weight="1.0" android:textAlignment="center" android:paddingStart="24dp" android:paddingEnd="24dp" />
+    <TextView android:textSize="18sp" android:textColor="0x1060012" android:padding="24dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/still_cant_find_school" android:layout_weight="1.0" android:textAlignment="center" />
+</LinearLayout>

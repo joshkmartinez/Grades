@@ -1,0 +1,82 @@
+!!brut.androlib.meta.MetaInfo
+apkFileName: AeriesMobilePortal_v1.2.0_apkpure.com.apk
+compressionType: false
+doNotCompress:
+- arsc
+- META-INF/com.android.support_exifinterface.version
+isFrameworkApk: false
+packageInfo:
+  forcedPackageId: '127'
+  renameManifestPackage: null
+sdkInfo:
+  minSdkVersion: '19'
+  targetSdkVersion: '26'
+sharedLibrary: false
+unknownFiles:
+  androidsupportmultidexversion.txt: '0'
+  firebase-analytics-impl.properties: '8'
+  firebase-analytics.properties: '8'
+  firebase-common.properties: '8'
+  firebase-core.properties: '8'
+  firebase-iid-interop.properties: '8'
+  firebase-iid.properties: '8'
+  play-services-ads-identifier.properties: '8'
+  play-services-auth-api-phone.properties: '8'
+  play-services-auth-base.properties: '8'
+  play-services-auth.properties: '8'
+  play-services-base.properties: '8'
+  play-services-basement.properties: '8'
+  play-services-clearcut.properties: '8'
+  play-services-flags.properties: '8'
+  play-services-location.properties: '8'
+  play-services-measurement-base.properties: '8'
+  play-services-phenotype.properties: '8'
+  play-services-places-placereport.properties: '8'
+  play-services-stats.properties: '8'
+  play-services-tasks.properties: '8'
+  play-services-vision-common.properties: '8'
+  play-services-vision.properties: '8'
+  fabric/com.crashlytics.sdk.android.answers.properties: '8'
+  fabric/com.crashlytics.sdk.android.beta.properties: '8'
+  fabric/com.crashlytics.sdk.android.crashlytics-core.properties: '8'
+  fabric/com.crashlytics.sdk.android.crashlytics.properties: '8'
+  fabric/io.fabric.sdk.android.fabric.properties: '8'
+  javax/annotation/CheckForNull.java: '8'
+  javax/annotation/CheckForSigned.java: '8'
+  javax/annotation/CheckReturnValue.java: '8'
+  javax/annotation/Detainted.java: '8'
+  javax/annotation/MatchesPattern.java: '8'
+  javax/annotation/Nonnegative.java: '8'
+  javax/annotation/Nonnull.java: '8'
+  javax/annotation/Nullable.java: '8'
+  javax/annotation/OverridingMethodsMustInvokeSuper.java: '8'
+  javax/annotation/ParametersAreNonnullByDefault.java: '8'
+  javax/annotation/PropertyKey.java: '8'
+  javax/annotation/RegEx.java: '8'
+  javax/annotation/Signed.java: '8'
+  javax/annotation/Syntax.java: '8'
+  javax/annotation/Tainted.java: '8'
+  javax/annotation/Untainted.java: '8'
+  javax/annotation/WillClose.java: '8'
+  javax/annotation/WillCloseWhenClosed.java: '8'
+  javax/annotation/WillNotClose.java: '8'
+  javax/annotation/concurrent/GuardedBy.java: '8'
+  javax/annotation/concurrent/Immutable.java: '8'
+  javax/annotation/concurrent/NotThreadSafe.java: '8'
+  javax/annotation/concurrent/ThreadSafe.java: '8'
+  javax/annotation/meta/Exclusive.java: '8'
+  javax/annotation/meta/Exhaustive.java: '8'
+  javax/annotation/meta/TypeQualifier.java: '8'
+  javax/annotation/meta/TypeQualifierDefault.java: '8'
+  javax/annotation/meta/TypeQualifierNickname.java: '8'
+  javax/annotation/meta/TypeQualifierValidator.java: '8'
+  javax/annotation/meta/When.java: '8'
+  okhttp3/internal/publicsuffix/publicsuffixes.gz: '0'
+usesFramework:
+  ids:
+  - 1
+  tag: null
+version: 2.3.0
+versionInfo:
+  versionCode: '22'
+  versionName: 1.2.0

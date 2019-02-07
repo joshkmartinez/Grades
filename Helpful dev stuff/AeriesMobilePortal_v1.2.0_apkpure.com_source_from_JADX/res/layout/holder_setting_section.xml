@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res-auto" app:layout_width="match_parent" app:layout_height="wrap_content" app:cardBackgroundColor="0x106000d">
+    <android.support.constraint.ConstraintLayout app:layout_width="match_parent" app:layout_height="wrap_content">
+        <TextView app:textSize="18sp" app:textStyle="bold" app:textColor="0x106000c" app:id="@+id/section_name" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="wrap_content" app:layout_marginTop="8dp" app:layout_marginBottom="8dp" app:text="TextView" app:layout_marginStart="16dp" app:layout_marginEnd="16dp" app:layout_constraintBottom_toTopOf="@+id/imageView25" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" />
+        <ImageView app:id="@+id/imageView25" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="wrap_content" app:layout_marginBottom="0dp" app:scaleType="centerCrop" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:srcCompat="@drawable/banner" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:id="@+id/layout_contact" app:background="@drawable/bg_link_contact" app:layout_width="match_parent" app:layout_height="wrap_content">
+    <TextView app:textAppearance="@style/TextAppearance.AppCompat.Title" app:id="@+id/contact_name" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="wrap_content" app:layout_marginTop="16dp" app:text="TextView" app:layout_marginStart="16dp" app:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" />
+    <TextView app:id="@+id/contact_relationship" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginTop="8dp" app:layout_marginBottom="16dp" app:text="TextView" app:layout_marginStart="0dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintStart_toStartOf="@+id/contact_name" app:layout_constraintTop_toBottomOf="@+id/contact_name" />
+</android.support.constraint.ConstraintLayout>

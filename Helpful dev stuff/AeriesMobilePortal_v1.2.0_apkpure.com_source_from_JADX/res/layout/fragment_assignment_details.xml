@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:layout_width="match_parent" app:layout_height="match_parent">
+    <ImageView app:layout_width="match_parent" app:layout_height="match_parent" app:src="@drawable/without_blade" app:scaleType="centerCrop" />
+    <android.support.constraint.ConstraintLayout app:layout_width="match_parent" app:layout_height="match_parent">
+        <TextView app:textAppearance="@style/TextAppearance.AppCompat.Headline" app:textColor="0x106000b" app:id="@+id/assignment_details_title" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginLeft="16dp" app:layout_marginTop="16dp" app:text="@string/assignment_details" app:layout_marginStart="24dp" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" />
+        <Button app:textAppearance="@style/TextAppearance.AppCompat.Headline" app:textSize="16sp" app:textStyle="bold" app:textColor="0x106000b" app:id="@+id/done_textview" app:background="@drawable/bg_red_button" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginBottom="16dp" app:text="@string/done" app:layout_marginStart="8dp" app:layout_marginEnd="8dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" />
+        <android.support.v7.widget.RecyclerView app:id="@+id/assignment_details_recyclerview" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="UNKNOWN_DATA_0x1" app:layout_marginTop="8dp" app:layout_marginBottom="8dp" app:fadeScrollbars="false" app:layout_marginStart="24dp" app:layout_marginEnd="24dp" app:layout_constraintBottom_toTopOf="@+id/done_textview" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toBottomOf="@+id/assignment_details_title" />
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

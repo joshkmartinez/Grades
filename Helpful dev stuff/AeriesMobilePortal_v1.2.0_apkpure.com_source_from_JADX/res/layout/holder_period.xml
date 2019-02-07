@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:padding="8dp" app:layout_width="wrap_content" app:layout_height="wrap_content">
+    <TextView app:textSize="12sp" app:textColor="0x106000c" app:id="@+id/period_number" app:layout_width="UNKNOWN_DATA_0xe01" app:layout_height="wrap_content" app:text="1" app:textAlignment="center" app:layout_constraintEnd_toEndOf="@+id/period1" app:layout_constraintStart_toStartOf="@+id/period1" app:layout_constraintTop_toBottomOf="@+id/textView14" />
+    <android.support.v7.widget.CardView app:id="@+id/period_indicator" app:background="@drawable/bg_period_indicator" app:layout_width="UNKNOWN_DATA_0xe01" app:layout_height="UNKNOWN_DATA_0xe01" app:cardCornerRadius="7dp" app:layout_constraintBottom_toBottomOf="@+id/period1" app:layout_constraintStart_toEndOf="@+id/period1" app:layout_constraintTop_toTopOf="@+id/period1" />
+</LinearLayout>

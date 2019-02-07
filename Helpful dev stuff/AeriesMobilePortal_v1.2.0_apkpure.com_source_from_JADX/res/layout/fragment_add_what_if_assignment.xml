@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:orientation="vertical" app:padding="16dp" app:layout_width="match_parent" app:layout_height="wrap_content">
+    <TextView app:textSize="24sp" app:textStyle="bold" app:textColor="0x106000c" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginBottom="16dp" app:text="@string/add_new_what_if_assignment" />
+    <android.support.design.widget.TextInputLayout app:layout_width="match_parent" app:layout_height="wrap_content">
+        <android.support.design.widget.TextInputEditText app:id="@+id/name" app:layout_width="match_parent" app:layout_height="wrap_content" app:hint="@string/name" app:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+    <LinearLayout app:orientation="horizontal" app:paddingTop="16dp" app:paddingBottom="16dp" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginTop="16dp" app:layout_marginBottom="16dp">
+        <TextView app:textSize="18sp" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="wrap_content" app:text="@string/category" app:layout_weight="1.0" />
+        <Spinner app:id="@+id/category" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="wrap_content" app:hint="@string/category" app:layout_weight="1.0" />
+    </LinearLayout>
+    <TextView app:textSize="18sp" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginTop="16dp" app:text="@string/score" />
+    <LinearLayout app:orientation="horizontal" app:layout_width="wrap_content" app:layout_height="wrap_content">
+        <android.support.design.widget.TextInputEditText app:textSize="20sp" app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/num_correct" app:layout_width="wrap_content" app:layout_height="wrap_content" app:ems="2" app:singleLine="true" app:inputType="number|numberSigned|numberDecimal|numberPassword|phone" app:imeOptions="actionGo|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+        <TextView app:textSize="18sp" app:layout_width="wrap_content" app:layout_height="wrap_content" app:text="@string/out_of" />
+        <android.support.design.widget.TextInputEditText app:textSize="20sp" app:gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/num_possible" app:layout_width="wrap_content" app:layout_height="wrap_content" app:ems="2" app:singleLine="true" app:inputType="number|numberSigned|numberDecimal|numberPassword|phone" app:imeOptions="actionGo|actionSearch|actionSend|actionNext|actionDone|actionPrevious" />
+    </LinearLayout>
+    <Button app:enabled="false" app:id="@+id/add_assignment" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginTop="24dp" app:layout_marginBottom="16dp" app:text="@string/add" app:layout_marginStart="24dp" app:layout_marginEnd="24dp" style="@style/BlueButton" />
+    <TextView app:textSize="18sp" app:textColor="@color/AeriesBlue" app:layout_gravity="top|bottom|left|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end" app:id="@+id/cancel" app:layout_width="wrap_content" app:layout_height="wrap_content" app:text="@string/cancel" />
+</LinearLayout>

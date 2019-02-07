@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:layout_width="match_parent" app:layout_height="wrap_content">
+    <TextView app:textSize="16sp" app:textColor="0x106000c" app:id="@+id/title_tv" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginTop="8dp" app:text="TextView" app:layout_marginStart="16dp" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" />
+    <TextView app:textSize="16sp" app:textColor="@color/AeriesBlue" app:id="@+id/detail_tv" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginTop="8dp" app:layout_marginBottom="8dp" app:text="TextView" app:layout_marginStart="16dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+    <ImageView app:id="@id/icon" app:layout_width="wrap_content" app:layout_height="UNKNOWN_DATA_0x2801" app:layout_marginTop="8dp" app:layout_marginBottom="8dp" app:adjustViewBounds="true" app:layout_marginEnd="24dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintTop_toTopOf="0" app:srcCompat="@drawable/placeholder" />
+</android.support.constraint.ConstraintLayout>

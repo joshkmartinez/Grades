@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res-auto" app:id="@id/container" app:layout_width="match_parent" app:layout_height="match_parent">
+    <android.support.v7.widget.CardView app:id="@+id/detail_title" app:layout_width="match_parent" app:layout_height="wrap_content" app:layout_marginLeft="107dp" app:layout_marginTop="0dp" app:layout_alignParentLeft="true" app:layout_alignParentTop="true" app:layout_marginStart="0dp" app:layout_alignParentStart="true" app:cardCornerRadius="0dp" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0">
+        <LinearLayout app:orientation="vertical" app:layout_width="match_parent" app:layout_height="match_parent">
+            <include app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0x4001" app:layout_marginTop="0dp" app:layout_marginStart="0dp" app:layout_marginEnd="0dp" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="0" layout="@layout/holder_student_detail" />
+            <ImageView app:layout_width="match_parent" app:layout_height="UNKNOWN_DATA_0xa01" app:scaleType="fitXY" app:srcCompat="@drawable/banner" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <RelativeLayout app:id="@+id/fragment_container" app:layout_width="UNKNOWN_DATA_0x1" app:layout_height="UNKNOWN_DATA_0x1" app:layout_marginTop="0dp" app:layout_marginBottom="0dp" app:layout_marginStart="0dp" app:layout_marginEnd="0dp" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toBottomOf="@+id/detail_title" />
+    <ProgressBar app:id="@+id/progress_bar" app:layout_width="wrap_content" app:layout_height="wrap_content" app:layout_marginTop="8dp" app:layout_alignParentBottom="true" app:layout_centerHorizontal="true" app:layout_constraintBottom_toBottomOf="0" app:layout_constraintEnd_toEndOf="0" app:layout_constraintStart_toStartOf="0" app:layout_constraintTop_toTopOf="@+id/fragment_container" style="?unknown_attr_ref: 1010077" />
+</android.support.constraint.ConstraintLayout>
